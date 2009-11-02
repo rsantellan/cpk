@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Microsoft Office InfoPath crea y modifica automáticamente este archivo.
+Se perderán los cambios realizados en él fuera de InfoPath si se modifica la plantilla de formulario en InfoPath.
+-->
+<xsf:xDocumentClass trustSetting="automatic" solutionFormatVersion="2.0.0.0" solutionVersion="1.0.0.24" productVersion="12.0.0" name="urn:schemas-microsoft-com:office:infopath:DefinicionModificacionAtributo:-myXSD-2009-10-31T16-45-27" xmlns:xsf="http://schemas.microsoft.com/office/infopath/2003/solutionDefinition" xmlns:xsf2="http://schemas.microsoft.com/office/infopath/2006/solutionDefinition/extensions" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:xd="http://schemas.microsoft.com/office/infopath/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xdUtil="http://schemas.microsoft.com/office/infopath/2003/xslt/Util" xmlns:xdXDocument="http://schemas.microsoft.com/office/infopath/2003/xslt/xDocument" xmlns:xdMath="http://schemas.microsoft.com/office/infopath/2003/xslt/Math" xmlns:xdDate="http://schemas.microsoft.com/office/infopath/2003/xslt/Date" xmlns:xdExtension="http://schemas.microsoft.com/office/infopath/2003/xslt/extension" xmlns:xdEnvironment="http://schemas.microsoft.com/office/infopath/2006/xslt/environment" xmlns:xdUser="http://schemas.microsoft.com/office/infopath/2006/xslt/User" xmlns:my="http://schemas.microsoft.com/office/infopath/2003/myXSD/2009-10-31T16:45:27">
+	<xsf:package>
+		<xsf:files>
+			<xsf:file name="myschema.xsd">
+				<xsf:fileProperties>
+					<xsf:property name="namespace" type="string" value="http://schemas.microsoft.com/office/infopath/2003/myXSD/2009-10-31T16:45:27"></xsf:property>
+					<xsf:property name="editability" type="string" value="full"></xsf:property>
+					<xsf:property name="rootElement" type="string" value="misCampos"></xsf:property>
+					<xsf:property name="useOnDemandAlgorithm" type="string" value="yes"></xsf:property>
+				</xsf:fileProperties>
+			</xsf:file>
+			<xsf:file name="template.xml"></xsf:file>
+			<xsf:file name="sampledata.xml">
+				<xsf:fileProperties>
+					<xsf:property name="fileType" type="string" value="sampleData"></xsf:property>
+				</xsf:fileProperties>
+			</xsf:file>
+			<xsf:file name="view1.xsl">
+				<xsf:fileProperties>
+					<xsf:property name="lang" type="string" value="14346"></xsf:property>
+					<xsf:property name="componentId" type="string" value="31"></xsf:property>
+					<xsf:property name="mode" type="string" value="6"></xsf:property>
+					<xsf:property name="xmlToEditName" type="string" value="15"></xsf:property>
+				</xsf:fileProperties>
+			</xsf:file>
+			<xsf:file name="Tab2.xsl">
+				<xsf:fileProperties>
+					<xsf:property name="lang" type="string" value="14346"></xsf:property>
+					<xsf:property name="componentId" type="string" value="5"></xsf:property>
+				</xsf:fileProperties>
+			</xsf:file>
+			<xsf:file name="Tab3.xsl">
+				<xsf:fileProperties>
+					<xsf:property name="lang" type="string" value="14346"></xsf:property>
+				</xsf:fileProperties>
+			</xsf:file>
+			<xsf:file name="DefinicionModificacionAtributo.dll">
+				<xsf:fileProperties>
+					<xsf:property name="fileType" type="string" value="rootAssembly"></xsf:property>
+				</xsf:fileProperties>
+			</xsf:file>
+			<xsf:file name="DefinicionModificacionAtributo.pdb">
+				<xsf:fileProperties>
+					<xsf:property name="fileType" type="string" value="pdb"></xsf:property>
+				</xsf:fileProperties>
+			</xsf:file>
+			<xsf:file name="upgrade.xsl"></xsf:file>
+		</xsf:files>
+	</xsf:package>
+	<xsf:importParameters enabled="yes"></xsf:importParameters>
+	<xsf:documentVersionUpgrade>
+		<xsf:useTransform transform="upgrade.xsl" minVersionToUpgrade="0.0.0.0" maxVersionToUpgrade="1.0.0.23"></xsf:useTransform>
+	</xsf:documentVersionUpgrade>
+	<xsf:extensions>
+		<xsf:extension name="SolutionDefinitionExtensions">
+			<xsf2:solutionDefinition runtimeCompatibility="client server" allowClientOnlyCode="no">
+				<xsf2:offline openIfQueryFails="yes" cacheQueries="yes"></xsf2:offline>
+				<xsf2:server isPreSubmitPostBackEnabled="no" isMobileEnabled="no" formLocale="es-UY"></xsf2:server>
+				<xsf2:managedCode projectPath="C:\Documents and Settings\Admin\Mis documentos\Visual Studio 2008\Projects\DefinicionModificacionAtributo\DefinicionModificacionAtributo\DefinicionModificacionAtributo.csproj" language="CSharp" version="2.0" enabled="yes"></xsf2:managedCode>
+			</xsf2:solutionDefinition>
+		</xsf:extension>
+	</xsf:extensions>
+	<xsf:views default="Tab 1">
+		<xsf:view name="Tab 1" caption="Tab 1" showMenuItem="yes">
+			<xsf:mainpane transform="view1.xsl"></xsf:mainpane>
+			<xsf:unboundControls>
+				<xsf:button name="btTab1">
+					<xsf:ruleSetAction ruleSet="ruleSet_1"></xsf:ruleSetAction>
+				</xsf:button>
+				<xsf:button name="btTab2">
+					<xsf:ruleSetAction ruleSet="ruleSet_2"></xsf:ruleSetAction>
+				</xsf:button>
+				<xsf:button name="btTab3">
+					<xsf:ruleSetAction ruleSet="ruleSet_3"></xsf:ruleSetAction>
+				</xsf:button>
+				<xsf:button name="CTRL18_5"></xsf:button>
+				<xsf:button name="Cancelar"></xsf:button>
+				<xsf:button name="Anterior"></xsf:button>
+				<xsf:button name="siguiente"></xsf:button>
+				<xsf:button name="CTRL24_5"></xsf:button>
+				<xsf:button name="cancelarTotal"></xsf:button>
+				<xsf:button name="confirmarTotal"></xsf:button>
+				<xsf:button name="agregarObservacion"></xsf:button>
+			</xsf:unboundControls>
+			<xsf:editing>
+				<xsf:xmlToEdit name="campo1_4" item="/my:misCampos/my:InformacionGeneral/my:identificador">
+					<xsf:editWith proofing="no" autoComplete="no" component="xField"></xsf:editWith>
+				</xsf:xmlToEdit>
+				<xsf:xmlToEdit name="campo2_5" item="/my:misCampos/my:InformacionGeneral/my:autor">
+					<xsf:editWith proofing="no" autoComplete="no" component="xField"></xsf:editWith>
+				</xsf:xmlToEdit>
+				<xsf:xmlToEdit name="campo8_8" item="/my:misCampos/my:InformacionGeneral/my:descripcion">
+					<xsf:editWith type="plainMultiline" component="xField"></xsf:editWith>
+				</xsf:xmlToEdit>
+				<xsf:xmlToEdit name="fechavigenciadesde_9" item="/my:misCampos/my:InformacionGeneral/my:fechavigenciadesde">
+					<xsf:editWith proofing="no" autoComplete="no" component="xField"></xsf:editWith>
+				</xsf:xmlToEdit>
+				<xsf:xmlToEdit name="campo3_6" item="/my:misCampos/my:InformacionGeneral/my:version">
+					<xsf:editWith proofing="no" autoComplete="no" component="xField"></xsf:editWith>
+				</xsf:xmlToEdit>
+				<xsf:xmlToEdit name="campo4_7" item="/my:misCampos/my:InformacionGeneral/my:fechaCreacion">
+					<xsf:editWith proofing="no" autoComplete="no" component="xField"></xsf:editWith>
+				</xsf:xmlToEdit>
+				<xsf:xmlToEdit name="fechavigenciahasta_10" item="/my:misCampos/my:InformacionGeneral/my:fechavigenciahasta">
+					<xsf:editWith proofing="no" autoComplete="no" component="xField"></xsf:editWith>
+				</xsf:xmlToEdit>
+			</xsf:editing>
+		</xsf:view>
+		<xsf:view showMenuItem="yes" name="Tab 2" caption="Tab 2">
+			<xsf:unboundControls>
+				<xsf:button name="btTab1">
+					<xsf:ruleSetAction ruleSet="ruleSet_4"></xsf:ruleSetAction>
+				</xsf:button>
+				<xsf:button name="btTab2">
+					<xsf:ruleSetAction ruleSet="ruleSet_5"></xsf:ruleSetAction>
+				</xsf:button>
+				<xsf:button name="btTab3">
+					<xsf:ruleSetAction ruleSet="ruleSet_6"></xsf:ruleSetAction>
+				</xsf:button>
+				<xsf:button name="cancelarTotal"></xsf:button>
+				<xsf:button name="agregarArbol"></xsf:button>
+				<xsf:button name="siguienteVista2"></xsf:button>
+				<xsf:button name="anteriorVista2"></xsf:button>
+				<xsf:button name="eliminarArbol"></xsf:button>
+			</xsf:unboundControls>
+			<xsf:mainpane transform="Tab2.xsl"></xsf:mainpane>
+		</xsf:view>
+		<xsf:view showMenuItem="yes" name="Tab 3" caption="Tab 3">
+			<xsf:unboundControls>
+				<xsf:button name="btTab1">
+					<xsf:ruleSetAction ruleSet="ruleSet_7"></xsf:ruleSetAction>
+				</xsf:button>
+				<xsf:button name="btTab2">
+					<xsf:ruleSetAction ruleSet="ruleSet_8"></xsf:ruleSetAction>
+				</xsf:button>
+				<xsf:button name="btTab3">
+					<xsf:ruleSetAction ruleSet="ruleSet_9"></xsf:ruleSetAction>
+				</xsf:button>
+			</xsf:unboundControls>
+			<xsf:mainpane transform="Tab3.xsl"></xsf:mainpane>
+		</xsf:view>
+	</xsf:views>
+	<xsf:applicationParameters application="InfoPath Design Mode">
+		<xsf:solutionProperties fullyEditableNamespace="http://schemas.microsoft.com/office/infopath/2003/myXSD/2009-10-31T16:45:27" scriptLanguage="managedCode" lastOpenView="view1.xsl" lastVersionNeedingTransform="1.0.0.23"></xsf:solutionProperties>
+	</xsf:applicationParameters>
+	<xsf:documentSchemas>
+		<xsf:documentSchema rootSchema="yes" location="http://schemas.microsoft.com/office/infopath/2003/myXSD/2009-10-31T16:45:27 myschema.xsd"></xsf:documentSchema>
+	</xsf:documentSchemas>
+	<xsf:fileNew>
+		<xsf:initialXmlDocument caption="DefinicionModificacionAtributo" href="template.xml"></xsf:initialXmlDocument>
+	</xsf:fileNew>
+	<xsf:ruleSets>
+		<xsf:ruleSet name="ruleSet_1">
+			<xsf:rule caption="Switch Views to Tab 1" isEnabled="yes">
+				<xsf:switchViewAction view="Tab 1"></xsf:switchViewAction>
+			</xsf:rule>
+		</xsf:ruleSet>
+		<xsf:ruleSet name="ruleSet_2">
+			<xsf:rule caption="Switch Views to Tab 2" isEnabled="yes">
+				<xsf:switchViewAction view="Tab 2"></xsf:switchViewAction>
+			</xsf:rule>
+		</xsf:ruleSet>
+		<xsf:ruleSet name="ruleSet_3">
+			<xsf:rule caption="Switch Views to Tab 3" isEnabled="yes">
+				<xsf:switchViewAction view="Tab 3"></xsf:switchViewAction>
+			</xsf:rule>
+		</xsf:ruleSet>
+		<xsf:ruleSet name="ruleSet_4">
+			<xsf:rule caption="Switch Views to Tab 1" isEnabled="yes">
+				<xsf:switchViewAction view="Tab 1"></xsf:switchViewAction>
+			</xsf:rule>
+		</xsf:ruleSet>
+		<xsf:ruleSet name="ruleSet_5">
+			<xsf:rule caption="Switch Views to Tab 2" isEnabled="yes">
+				<xsf:switchViewAction view="Tab 2"></xsf:switchViewAction>
+			</xsf:rule>
+		</xsf:ruleSet>
+		<xsf:ruleSet name="ruleSet_6">
+			<xsf:rule caption="Switch Views to Tab 3" isEnabled="yes">
+				<xsf:switchViewAction view="Tab 3"></xsf:switchViewAction>
+			</xsf:rule>
+		</xsf:ruleSet>
+		<xsf:ruleSet name="ruleSet_7">
+			<xsf:rule caption="Switch Views to Tab 1" isEnabled="yes">
+				<xsf:switchViewAction view="Tab 1"></xsf:switchViewAction>
+			</xsf:rule>
+		</xsf:ruleSet>
+		<xsf:ruleSet name="ruleSet_8">
+			<xsf:rule caption="Switch Views to Tab 2" isEnabled="yes">
+				<xsf:switchViewAction view="Tab 2"></xsf:switchViewAction>
+			</xsf:rule>
+		</xsf:ruleSet>
+		<xsf:ruleSet name="ruleSet_9">
+			<xsf:rule caption="Switch Views to Tab 3" isEnabled="yes">
+				<xsf:switchViewAction view="Tab 3"></xsf:switchViewAction>
+			</xsf:rule>
+		</xsf:ruleSet>
+	</xsf:ruleSets>
+</xsf:xDocumentClass>

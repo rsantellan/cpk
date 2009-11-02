@@ -1,0 +1,33 @@
+<my:misCampos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:my="http://schemas.microsoft.com/office/infopath/2003/myXSD/2009-10-31T16:45:27" xmlns:xd="http://schemas.microsoft.com/office/infopath/2003">
+	<my:grupo1/>
+	<my:InformacionGeneral>
+		<my:identificador/>
+		<my:autor/>
+		<my:version/>
+		<my:fechaCreacion/>
+		<my:fechavigenciadesde/>
+		<my:fechavigenciahasta/>
+		<my:nombre/>
+		<my:descripcion/>
+		<my:esModificable>true</my:esModificable>
+	</my:InformacionGeneral>
+	<my:grupo4/>
+	<my:grupo5/>
+	<my:informacionAgrupacion/>
+	<my:observaciones>
+		<my:grupo6>
+			<my:grupo7>
+				<my:campo1/>
+				<my:campo2/>
+				<my:campo3/>
+				<my:campo4/>
+				<my:campo5/>
+			</my:grupo7>
+		</my:grupo6>
+	</my:observaciones>
+	<xd:SchemaInfo LocalName="misCampos" NamespaceURI="http://schemas.microsoft.com/office/infopath/2003/myXSD/2009-10-31T16:45:27">
+		<xd:Namespaces>
+			<xd:Namespace LocalName="misCampos" NamespaceURI="http://schemas.microsoft.com/office/infopath/2003/myXSD/2009-10-31T16:45:27"/>
+		</xd:Namespaces>
+	</xd:SchemaInfo>
+</my:misCampos>
