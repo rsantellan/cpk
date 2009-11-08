@@ -72,7 +72,7 @@
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{A860303F-1F3F-4691-B57E-529FC101A107}">
-        <ProjectProperties HostName="VSTAHostName" HostPackage="{13956671-21BF-4F92-B876-4CD8D46D37F3}" ApplicationType="xsn" Language="cs" TemplatesPath="" DebugInfoExeName="#SOFTWARE\Microsoft\Office\12.0\InfoPath\InstallRoot\Path#infopath.exe" DebugInfoCommandLine="/preview &quot;manifest.xsf&quot; /sampledata &quot;template.xml&quot; /viewname &quot;Tab 1&quot;" DebugInfoWorkingDir="C:\Documents and Settings\Admin\Mis documentos\Visual Studio 2008\Projects\DefinicionModificacionAtributo\DefinicionModificacionAtributo\InfoPath Form Template" IconImageList="#SOFTWARE\Microsoft\Office\12.0\InfoPath\InstallRoot\Path#infopath.exe#100" />
+        <ProjectProperties HostName="VSTAHostName" HostPackage="{13956671-21BF-4F92-B876-4CD8D46D37F3}" ApplicationType="xsn" Language="cs" TemplatesPath="" DebugInfoExeName="#SOFTWARE\Microsoft\Office\12.0\InfoPath\InstallRoot\Path#infopath.exe" DebugInfoCommandLine="/preview &quot;manifest.xsf&quot; /sampledata &quot;template.xml&quot; /viewname &quot;Tab 1&quot;" DebugInfoWorkingDir="C:\project\DefinicionModificacionAtributo\DefinicionModificacionAtributo\InfoPath Form Template" IconImageList="#SOFTWARE\Microsoft\Office\12.0\InfoPath\InstallRoot\Path#infopath.exe#100" />
         <Host Name="InfoPath Form Code" IconIndex="0">
           <HostItem Name="FormCode" Code="FormCode.cs" CanonicalName="XmlForm" IconIndex="1" Blueprint="FormCode.Designer.xml" GeneratedCode="FormCode.Designer.cs" />
         </Host>

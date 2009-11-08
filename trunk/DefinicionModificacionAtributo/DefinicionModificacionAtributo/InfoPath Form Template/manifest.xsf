@@ -3,7 +3,11 @@
 Microsoft Office InfoPath crea y modifica automáticamente este archivo.
 Se perderán los cambios realizados en él fuera de InfoPath si se modifica la plantilla de formulario en InfoPath.
 -->
-<xsf:xDocumentClass trustSetting="automatic" solutionFormatVersion="2.0.0.0" solutionVersion="1.0.0.24" productVersion="12.0.0" name="urn:schemas-microsoft-com:office:infopath:DefinicionModificacionAtributo:-myXSD-2009-10-31T16-45-27" xmlns:xsf="http://schemas.microsoft.com/office/infopath/2003/solutionDefinition" xmlns:xsf2="http://schemas.microsoft.com/office/infopath/2006/solutionDefinition/extensions" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:xd="http://schemas.microsoft.com/office/infopath/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xdUtil="http://schemas.microsoft.com/office/infopath/2003/xslt/Util" xmlns:xdXDocument="http://schemas.microsoft.com/office/infopath/2003/xslt/xDocument" xmlns:xdMath="http://schemas.microsoft.com/office/infopath/2003/xslt/Math" xmlns:xdDate="http://schemas.microsoft.com/office/infopath/2003/xslt/Date" xmlns:xdExtension="http://schemas.microsoft.com/office/infopath/2003/xslt/extension" xmlns:xdEnvironment="http://schemas.microsoft.com/office/infopath/2006/xslt/environment" xmlns:xdUser="http://schemas.microsoft.com/office/infopath/2006/xslt/User" xmlns:my="http://schemas.microsoft.com/office/infopath/2003/myXSD/2009-10-31T16:45:27">
+<!--
+This file is automatically created and modified by Microsoft Office InfoPath.
+Changes made to the file outside of InfoPath might be lost if the form template is modified in InfoPath.
+-->
+<xsf:xDocumentClass trustSetting="automatic" solutionFormatVersion="2.0.0.0" solutionVersion="1.0.0.56" productVersion="12.0.0" name="urn:schemas-microsoft-com:office:infopath:DefinicionModificacionAtributo:-myXSD-2009-10-31T16-45-27" xmlns:xsf="http://schemas.microsoft.com/office/infopath/2003/solutionDefinition" xmlns:xsf2="http://schemas.microsoft.com/office/infopath/2006/solutionDefinition/extensions" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:xd="http://schemas.microsoft.com/office/infopath/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xdUtil="http://schemas.microsoft.com/office/infopath/2003/xslt/Util" xmlns:xdXDocument="http://schemas.microsoft.com/office/infopath/2003/xslt/xDocument" xmlns:xdMath="http://schemas.microsoft.com/office/infopath/2003/xslt/Math" xmlns:xdDate="http://schemas.microsoft.com/office/infopath/2003/xslt/Date" xmlns:xdExtension="http://schemas.microsoft.com/office/infopath/2003/xslt/extension" xmlns:xdEnvironment="http://schemas.microsoft.com/office/infopath/2006/xslt/environment" xmlns:xdUser="http://schemas.microsoft.com/office/infopath/2006/xslt/User" xmlns:my="http://schemas.microsoft.com/office/infopath/2003/myXSD/2009-10-31T16:45:27">
 	<xsf:package>
 		<xsf:files>
 			<xsf:file name="myschema.xsd">
@@ -39,6 +43,7 @@ Se perderán los cambios realizados en él fuera de InfoPath si se modifica la p
 					<xsf:property name="lang" type="string" value="14346"></xsf:property>
 				</xsf:fileProperties>
 			</xsf:file>
+			<xsf:file name="upgrade.xsl"></xsf:file>
 			<xsf:file name="DefinicionModificacionAtributo.dll">
 				<xsf:fileProperties>
 					<xsf:property name="fileType" type="string" value="rootAssembly"></xsf:property>
@@ -49,19 +54,21 @@ Se perderán los cambios realizados en él fuera de InfoPath si se modifica la p
 					<xsf:property name="fileType" type="string" value="pdb"></xsf:property>
 				</xsf:fileProperties>
 			</xsf:file>
-			<xsf:file name="upgrade.xsl"></xsf:file>
 		</xsf:files>
 	</xsf:package>
 	<xsf:importParameters enabled="yes"></xsf:importParameters>
 	<xsf:documentVersionUpgrade>
-		<xsf:useTransform transform="upgrade.xsl" minVersionToUpgrade="0.0.0.0" maxVersionToUpgrade="1.0.0.23"></xsf:useTransform>
+		<xsf:useTransform transform="upgrade.xsl" minVersionToUpgrade="0.0.0.0" maxVersionToUpgrade="1.0.0.45"></xsf:useTransform>
 	</xsf:documentVersionUpgrade>
 	<xsf:extensions>
 		<xsf:extension name="SolutionDefinitionExtensions">
 			<xsf2:solutionDefinition runtimeCompatibility="client server" allowClientOnlyCode="no">
 				<xsf2:offline openIfQueryFails="yes" cacheQueries="yes"></xsf2:offline>
-				<xsf2:server isPreSubmitPostBackEnabled="no" isMobileEnabled="no" formLocale="es-UY"></xsf2:server>
-				<xsf2:managedCode projectPath="C:\Documents and Settings\Admin\Mis documentos\Visual Studio 2008\Projects\DefinicionModificacionAtributo\DefinicionModificacionAtributo\DefinicionModificacionAtributo.csproj" language="CSharp" version="2.0" enabled="yes"></xsf2:managedCode>
+				<xsf2:server isPreSubmitPostBackEnabled="no" isMobileEnabled="no" formLocale="en-US"></xsf2:server>
+				<xsf2:managedCode language="CSharp" version="2.0" enabled="yes" projectPath="C:\Documents and Settings\Admin\Mis documentos\Visual Studio 2008\Projects\DefinicionModificacionAtributo\DefinicionModificacionAtributo\DefinicionModificacionAtributo.csproj"></xsf2:managedCode>
+				<xsf2:solutionPropertiesExtension branch="wss">
+					<xsf2:wss path="http://moss.denallix.com/departments/hr/Internal Recruitment" name="Internal Recruitment" description="InfoPath Form Library used in the Internal Recruitment Training Solution" browserEnable="no"></xsf2:wss>
+				</xsf2:solutionPropertiesExtension>
 			</xsf2:solutionDefinition>
 		</xsf:extension>
 	</xsf:extensions>
@@ -146,7 +153,7 @@ Se perderán los cambios realizados en él fuera de InfoPath si se modifica la p
 		</xsf:view>
 	</xsf:views>
 	<xsf:applicationParameters application="InfoPath Design Mode">
-		<xsf:solutionProperties fullyEditableNamespace="http://schemas.microsoft.com/office/infopath/2003/myXSD/2009-10-31T16:45:27" scriptLanguage="managedCode" lastOpenView="view1.xsl" lastVersionNeedingTransform="1.0.0.23"></xsf:solutionProperties>
+		<xsf:solutionProperties fullyEditableNamespace="http://schemas.microsoft.com/office/infopath/2003/myXSD/2009-10-31T16:45:27" scriptLanguage="managedCode" lastOpenView="view1.xsl" lastVersionNeedingTransform="1.0.0.45"></xsf:solutionProperties>
 	</xsf:applicationParameters>
 	<xsf:documentSchemas>
 		<xsf:documentSchema rootSchema="yes" location="http://schemas.microsoft.com/office/infopath/2003/myXSD/2009-10-31T16:45:27 myschema.xsd"></xsf:documentSchema>
