@@ -3,3 +3,8 @@ C:\Documents and Settings\Admin\Mis documentos\Visual Studio 2008\Projects\Defin
 C:\Documents and Settings\Admin\Mis documentos\Visual Studio 2008\Projects\DefinicionModificacionAtributo\DefinicionModificacionAtributo\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\Admin\Mis documentos\Visual Studio 2008\Projects\DefinicionModificacionAtributo\DefinicionModificacionAtributo\obj\Debug\DefinicionModificacionAtributo.dll
 C:\Documents and Settings\Admin\Mis documentos\Visual Studio 2008\Projects\DefinicionModificacionAtributo\DefinicionModificacionAtributo\obj\Debug\DefinicionModificacionAtributo.pdb
+C:\project\DefinicionModificacionAtributo\DefinicionModificacionAtributo\bin\Debug\DefinicionModificacionAtributo.dll
+C:\project\DefinicionModificacionAtributo\DefinicionModificacionAtributo\bin\Debug\DefinicionModificacionAtributo.pdb
+C:\project\DefinicionModificacionAtributo\DefinicionModificacionAtributo\obj\Debug\ResolveAssemblyReference.cache
+C:\project\DefinicionModificacionAtributo\DefinicionModificacionAtributo\obj\Debug\DefinicionModificacionAtributo.dll
+C:\project\DefinicionModificacionAtributo\DefinicionModificacionAtributo\obj\Debug\DefinicionModificacionAtributo.pdb
