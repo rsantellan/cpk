@@ -95,20 +95,76 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
             }
             
         }
-        DataSet datos = abmc.buscarAtributos(this.TextBoxNombre.Text, Convert.ToBoolean(this.DropDownListEstado.SelectedValue), this.DropDownListAutores.SelectedValue.ToString(), " ", version, vigenciaDesde, vigenciaHasta, vigenciaFinDesde, vigenciaFinHasta, creacionDesde, creacionHasta);
+        Boolean estado = Convert.ToBoolean(this.DropDownListEstado.SelectedValue);
+        DataSet datos = abmc.buscarAtributos(this.TextBoxNombre.Text, estado, this.DropDownListAutores.SelectedValue.ToString(), " ", version, vigenciaDesde, vigenciaHasta, vigenciaFinDesde, vigenciaFinHasta, creacionDesde, creacionHasta);
+        DataSet show = new DataSet();
+
         DataTable dt = new DataTable();
-        //for (int i = 0; i < this.GridViewDatos.Columns.Count; i++)
-        //{
-        //    dt.Columns.Add(this.GridViewDatos.Columns[i]);
-        //}
-        //foreach (DataRow row in datos.Tables[0].Rows)
-        //{
-            
-        //}
+        show.Tables.Add(dt);
+        DataColumn dc = new DataColumn("ID");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("ModificarMostrar");
+        dc.ColumnMapping = MappingType.Hidden;
+        dt.Columns.Add(dc);
+        dc = new DataColumn("VersionadoMostrar");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Nombre");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Pilar");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Fecha de creacion");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Fecha vigencia desde");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Fecha vigencia hasta");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Ultima Version");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Area responsable");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Estado");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Autor");
+        dt.Columns.Add(dc);
+
+        DataRow dr;
+
+        foreach (DataRow row in datos.Tables[0].Rows)
+        {
+            ArrayList misDatos = new ArrayList();
+            misDatos.Add("10");
+            misDatos.Add(" Modificar ");
+            misDatos.Add(" Versionado ");
+            misDatos.Add(row[7].ToString());
+            misDatos.Add("Pilar");
+            DateTime dateTimes;
+            dateTimes = DateTime.Parse(row[4].ToString());
+            misDatos.Add(dateTimes.ToShortDateString());
+            dateTimes = DateTime.Parse(row[5].ToString());
+            misDatos.Add(dateTimes.ToShortDateString());
+            dateTimes = DateTime.Parse(row[6].ToString());
+            misDatos.Add(dateTimes.ToShortDateString());
+            misDatos.Add(row[3].ToString());
+            misDatos.Add("Responsables");
+            if (estado)
+            {
+                misDatos.Add("Activo");
+            }
+            else
+            {
+                misDatos.Add("No Activo");
+            }
+            misDatos.Add(row[2].ToString());
+            dr = dt.NewRow();
+            dr.ItemArray = misDatos.ToArray();
+            dt.Rows.Add(dr);
+        }
         
-        this.GridViewDatos.DataSource = datos;
+        this.GridViewDatos.DataSource = show;
         this.GridViewDatos.DataBind();
         this.GridViewDatos.Visible = true;
+        
+        //this.GridViewDatos.Columns[2].Visible = false;
     }
 
 

@@ -16,67 +16,51 @@ using System.Data.Odbc;
 public partial class Atributos : System.Web.UI.Page
 {
 
-    System.Data.Odbc.OdbcConnection _con;
-    System.Data.Odbc.OdbcCommand _cmd;
-
     protected void Page_Load(object sender, EventArgs e)
     {
-        //Response.Write("Esto es el numero que me pasaron ");
         String id = Request.QueryString["id"];
-        String identificador = Request.QueryString["identificador"];
-        //Response.Write(id);
-        LabelVersion.Text = identificador;
-        LabelIdentificador.Text = Convert.ToString(this.getNewId());
-        this.HiddenField1.Value = LabelIdentificador.Text;
-
-        String userFull = HttpContext.Current.User.Identity.Name;
-        String user = "";
-        bool save = false;
-        foreach (char a in userFull)
+        if (!String.IsNullOrEmpty(id))
         {
-            if (save)
-            {
-                user += a;
-            }
-            if (a == '\\')
-            {
-                save = true;
-            }
-
+            cargarDatosBase(Convert.ToInt16(id));
         }
-        LabelAutor.Text = user;
-        LabelFechaCreacion.Text = DateTime.Today.Date.ToShortDateString();
+        else
+        {
+
+            //String identificador = Request.QueryString["identificador"];
+            LabelVersion.Text = "0";
+            LabelIdentificador.Text = Convert.ToString(this.getNewId());
+            this.HiddenField1.Value = LabelIdentificador.Text;
+
+            String userFull = HttpContext.Current.User.Identity.Name;
+            String user = "";
+            bool save = false;
+            foreach (char a in userFull)
+            {
+                if (save)
+                {
+                    user += a;
+                }
+                if (a == '\\')
+                {
+                    save = true;
+                }
+
+            }
+            LabelAutor.Text = user;
+            LabelFechaCreacion.Text = DateTime.Today.Date.ToShortDateString();
+        }
+    }
+    private void cargarDatosBase(int id)
+    {
+        System.Data.SqlClient.SqlCommand commandSql = new System.Data.SqlClient.SqlCommand();
+        System.Data.SqlClient.SqlConnection sqlConn = new System.Data.SqlClient.SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        commandSql.Connection = sqlConn;
     }
 
     private int getNewId()
     {
-        int max = 0;
-        try
-        {
-            this._con = new OdbcConnection("DSN=FormFlow");
-            this._con.Open();
-            this._cmd = this._con.CreateCommand();
-            this._cmd.CommandText = "SELECT Identificador FROM AtributoInformacionGeneral WHERE Identificador = (SELECT MAX(Identificador)  FROM AtributoInformacionGeneral) ";
-            this._cmd.Connection = this._con;
-            OdbcDataReader DbReader = this._cmd.ExecuteReader();
-
-            while (DbReader.Read())
-            {
-                max = Convert.ToInt16((DbReader["identificador"].ToString()));
-            }
-
-        }
-        catch (Exception e)
-        {
-            this.LabelVersion.Text = e.Message;
-        }
-        finally
-        {
-            this._con.Close();
-        }
-
-        max = max + 1;
-        return max;
+        ABMCAtributo abmc = new ABMCAtributo();
+        return abmc.getLastIdentifier();
     }
 
     protected void Button1_Click(object sender, EventArgs e)
@@ -93,39 +77,18 @@ public partial class Atributos : System.Web.UI.Page
 
     private void guardar()
     {
-        int modificable = 0;
-        if (this.CheckBoxModificable.Checked)
-        {
-            modificable = 1;
-        }
-        String sql = "INSERT INTO " +
-                "AtributoInformacionGeneral " +
-                "(" +
-                "Identificador," +
-                "Autor," +
-                "Version," +
-                "FechaCreacion," +
-                "FechaVigenciaDesde," +
-                "FechaVigenciaHasta," +
-                "Nombre," +
-                "Descripcion," +
-                "EsModificable" +
-                ")" +
-                "VALUES (" +
-                this.LabelIdentificador.Text + ",'" +
-                this.LabelAutor.Text + "'," +
-                this.LabelVersion.Text + ",'" +
-                this.LabelFechaCreacion.Text + "','" +
-                this.TextCalendarDesde.Text + "','" +
-                this.TextBoxCalendarHasta.Text + "','" +
-                this.TextBoxDescripcion.Text + "','" +
-                this.TextBoxDescripcion.Text + "'," +
-                modificable + ");";
-        this._con = new OdbcConnection("DSN=FormFlow");
-        this._con.Open();
-        this._cmd = this._con.CreateCommand();
-        this._cmd.CommandText = sql;
-        this._cmd.ExecuteNonQuery();
-        this._con.Close();
+        Atributo a = new Atributo();
+        a.Autor = this.LabelAutor.Text;
+        a.Descripcion = this.TextBoxDescripcion.Text;
+        a.EsModificable = this.CheckBoxModificable.Checked;
+        a.FechaCreacion = DateTime.Parse(this.LabelFechaCreacion.Text);
+        a.FechaVigenciaDesde = DateTime.Parse(this.TextCalendarDesde.Text);
+        a.FechaVigenciaHasta = DateTime.Parse(this.TextBoxCalendarHasta.Text);
+        a.Identificador = Convert.ToInt16(this.LabelIdentificador.Text);
+        a.Nombre = this.TextBoxNombre.Text;
+        a.Version = Convert.ToInt16(this.LabelVersion.Text);
+
+        ABMCAtributo abmc = new ABMCAtributo();
+        abmc.guardarAtributo(a);
     }
 }

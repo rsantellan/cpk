@@ -9,6 +9,8 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
 
 /// <summary>
 /// Descripción breve de ABMCAtributo
@@ -21,6 +23,115 @@ public class ABMCAtributo
         //this._atributo = atributo;
     }
 
+    public int getLastIdentifier()
+    {
+        int max = 0;
+        SqlCommand commandSql = new SqlCommand();
+        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        try
+        {
+            commandSql.Connection = sqlConn;
+            commandSql = sqlConn.CreateCommand();
+
+            commandSql.CommandText = "SELECT Identificador FROM AtributoInformacionGeneral WHERE Identificador = (SELECT MAX(Identificador)  FROM AtributoInformacionGeneral) ";
+            sqlConn.Open();
+            System.Data.SqlClient.SqlDataReader DbReader = commandSql.ExecuteReader();
+
+            while (DbReader.Read())
+            {
+                max = Convert.ToInt16((DbReader["identificador"].ToString()));
+            }
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+
+        max = max + 1;
+        return max;
+    }
+
+    public Boolean guardarAtributo(Atributo guardar)
+    {
+        SqlCommand commandSql = new SqlCommand();
+        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        Boolean salida = false;
+        String sql = "INSERT INTO " +
+            "AtributoInformacionGeneral " +
+            "(" +
+                "Identificador," +
+                "Autor," +
+                "Version," +
+                "FechaCreacion," +
+                "FechaVigenciaDesde," +
+                "FechaVigenciaHasta," +
+                "Nombre," +
+                "Descripcion," +
+                "EsModificable" +
+            ")" +
+            "VALUES"+
+            "(" +
+                "@IDENTIFICADOR," +
+                "@AUTOR," +
+                "@VERSION," +
+                "@FECHACREACION," +
+                "@FECHAVIGENCIADESDE," +
+                "@FECHAVIGENCIAHASTA," +
+                "@NOMBRE," +
+                "@DESCRIPCION," +
+                "@MODIFICABLE"+
+            ");";
+        commandSql.CommandText = sql;
+        SqlParameter p_identificador = commandSql.Parameters.Add("IDENTIFICADOR", SqlDbType.Int);
+        p_identificador.Value = guardar.Identificador;
+        SqlParameter p_autor = commandSql.Parameters.Add("AUTOR", SqlDbType.NChar);
+        p_autor.Value = guardar.Autor;
+        SqlParameter p_version = commandSql.Parameters.Add("VERSION", SqlDbType.Int);
+        p_version.Value = guardar.Version;
+        SqlParameter p_fechaCreacion = commandSql.Parameters.Add("FECHACREACION", SqlDbType.DateTime);
+        p_fechaCreacion.Value = guardar.FechaCreacion;
+        SqlParameter p_fechaVigenciaDesde = commandSql.Parameters.Add("FECHAVIGENCIADESDE", SqlDbType.DateTime);
+        p_fechaVigenciaDesde.Value = guardar.FechaVigenciaDesde;
+        SqlParameter p_fechaVigenciaHasta = commandSql.Parameters.Add("FECHAVIGENCIAHASTA", SqlDbType.DateTime);
+        p_fechaVigenciaHasta.Value = guardar.FechaVigenciaHasta;
+        SqlParameter p_nombre = commandSql.Parameters.Add("NOMBRE", SqlDbType.NChar);
+        p_nombre.Value = guardar.Nombre;
+        SqlParameter p_descripcion = commandSql.Parameters.Add("DESCRIPCION", SqlDbType.NChar);
+        p_descripcion.Value = guardar.Nombre;
+        SqlParameter p_modificable = commandSql.Parameters.Add("MODIFICABLE", SqlDbType.Bit);
+        p_modificable.Value = guardar.EsModificable;
+        //if (guardar.EsModificable)
+        //{
+        //    p_modificable.Value = '1';
+        //}
+        //else
+        //{
+        //    p_modificable.Value = '0';
+        //}
+        
+        
+        commandSql.Connection = sqlConn;
+        try
+        {
+            sqlConn.Open();
+            commandSql.ExecuteNonQuery();
+            salida = true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+        return salida;
+    }
     public DataSet buscarAtributos(String nombre, Boolean estado, String autor, String responsables, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaVigenciaDesde, DateTime fechaVigenciaHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
     {
 
@@ -74,42 +185,42 @@ public class ABMCAtributo
         {
             consulta += " AND FechaCreacion BETWEEN @FechaCreacionDesde AND @FechaCreacionHasta";
         }
-        System.Data.SqlClient.SqlCommand commandSql = new System.Data.SqlClient.SqlCommand();
+        SqlCommand commandSql = new SqlCommand();
         commandSql.CommandText = consulta;
         
-        System.Data.SqlClient.SqlParameter p_autor = commandSql.Parameters.Add("AUTOR", System.Data.SqlDbType.NChar);
+        SqlParameter p_autor = commandSql.Parameters.Add("AUTOR", System.Data.SqlDbType.NChar);
         p_autor.Value = autor;
 
-        System.Data.SqlClient.SqlParameter p_fechaAhora = commandSql.Parameters.Add("HOY", System.Data.SqlDbType.DateTime);
+        SqlParameter p_fechaAhora = commandSql.Parameters.Add("HOY", System.Data.SqlDbType.DateTime);
         p_fechaAhora.Value = DateTime.Now;
 
         if (buscarVersion)
         {
-            System.Data.SqlClient.SqlParameter p_version = commandSql.Parameters.Add("VERSION", System.Data.SqlDbType.NChar);
+            SqlParameter p_version = commandSql.Parameters.Add("VERSION", System.Data.SqlDbType.NChar);
             p_version.Value = version;
         }
 
         if (buscarNombre)
         {
-            System.Data.SqlClient.SqlParameter p_nombre = commandSql.Parameters.Add("Nombre", System.Data.SqlDbType.NChar);
+            SqlParameter p_nombre = commandSql.Parameters.Add("Nombre", System.Data.SqlDbType.NChar);
             p_nombre.Value = nombre;
         }
 
         if (buscarCreacion)
         {
-            System.Data.SqlClient.SqlParameter p_fechaCreacionDesde = commandSql.Parameters.Add("FechaCreacionDesde", System.Data.SqlDbType.DateTime);
+            SqlParameter p_fechaCreacionDesde = commandSql.Parameters.Add("FechaCreacionDesde", System.Data.SqlDbType.DateTime);
             p_fechaCreacionDesde.Value = fechaCreacionDesde;
 
-            System.Data.SqlClient.SqlParameter p_fechaCreacionHasta = commandSql.Parameters.Add("FechaCreacionHasta", System.Data.SqlDbType.DateTime);
+            SqlParameter p_fechaCreacionHasta = commandSql.Parameters.Add("FechaCreacionHasta", System.Data.SqlDbType.DateTime);
             p_fechaCreacionHasta.Value = fechaCreacionHasta;
         }
-        System.Data.SqlClient.SqlConnection sqlConn = new System.Data.SqlClient.SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
         commandSql.Connection = sqlConn;
         DataSet ds = new DataSet();
         try
         {
             sqlConn.Open();
-            System.Data.SqlClient.SqlDataAdapter da = new System.Data.SqlClient.SqlDataAdapter(commandSql);
+            SqlDataAdapter da = new SqlDataAdapter(commandSql);
             da.Fill(ds, "Atributos");
         }
         catch (Exception e)
@@ -123,28 +234,5 @@ public class ABMCAtributo
         
         
         return ds;
-
-
-        //this.conectar();
-
-        //   c.Connection = this.conn;
-
-        //   SqlDataAdapter da = new SqlDataAdapter(c);
-
-        //   this.desconectar();
-
-        //   DataSet ds = new DataSet();
-
-        //   da.Fill(ds, nombreTabla);
-
-        //   return ds;
-
-        //c.CommandText = "SELECT * FROM USUARIO, CREDENCIAL " +
-
-        //                       "WHERE ID_CREDENCIAL = @LOGIN AND ID_CREDENCIAL = LOGIN";
-
-        //       SqlParameter p_ci = c.Parameters.Add("@LOGIN", SqlDbType.NChar);
-
-        //       p_ci.Value = u.Credencial.Login;
     }
 }
