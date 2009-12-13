@@ -52,9 +52,17 @@ public partial class Atributos : System.Web.UI.Page
     }
     private void cargarDatosBase(int id)
     {
-        System.Data.SqlClient.SqlCommand commandSql = new System.Data.SqlClient.SqlCommand();
-        System.Data.SqlClient.SqlConnection sqlConn = new System.Data.SqlClient.SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
-        commandSql.Connection = sqlConn;
+        ABMCAtributo abmc = new ABMCAtributo();
+        Atributo a = abmc.obtenerAtributo(id);
+        this.LabelVersion.Text = a.Version.ToString();
+        this.LabelIdentificador.Text = a.Identificador.ToString();
+        this.LabelAutor.Text = a.Autor;
+        this.LabelFechaCreacion.Text = a.FechaCreacion.ToShortDateString();
+        this.TextBoxCalendarHasta.Text = a.FechaVigenciaHasta.ToShortDateString();
+        this.TextBoxDescripcion.Text = a.Descripcion;
+        this.TextBoxNombre.Text = a.Nombre;
+        this.TextCalendarDesde.Text = a.FechaVigenciaDesde.ToShortDateString();
+        this.CheckBoxModificable.Checked = a.EsModificable;
     }
 
     private int getNewId()

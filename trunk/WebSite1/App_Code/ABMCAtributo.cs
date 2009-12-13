@@ -56,6 +56,75 @@ public class ABMCAtributo
         return max;
     }
 
+    public Atributo obtenerAtributo(int id)
+    {
+        String sql = "SELECT "+
+                        "Id,"+
+                        "Identificador,"+
+                        "Autor,"+
+                        "Version,"+
+                        "FechaCreacion,"+
+                        "FechaVigenciaDesde,"+
+                        "FechaVigenciaHasta,"+
+                        "Nombre,"+
+                        "Descripcion,"+
+                        "EsModificable"+
+                        " FROM "+
+                        " AtributoInformacionGeneral "+
+                        " WHERE " +
+                        " Id = @ID;";
+        SqlCommand commandSql = new SqlCommand();
+        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        commandSql.CommandText = sql;
+        commandSql.Connection = sqlConn;
+        SqlParameter p_id = commandSql.Parameters.Add("ID", SqlDbType.Int);
+        p_id.Value = id;
+        DataSet ds = new DataSet();
+        try
+        {
+            sqlConn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(commandSql);
+            sqlConn.Close();
+            da.Fill(ds, "Atributo");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+        Atributo salida = new Atributo();
+        if (ds.Tables[0].Rows.Count > 0)
+        {
+            DataRow row = ds.Tables[0].Rows[0];
+            salida.Id = id;
+            salida.Identificador = Convert.ToInt16(row[1].ToString());
+            salida.Autor = row[2].ToString();
+            salida.Version = Convert.ToInt16(row[3].ToString());
+            salida.FechaCreacion = DateTime.Parse(row[4].ToString());
+            salida.FechaVigenciaDesde = DateTime.Parse(row[5].ToString());
+            salida.FechaVigenciaHasta = DateTime.Parse(row[6].ToString());
+            salida.Nombre = row[7].ToString();
+            salida.Descripcion = row[8].ToString();
+            if (row[9].ToString().Equals("1"))
+            {
+                salida.EsModificable = true;
+            }
+            else
+            {
+                salida.EsModificable = false;
+            }
+            return salida;
+        }
+        else
+        {
+            return null;
+        }
+        
+    }
+
     public Boolean guardarAtributo(Atributo guardar)
     {
         SqlCommand commandSql = new SqlCommand();
@@ -105,15 +174,6 @@ public class ABMCAtributo
         p_descripcion.Value = guardar.Nombre;
         SqlParameter p_modificable = commandSql.Parameters.Add("MODIFICABLE", SqlDbType.Bit);
         p_modificable.Value = guardar.EsModificable;
-        //if (guardar.EsModificable)
-        //{
-        //    p_modificable.Value = '1';
-        //}
-        //else
-        //{
-        //    p_modificable.Value = '0';
-        //}
-        
         
         commandSql.Connection = sqlConn;
         try
