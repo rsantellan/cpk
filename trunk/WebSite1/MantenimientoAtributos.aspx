@@ -31,6 +31,24 @@
         	
         }
     </style>
+    <script runat="server">
+
+  void CustomersGridView_RowDataBound(Object sender, GridViewRowEventArgs e)
+  {
+
+    
+      
+    if(e.Row.RowType == DataControlRowType.DataRow)
+    {
+      // Display the company name in italics.
+      e.Row.Cells[1].Text = "<i>" + e.Row.Cells[1].Text + "</i>";
+      //e.Row.Cells[2].Visible = false; 
+    }
+
+  }
+
+</script>
+
 </head>
 <body>
     <form id="form1" runat="server">
@@ -204,28 +222,18 @@
     </div>
     <div class="consulta">
         <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
-        <asp:GridView ID="GridViewDatos" runat="server" AutoGenerateSelectButton="True" 
-            onselectedindexchanged="GridViewDatos_SelectedIndexChanged">
+        <asp:GridView ID="GridViewDatos" runat="server" >
             <%--<Columns><asp:CommandField ShowSelectButton="True" SelectText="Pick" /></Columns>--%>
             <Columns>
-                <asp:HyperLinkField HeaderText="Modificar" />
-                <asp:HyperLinkField HeaderText="Versionado" />
-                <asp:BoundField HeaderText="Nombre" />
-                <asp:BoundField HeaderText="Pilar" />
-                <asp:BoundField HeaderText="Fecha de creacion" />
-                <asp:BoundField HeaderText="Fecha vigencia desde" />
-                <asp:BoundField HeaderText="Fecha vigencia hasta" />
-                <asp:BoundField HeaderText="Ultima Version" />
-                <asp:BoundField HeaderText="Area responsable" />
-                <asp:BoundField HeaderText="Estado" />
-                <asp:BoundField HeaderText="Autor" />
+                <asp:HyperLinkField HeaderText="Modificar" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="Atributos.aspx?id={0}" DataTextField="ModificarMostrar"/>
+                <asp:HyperLinkField HeaderText="Versionado" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="MantenimientoAtributosVersionado.aspx?id={0}" DataTextField="VersionadoMostrar"/>
             </Columns>
         </asp:GridView>
     </div>
     <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Large" ForeColor="Red"
                     Text="Datos"></asp:Label>
     </ContentTemplate>
-
+    
     </asp:UpdatePanel>
     </form>
     </body>
