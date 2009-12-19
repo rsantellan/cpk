@@ -23,8 +23,43 @@ public class ABMCAtributo
         //this._atributo = atributo;
     }
 
+    public static int getIdentifierOfAtributeById(int id)
+    {
+        int identifier = 0;
+        SqlCommand commandSql = new SqlCommand();
+        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        try
+        {
+            commandSql.Connection = sqlConn;
+            commandSql = sqlConn.CreateCommand();
+
+            commandSql.CommandText = "SELECT Identificador FROM AtributoInformacionGeneral WHERE id = @ID ";
+            SqlParameter p_id = commandSql.Parameters.Add("ID", SqlDbType.Int);
+            p_id.Value = id;
+            sqlConn.Open();
+            System.Data.SqlClient.SqlDataReader DbReader = commandSql.ExecuteReader();
+
+            while (DbReader.Read())
+            {
+                identifier = Convert.ToInt16((DbReader["identificador"].ToString()));
+            }
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+
+        return identifier;
+    }
+
     public int getLastIdentifier()
     {
+        
         int max = 0;
         SqlCommand commandSql = new SqlCommand();
         SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
@@ -192,7 +227,23 @@ public class ABMCAtributo
         }
         return salida;
     }
-    public DataSet buscarAtributos(String nombre, Boolean estado, String autor, String responsables, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaVigenciaDesde, DateTime fechaVigenciaHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
+
+    /// <summary>
+    /// Busca atributo para las consultas de filtros.
+    /// </summary>
+    /// <param name="nombre"></param>
+    /// <param name="estado"></param>
+    /// <param name="autor"></param>
+    /// <param name="responsables"></param>
+    /// <param name="version"></param>
+    /// <param name="fechaInicioDesde"></param>
+    /// <param name="FechaInicioHasta"></param>
+    /// <param name="fechaVigenciaDesde"></param>
+    /// <param name="fechaVigenciaHasta"></param>
+    /// <param name="fechaCreacionDesde"></param>
+    /// <param name="fechaCreacionHasta"></param>
+    /// <returns></returns>
+    public DataSet buscarAtributos(String nombre, int estado, String autor, String responsables, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaVigenciaDesde, DateTime fechaVigenciaHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
     {
 
 
@@ -220,7 +271,178 @@ public class ABMCAtributo
         if (fechaInicioDesde != DateTime.MinValue && FechaInicioHasta != DateTime.MinValue) buscarInicio = true;
         if (fechaVigenciaDesde != DateTime.MinValue && fechaVigenciaHasta != DateTime.MinValue) buscarVigencia = true;
         if (fechaCreacionDesde != DateTime.MinValue && fechaCreacionHasta != DateTime.MinValue) buscarCreacion = true;
-        String consulta = consultaBasica + " WHERE Autor = @AUTOR";
+        String consulta = consultaBasica + " WHERE ";
+        System.Collections.ArrayList listaConsulta = new System.Collections.ArrayList();
+        String datosConsulta = "";
+        if (!autor.Equals("-"))
+        {
+            datosConsulta= "Autor = @AUTOR";
+            listaConsulta.Add(datosConsulta);
+        };
+        switch (estado)
+        {
+            case 0:
+                datosConsulta = "FechaVigenciaHasta < @HOY";
+                listaConsulta.Add(datosConsulta);
+                break;
+            case 1:
+                datosConsulta =  "FechaVigenciaHasta >= @HOY";
+                listaConsulta.Add(datosConsulta);
+                break;
+            default:
+                break;
+        }
+        if (buscarNombre)
+        {
+            datosConsulta = "Nombre LIKE @Nombre ";
+            listaConsulta.Add(datosConsulta);
+        }
+        if (buscarVersion)
+        {
+            datosConsulta = "Version = @VERSION ";
+            listaConsulta.Add(datosConsulta);
+        }
+        if (buscarInicio)
+        {
+            datosConsulta = "FechaVigenciaDesde BETWEEN @FechaInicioDesde AND @FechaInicioHasta";
+            listaConsulta.Add(datosConsulta);
+        }
+        if (buscarCreacion)
+        {
+            datosConsulta = "FechaCreacion BETWEEN @FechaCreacionDesde AND @FechaCreacionHasta";
+            listaConsulta.Add(datosConsulta);
+        }
+        int comienzo = 0;
+        foreach (String item in listaConsulta)
+        {
+            if(comienzo != 0){
+                consulta = consulta + " AND ";
+            }
+            consulta = consulta + item;
+            comienzo++;
+        }
+        if (comienzo != 0)
+        {
+            consulta = consulta + " AND ";
+        }
+        consulta += " Id IN (SELECT max(Id)"
+                    + " FROM "
+                    + "AtributoInformacionGeneral "
+                    + "GROUP BY "
+                    + "Identificador) AND FechaCreacion IS NOT NULL";
+        consulta += " ORDER BY Identificador";
+        SqlCommand commandSql = new SqlCommand();
+        commandSql.CommandText = consulta;
+
+        if (!autor.Equals("-"))
+        {
+            SqlParameter p_autor = commandSql.Parameters.Add("AUTOR", System.Data.SqlDbType.NChar);
+            p_autor.Value = autor;
+        }
+        switch (estado)
+        {
+            case -1:
+                break;
+            default:
+                SqlParameter p_fechaAhora = commandSql.Parameters.Add("HOY", System.Data.SqlDbType.DateTime);
+                p_fechaAhora.Value = DateTime.Now;
+                break;
+        }
+
+        if (buscarVersion)
+        {
+            SqlParameter p_version = commandSql.Parameters.Add("VERSION", System.Data.SqlDbType.NChar);
+            p_version.Value = version;
+        }
+
+        if (buscarNombre)
+        {
+            SqlParameter p_nombre = commandSql.Parameters.Add("Nombre", System.Data.SqlDbType.NChar);
+             p_nombre.Value = nombre + "%";
+        }
+
+        if (buscarCreacion)
+        {
+            SqlParameter p_fechaCreacionDesde = commandSql.Parameters.Add("FechaCreacionDesde", System.Data.SqlDbType.DateTime);
+            p_fechaCreacionDesde.Value = fechaCreacionDesde;
+
+            SqlParameter p_fechaCreacionHasta = commandSql.Parameters.Add("FechaCreacionHasta", System.Data.SqlDbType.DateTime);
+            p_fechaCreacionHasta.Value = fechaCreacionHasta;
+        }
+        if (buscarInicio)
+        {
+            SqlParameter p_fechaInicioDesde = commandSql.Parameters.Add("FechaInicioDesde", System.Data.SqlDbType.DateTime);
+            p_fechaInicioDesde.Value = fechaInicioDesde;
+
+            SqlParameter p_fechaInicioHasta = commandSql.Parameters.Add("FechaInicioHasta", System.Data.SqlDbType.DateTime);
+            p_fechaInicioHasta.Value = FechaInicioHasta;
+        }
+        
+        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        commandSql.Connection = sqlConn;
+        DataSet ds = new DataSet();
+        try
+        {
+            sqlConn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(commandSql);
+            da.Fill(ds, "Atributos");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+        return ds;
+    }
+
+    /// <summary>
+    /// Busca las versiones de un atributo 
+    /// </summary>
+    /// <param name="identificador"></param>
+    /// <param name="nombre"></param>
+    /// <param name="estado"></param>
+    /// <param name="autor"></param>
+    /// <param name="responsables"></param>
+    /// <param name="version"></param>
+    /// <param name="fechaInicioDesde"></param>
+    /// <param name="FechaInicioHasta"></param>
+    /// <param name="fechaVigenciaDesde"></param>
+    /// <param name="fechaVigenciaHasta"></param>
+    /// <param name="fechaCreacionDesde"></param>
+    /// <param name="fechaCreacionHasta"></param>
+    /// <returns></returns>
+    public DataSet buscarAtributosVersionado(int identificador, String nombre, Boolean estado, String autor, String responsables, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaVigenciaDesde, DateTime fechaVigenciaHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
+    {
+
+
+        String consultaBasica = " SELECT " +
+            " Id," +
+            "Identificador," +
+            "Autor," +
+            "Version," +
+            "FechaCreacion," +
+            "FechaVigenciaDesde," +
+            "FechaVigenciaHasta," +
+            "Nombre," +
+            "Descripcion," +
+            "EsModificable" +
+            " FROM " +
+            "AtributoInformacionGeneral";
+
+        bool buscarNombre = false;
+        bool buscarVersion = false;
+        bool buscarInicio = false;
+        bool buscarVigencia = false;
+        bool buscarCreacion = false;
+        if (!string.IsNullOrEmpty(nombre)) buscarNombre = true;
+        if (!version.Equals(0)) buscarVersion = true;
+        if (fechaInicioDesde != DateTime.MinValue && FechaInicioHasta != DateTime.MinValue) buscarInicio = true;
+        if (fechaVigenciaDesde != DateTime.MinValue && fechaVigenciaHasta != DateTime.MinValue) buscarVigencia = true;
+        if (fechaCreacionDesde != DateTime.MinValue && fechaCreacionHasta != DateTime.MinValue) buscarCreacion = true;
+        String consulta = consultaBasica + " WHERE Autor = @AUTOR AND Identificador = @IDENTIFICADOR";
         if (estado)
         {
             consulta = consulta + " AND FechaVigenciaHasta >= @HOY";
@@ -239,7 +461,7 @@ public class ABMCAtributo
         }
         if (buscarInicio)
         {
-            //consulta += " AND FechaVigenciaDesde BETWEEN @FechaInicioDesde AND @FechaInicioHasta";
+            consulta += " AND FechaVigenciaDesde BETWEEN @FechaInicioDesde AND @FechaInicioHasta";
         }
         if (buscarCreacion)
         {
@@ -247,7 +469,11 @@ public class ABMCAtributo
         }
         SqlCommand commandSql = new SqlCommand();
         commandSql.CommandText = consulta;
-        
+
+        SqlParameter p_identificador = commandSql.Parameters.Add("IDENTIFICADOR", System.Data.SqlDbType.Int);
+        p_identificador.Value = identificador;
+
+
         SqlParameter p_autor = commandSql.Parameters.Add("AUTOR", System.Data.SqlDbType.NChar);
         p_autor.Value = autor;
 
@@ -274,6 +500,15 @@ public class ABMCAtributo
             SqlParameter p_fechaCreacionHasta = commandSql.Parameters.Add("FechaCreacionHasta", System.Data.SqlDbType.DateTime);
             p_fechaCreacionHasta.Value = fechaCreacionHasta;
         }
+        if (buscarInicio)
+        {
+            SqlParameter p_fechaInicioDesde = commandSql.Parameters.Add("FechaInicioDesde", System.Data.SqlDbType.DateTime);
+            p_fechaInicioDesde.Value = fechaInicioDesde;
+
+            SqlParameter p_fechaInicioHasta = commandSql.Parameters.Add("FechaInicioHasta", System.Data.SqlDbType.DateTime);
+            p_fechaInicioHasta.Value = FechaInicioHasta;
+        }
+
         SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
         commandSql.Connection = sqlConn;
         DataSet ds = new DataSet();
@@ -291,8 +526,9 @@ public class ABMCAtributo
         {
             sqlConn.Close();
         }
-        
-        
+
+
         return ds;
     }
+
 }

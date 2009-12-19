@@ -13,21 +13,28 @@ using System.Xml.Linq;
 
 public partial class MantenimientoAtributos : System.Web.UI.Page
 {
+    private int _id = 0;
+    private int _identifier = 0;
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        //this.GridViewDatos.Visible = false;
+        String id = Request.QueryString["id"];
+        this._id = Convert.ToInt16(id);
+        this._identifier = ABMCAtributo.getIdentifierOfAtributeById(this._id);
+        if (!IsPostBack)
+        {
+            this.cargarDatos();
+        }
     }
     protected void ButtonBusqueda_Click(object sender, EventArgs e)
     {
-        this.Label1.Text = "Funciono ajax :)";
+        
         this.cargarDatos();
     }
 
     private void cargarDatos()
     {
         ABMCAtributo abmc = new ABMCAtributo();
-        this.Label2.Text = this.DropDownListAutores.SelectedValue.ToString();
-        this.LabelError.Text = this.DropDownListAutores.SelectedValue.ToString();
         DateTime creacionDesde = new DateTime();
         if (string.IsNullOrEmpty(this.TextBoxCreacionDesde.Text))
         {
@@ -95,12 +102,70 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
             }
             
         }
-        DataSet datos = abmc.buscarAtributos(this.TextBoxNombre.Text, Convert.ToBoolean(this.DropDownListEstado.SelectedValue), this.DropDownListAutores.SelectedValue.ToString(), " ", version, vigenciaDesde, vigenciaHasta, vigenciaFinDesde, vigenciaFinHasta, creacionDesde, creacionHasta);
-        //foreach (DataRow row in datos.Tables[0].rows)
-        //{
-            
-        //}
-        this.GridViewDatos.DataSource = datos;
+        Boolean estado = Convert.ToBoolean(this.DropDownListEstado.SelectedValue);
+        DataSet datos = abmc.buscarAtributosVersionado(this._identifier, this.TextBoxNombre.Text, Convert.ToBoolean(this.DropDownListEstado.SelectedValue), this.DropDownListAutores.SelectedValue.ToString(), " ", version, vigenciaDesde, vigenciaHasta, vigenciaFinDesde, vigenciaFinHasta, creacionDesde, creacionHasta);
+
+        DataSet show = new DataSet();
+
+        DataTable dt = new DataTable();
+        show.Tables.Add(dt);
+        DataColumn dc = new DataColumn("ID");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("ModificarMostrar");
+        dc.ColumnMapping = MappingType.Hidden;
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Nombre");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Pilar");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Fecha de creacion");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Fecha vigencia desde");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Fecha vigencia hasta");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Ultima Version");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Area responsable");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Estado");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Autor");
+        dt.Columns.Add(dc);
+
+        DataRow dr;
+
+        foreach (DataRow row in datos.Tables[0].Rows)
+        {
+            ArrayList misDatos = new ArrayList();
+            misDatos.Add(row[0].ToString());
+            misDatos.Add(" Modificar ");
+            misDatos.Add(row[7].ToString());
+            misDatos.Add("Pilar");
+            DateTime dateTimes;
+            dateTimes = DateTime.Parse(row[4].ToString());
+            misDatos.Add(dateTimes.ToShortDateString());
+            dateTimes = DateTime.Parse(row[5].ToString());
+            misDatos.Add(dateTimes.ToShortDateString());
+            dateTimes = DateTime.Parse(row[6].ToString());
+            misDatos.Add(dateTimes.ToShortDateString());
+            misDatos.Add(row[3].ToString());
+            misDatos.Add("Responsables");
+            if (estado)
+            {
+                misDatos.Add("Activo");
+            }
+            else
+            {
+                misDatos.Add("No Activo");
+            }
+            misDatos.Add(row[2].ToString());
+            dr = dt.NewRow();
+            dr.ItemArray = misDatos.ToArray();
+            dt.Rows.Add(dr);
+        }
+
+        this.GridViewDatos.DataSource = show;
         this.GridViewDatos.DataBind();
         this.GridViewDatos.Visible = true;
     }
@@ -108,14 +173,8 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
 
     protected void GridViewDatos_SelectedIndexChanged(object sender, EventArgs e)
     {
-        //GridViewRow dr = new GridViewRow(GridViewDatos.SelectedRow);
-        
-        //dr.BackColor = System.Drawing.Color.FromName("#FAF7DA");
-        GridView grid = (GridView)sender;//-		sender	{System.Web.UI.WebControls.GridView}	object {System.Web.UI.WebControls.GridView}
-        this.Label2.Text = grid.SelectedRow.Cells[1].Text;
+        GridView grid = (GridView)sender;
         String place = "Atributos.aspx?id=" + grid.SelectedRow.Cells[1].Text + "&identificador=" + grid.SelectedRow.Cells[2].Text;
         Response.Redirect(place);
-        //Server.Transfer(place);
-        //Console.WriteLine(e);
     }
 }

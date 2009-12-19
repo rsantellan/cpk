@@ -19,15 +19,12 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
     }
     protected void ButtonBusqueda_Click(object sender, EventArgs e)
     {
-        this.Label1.Text = "Funciono ajax :)";
         this.cargarDatos();
     }
 
     private void cargarDatos()
     {
         ABMCAtributo abmc = new ABMCAtributo();
-        this.Label2.Text = this.DropDownListAutores.SelectedValue.ToString();
-        this.LabelError.Text = this.DropDownListAutores.SelectedValue.ToString();
         DateTime creacionDesde = new DateTime();
         if (string.IsNullOrEmpty(this.TextBoxCreacionDesde.Text))
         {
@@ -91,11 +88,19 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
             }
             catch (Exception e)
             {
-               
+                Console.WriteLine(e.Message);
             }
             
         }
-        Boolean estado = Convert.ToBoolean(this.DropDownListEstado.SelectedValue);
+        int estado;
+        if (String.IsNullOrEmpty(this.DropDownListEstado.SelectedValue))
+        {
+            estado = -1;
+        }
+        else
+        {
+            estado = Convert.ToInt16(this.DropDownListEstado.SelectedValue);
+        }
         DataSet datos = abmc.buscarAtributos(this.TextBoxNombre.Text, estado, this.DropDownListAutores.SelectedValue.ToString(), " ", version, vigenciaDesde, vigenciaHasta, vigenciaFinDesde, vigenciaFinHasta, creacionDesde, creacionHasta);
         DataSet show = new DataSet();
 
@@ -112,15 +117,15 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
         dt.Columns.Add(dc);
         dc = new DataColumn("Pilar");
         dt.Columns.Add(dc);
-        dc = new DataColumn("Fecha de creacion");
+        dc = new DataColumn("fecha_de_creacion");
         dt.Columns.Add(dc);
-        dc = new DataColumn("Fecha vigencia desde");
+        dc = new DataColumn("fecha_vigencia_desde");
         dt.Columns.Add(dc);
-        dc = new DataColumn("Fecha vigencia hasta");
+        dc = new DataColumn("fecha_vigencia_hasta");
         dt.Columns.Add(dc);
-        dc = new DataColumn("Ultima Version");
+        dc = new DataColumn("Version");
         dt.Columns.Add(dc);
-        dc = new DataColumn("Area responsable");
+        dc = new DataColumn("Area");
         dt.Columns.Add(dc);
         dc = new DataColumn("Estado");
         dt.Columns.Add(dc);
@@ -132,7 +137,7 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
         foreach (DataRow row in datos.Tables[0].Rows)
         {
             ArrayList misDatos = new ArrayList();
-            misDatos.Add("10");
+            misDatos.Add(row[0].ToString());
             misDatos.Add(" Modificar ");
             misDatos.Add(" Versionado ");
             misDatos.Add(row[7].ToString());
@@ -146,13 +151,13 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
             misDatos.Add(dateTimes.ToShortDateString());
             misDatos.Add(row[3].ToString());
             misDatos.Add("Responsables");
-            if (estado)
+            if (DateTime.Now > dateTimes)
             {
-                misDatos.Add("Activo");
+                misDatos.Add("No Activo");
             }
             else
             {
-                misDatos.Add("No Activo");
+                misDatos.Add("Activo");
             }
             misDatos.Add(row[2].ToString());
             dr = dt.NewRow();
@@ -174,10 +179,14 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
         
         //dr.BackColor = System.Drawing.Color.FromName("#FAF7DA");
         GridView grid = (GridView)sender;//-		sender	{System.Web.UI.WebControls.GridView}	object {System.Web.UI.WebControls.GridView}
-        this.Label2.Text = grid.SelectedRow.Cells[1].Text;
         String place = "Atributos.aspx?id=" + grid.SelectedRow.Cells[1].Text + "&identificador=" + grid.SelectedRow.Cells[2].Text;
         Response.Redirect(place);
         //Server.Transfer(place);
         //Console.WriteLine(e);
+    }
+    protected void gridViewDatos_paging(object sender, GridViewPageEventArgs e)
+    {
+        GridViewDatos.PageIndex = e.NewPageIndex;
+        this.cargarDatos();
     }
 }

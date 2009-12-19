@@ -25,7 +25,6 @@ public partial class Atributos : System.Web.UI.Page
         }
         else
         {
-
             //String identificador = Request.QueryString["identificador"];
             LabelVersion.Text = "0";
             LabelIdentificador.Text = Convert.ToString(this.getNewId());
@@ -67,8 +66,20 @@ public partial class Atributos : System.Web.UI.Page
 
     private int getNewId()
     {
-        ABMCAtributo abmc = new ABMCAtributo();
-        return abmc.getLastIdentifier();
+        String lastId = Convert.ToString(Session["LastIdentifier"]);
+        int salida;
+        if (String.IsNullOrEmpty(lastId))
+        {
+            ABMCAtributo abmc = new ABMCAtributo();
+            salida = abmc.getLastIdentifier();
+        }
+        else
+        {
+            salida = Convert.ToInt16(lastId);
+            salida = salida + 1;
+        }
+        Session["LastIdentifier"] = salida;
+        return salida;
     }
 
     protected void Button1_Click(object sender, EventArgs e)
