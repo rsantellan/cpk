@@ -30,6 +30,24 @@
         	padding-right:50px;
         	
         }
+        .navegacion
+        {
+            margin-left: auto;
+            margin-right: auto;
+            width: 30%;
+            background-color: #00FFCC;
+            text-align: center;
+        }
+        .linkNavegacion
+        {
+        	font-size:1.2em;
+        }
+        .results
+        {
+        	margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
     </style>
     <script runat="server">
 
@@ -51,6 +69,10 @@
 
 </head>
 <body>
+    <div class="navegacion">
+        <a href="Atributos.aspx" class="linkNavegacion">Crear atributo</a> 
+        <a href="MantenimientoAtributos.aspx" class="linkNavegacion">Mantenimiento de atributos</a>
+    </div>
     <form id="form1" runat="server">
     <asp:ScriptManager ID="ScriptManagerAjax" runat="server" >
     </asp:ScriptManager>
@@ -100,8 +122,9 @@
              </td>
              <td class="style1">
                 <asp:DropDownList ID="DropDownListEstado" runat="server">
-                    <asp:ListItem Value="True">Vigente</asp:ListItem>
-                    <asp:ListItem Value="False">No vigente</asp:ListItem>
+                    <asp:ListItem></asp:ListItem>
+                    <asp:ListItem Value="1">Vigente</asp:ListItem>
+                    <asp:ListItem Value="0">No vigente</asp:ListItem>
                 </asp:DropDownList>
             </td>
             <td class="style1">
@@ -221,12 +244,32 @@
              CssClass="buttonSearch" onclick="ButtonBusqueda_Click" />
     </div>
     <div class="consulta">
-        <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
-        <asp:GridView ID="GridViewDatos" runat="server" >
-            <%--<Columns><asp:CommandField ShowSelectButton="True" SelectText="Pick" /></Columns>--%>
+        <asp:GridView ID="GridViewDatos" runat="server" AutoGenerateColumns="False" 
+            EnableSortingAndPagingCallbacks="True"
+            AllowPaging ="true"
+            PageSize = "10" 
+            onpageindexchanging="gridViewDatos_paging" 
+            CssClass="results" >
             <Columns>
                 <asp:HyperLinkField HeaderText="Modificar" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="Atributos.aspx?id={0}" DataTextField="ModificarMostrar"/>
                 <asp:HyperLinkField HeaderText="Versionado" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="MantenimientoAtributosVersionado.aspx?id={0}" DataTextField="VersionadoMostrar"/>
+                <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" 
+                    Visible="False" />
+                <asp:BoundField DataField="ModificarMostrar" HeaderText="ModificarMostrar" 
+                    Visible="False" />
+                <asp:BoundField DataField="VersionadoMostrar" HeaderText="VersionadoMostrar" 
+                    Visible="False" />
+                <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                <asp:BoundField DataField="Pilar" HeaderText="Pilar" />
+                <asp:BoundField DataField="fecha_de_creacion" HeaderText="Fecha de creacion" />
+                <asp:BoundField DataField="fecha_vigencia_desde" 
+                    HeaderText="Fecha vigencia desde" />
+                <asp:BoundField DataField="fecha_vigencia_hasta" 
+                    HeaderText="Fecha vigencia hasta" />
+                <asp:BoundField DataField="Version" HeaderText="Ultima Version" />
+                <asp:BoundField DataField="Area" HeaderText="Area responsable" />
+                <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                <asp:BoundField DataField="Autor" HeaderText="Autor" />
             </Columns>
         </asp:GridView>
     </div>

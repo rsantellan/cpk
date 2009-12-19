@@ -2,15 +2,42 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
+<%@ Register Assembly="System.Web.Silverlight" Namespace="System.Web.UI.SilverlightControls" TagPrefix="asp"  %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Página sin título</title>
+    <title>Crear atributo</title>
+    <style type="text/css">
+        .navegacion
+        {
+            margin-left: auto;
+            margin-right: auto;
+            width: 30%;
+            background-color: #00FFCC;
+            text-align: center;
+        }
+        .linkNavegacion
+        {
+        	font-size:1.2em;
+        }
+        .center
+        {
+        	margin: auto;
+        	width: 640px;
+        	height: 480px;
+        }
+    </style>
 </head>
 <body>
+    <div class="navegacion">
+        <a href="Atributos.aspx" class="linkNavegacion">Crear atributo</a> 
+        <a href="MantenimientoAtributos.aspx" class="linkNavegacion">Mantenimiento de atributos</a>
+    </div>
+    
     <form id="form1" runat="server">
-    <div id ="InformacionBasica">
+    <div id ="InformacionBasica" class="center">
     <table>
     <tr>
         <td>Identificador: </td>
@@ -86,21 +113,22 @@
 </table>
     </div>
     <div id="dinamico1">
-        <h1>Dinamico 1</h1>
-        
+        <div  style="height:auto"; margin: 0">
+            <div style="margin: auto; width: 640px; height: 480px"> 
+            <asp:Silverlight ID="Xaml1" runat="server" Source="~/ClientBin/SilverlightApplication2.xap" MinimumVersion="2.0.31005.0" Width="100%" Height="100%" />
+        </div>
+    </div>    
     </div>
     <div id="dinamico2">
         <h1>Dinamico 2</h1>
     </div>
-    <div id="navegacion">
+    <div id="navegacion" class="center">
         <asp:Button ID="ButtonCancelar" runat="server" Text="Cancelar" />
         <input id="ButtonAtras" type="button" value="<<Atras<<" onclick="goBack()" />
         <input id="ButtonAdelante" type="button" value=">>Adelante>>" onclick="goForward()" />
+        <asp:Button ID="ButtonSalvar" runat="server" onclick="Button1_Click" Text="Salvar" />
     </div>
-    <div id="divSalvar">
-            <asp:Button ID="ButtonSalvar" runat="server" onclick="Button1_Click" 
-            Text="Salvar" />
-    </div>
+
     
 <script type="text/javascript">
     var place = 0;
