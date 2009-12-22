@@ -1,0 +1,22 @@
+1	root	0	1
+2	1era	1	1
+3	1eraA	1	1
+4	1eraB	1	1
+5	1eraC	1	1
+6	2da	3	1
+7	2daA	3	1
+8	2daB	4	1
+9	2daC	15	2
+10	2daD	16	2
+11	2daE	15	2
+12	fgfg	16	2
+13	Test	16	2
+14	root	0	2
+15	1er	1	2
+16	1erb	1	2
+17	dfdfff	2	1
+18	nuevonuevo	2	1
+NULL	NULL	NULL	NULL
+
+
+INSERT INTO [formFlows].[dbo].[TreeNodos]([NomTree],[IDParent],[IDAttr]) VALUES(<NomTree, varchar(50),>,<IDParent, numeric,>,<IDAttr, numeric,>)

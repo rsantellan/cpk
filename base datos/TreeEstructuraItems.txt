@@ -1,0 +1,29 @@
+5	False	True	True	Grilla	Servicio	Valores Valores Valores	c:\chocle	Carga Todo	NULL	NULL	NULL
+8	True	True	False	Lista	NULL	NULL	NULL	NULL	Fecha-Hora	8	80
+
+INSERT INTO [formFlows].[dbo].[TreeEstructuraItems]
+           ([IDTreeEstructuraItem]
+           ,[EsRequerido]
+           ,[SoloLectura]
+           ,[MultiSeleccion]
+           ,[SubTipo]
+           ,[OrigenDeDatos]
+           ,[Valores]
+           ,[Ruta]
+           ,[Metodo]
+           ,[Tipo]
+           ,[Largo]
+           ,[Decimales])
+     VALUES
+           (<IDTreeEstructuraItem, numeric,>
+           ,<EsRequerido, bit,>
+           ,<SoloLectura, bit,>
+           ,<MultiSeleccion, bit,>
+           ,<SubTipo, varchar(50),>
+           ,<OrigenDeDatos, varchar(50),>
+           ,<Valores, varchar(50),>
+           ,<Ruta, varchar(50),>
+           ,<Metodo, varchar(50),>
+           ,<Tipo, varchar(50),>
+           ,<Largo, numeric,>
+           ,<Decimales, numeric,>)
