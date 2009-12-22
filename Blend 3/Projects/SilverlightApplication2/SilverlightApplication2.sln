@@ -18,7 +18,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SilverlightApplication2Site
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "1551"
+		VWDPort = "1062"
 		ProjOutputReferences = "{bf878e4a-67a6-47ac-a643-d0e0874bd42b}|ClientBin|false;"
 	EndProjectSection
 EndProject

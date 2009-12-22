@@ -2,6 +2,12 @@
   <Deployment.Parts>
     <AssemblyPart x:Name="SilverlightApplication2" Source="SilverlightApplication2.dll" />
     <AssemblyPart x:Name="Microsoft.Windows.Controls" Source="Microsoft.Windows.Controls.dll" />
+    <AssemblyPart x:Name="System.ComponentModel.DataAnnotations" Source="System.ComponentModel.DataAnnotations.dll" />
+    <AssemblyPart x:Name="System.Runtime.Serialization" Source="System.Runtime.Serialization.dll" />
+    <AssemblyPart x:Name="System.ServiceModel" Source="System.ServiceModel.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Data" Source="System.Windows.Controls.Data.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Data.Input" Source="System.Windows.Controls.Data.Input.dll" />
     <AssemblyPart x:Name="System.Windows.Controls" Source="System.Windows.Controls.dll" />
+    <AssemblyPart x:Name="System.Windows.Data" Source="System.Windows.Data.dll" />
   </Deployment.Parts>
 </Deployment>
