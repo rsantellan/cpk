@@ -1,0 +1,14 @@
+﻿body {
+}
+.navegacion
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 30%;
+	background-color: #00FFCC;
+	text-align: center;
+}
+.linkNavegacion
+{
+	font-size: 1.2em;
+}

@@ -9,34 +9,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Crear atributo</title>
-    <style type="text/css">
-        .navegacion
-        {
-            margin-left: auto;
-            margin-right: auto;
-            width: 30%;
-            background-color: #00FFCC;
-            text-align: center;
-        }
-        .linkNavegacion
-        {
-        	font-size:1.2em;
-        }
-        .center
-        {
-        	margin: auto;
-        	width: 640px;
-        	height: 480px;
-        }
-    </style>
+    <script src="js/prototype.js" type="text/javascript"></script>
+    <script src="js/observations.js" type="text/javascript"></script>
+    <script src="js/addAttribute.js" type="text/javascript"></script>
+    <link rel="Stylesheet" type="text/css" href="css/addAttribute.css" />
+    <link rel="Stylesheet" type="text/css" href="css/Navigation.css" />
+    <link rel="Stylesheet" type="text/css" href="css/Observations.css" />
 </head>
-<body>
+
+<body onunload="leave()">
+    
+    <form id="form1" runat="server">
     <div class="navegacion">
         <a href="Atributos.aspx" class="linkNavegacion">Crear atributo</a> 
         <a href="MantenimientoAtributos.aspx" class="linkNavegacion">Mantenimiento de atributos</a>
     </div>
     
-    <form id="form1" runat="server">
     <div id ="InformacionBasica" class="center">
     <table>
     <tr>
@@ -44,6 +32,7 @@
         <td style="width: 478px">
             <asp:Label ID="LabelIdentificador" runat="server" Font-Bold="True" Text="Label"></asp:Label>
             <asp:HiddenField ID="HiddenField1" runat="server" />
+            <asp:HiddenField ID="HiddenFieldId" runat="server" />
         </td>
     </tr>
     <tr>
@@ -122,68 +111,39 @@
     <div id="dinamico2">
         <h1>Dinamico 2</h1>
     </div>
-    <div id="navegacion" class="center">
-        <asp:Button ID="ButtonCancelar" runat="server" Text="Cancelar" />
+    <div id="navegacion" class="center cssNavegacion">
+        <asp:Button ID="ButtonCancelar" runat="server" Text="Cancelar" 
+            onclick="ButtonCancelar_Click" CausesValidation="False" />
         <input id="ButtonAtras" type="button" value="<<Atras<<" onclick="goBack()" />
         <input id="ButtonAdelante" type="button" value=">>Adelante>>" onclick="goForward()" />
         <asp:Button ID="ButtonSalvar" runat="server" onclick="Button1_Click" Text="Salvar" />
     </div>
+    <div id="comentarios" class="divComentario">
+    <label id="titulo">Comentarios</label>
+    <br />
+        <input id="agregarObservacion" type="button" value="agregar" onclick="showObservation()"/>
+        <div id="formularioIngreso" class ="formularioObservacion">
+        <label id="labTarea">Tarea</label>
+        <input id="inputTarea" />
+        <br />
+        <label id="labObservacion">Obsevacion</label>
+        <textarea id="TextAreaObservacion" rows="2" cols="30"></textarea>
+        <br />
+        <input id="confirmarAgregar" type="button" value="insertar" onclick="addObservation()"/>
+        </div>
+        <table id="observaciones" style="width: 100%;" runat="server">
+            <tr>
+                <th>Tarea</th>
+                <th>Observacion</th>
+                <th>Autor</th>
+                <th>Fecha</th>
+                <th></th>
+            </tr>
+        </table>
+    </div>
+    <asp:HiddenField ID="HiddenFieldClass" runat="server" />
+    <asp:HiddenField ID="HiddenFieldVersion" runat="server" />
 
-    
-<script type="text/javascript">
-    var place = 0;
-    function goForward(){
-        switch(place){
-            case 0:
-                place++;
-                hideStuff('InformacionBasica');
-                showStuff('dinamico1');
-                break;
-            case 1:
-                place++;
-                hideStuff('dinamico1');
-                showStuff('dinamico2');
-                showStuff('ButtonSalvar');
-                hideStuff('ButtonAdelante');
-                break;
-        }
-    }
-    function goBack(){
-        switch(place){
-            case 1:
-                showStuff('InformacionBasica');
-                break;
-            case 2:
-                place--;
-                hideStuff('dinamico2');
-                showStuff('dinamico1');
-                hideStuff('ButtonSalvar');
-                showStuff('ButtonAdelante');
-                break;
-        }
-    }
-    window.onload = loadEvents;
-    function loadEvents(){
-        hideStuff('ButtonSalvar');
-        hideStuff('dinamico1');
-        hideStuff('dinamico2');
-    }
-
-    function getId(){
-        return id;
-    }
-    
-    
-</script>
-
-<script type="text/javascript">
-	function showStuff(id) {
-		document.getElementById(id).style.display = 'block';
-	}
-	function hideStuff(id) {
-		document.getElementById(id).style.display = 'none';
-	}
-</script>
     </form>
-</body>
+    </body>
 </html>

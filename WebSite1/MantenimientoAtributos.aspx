@@ -7,60 +7,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Mantenimiento de atributos</title>
-    <style type="text/css">
-        .style1
-        {
-            height: 10px;
-        }
-        .style2
-        {
-            width: 172px;
-        }
-        .style3
-        {
-            height: 10px;
-            width: 172px;
-        }
-        .consulta
-        {
-        	border-style: solid;
-        }
-        .buttonSearch
-        {
-        	padding-right:50px;
-        	
-        }
-        .navegacion
-        {
-            margin-left: auto;
-            margin-right: auto;
-            width: 30%;
-            background-color: #00FFCC;
-            text-align: center;
-        }
-        .linkNavegacion
-        {
-        	font-size:1.2em;
-        }
-        .results
-        {
-        	margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-        }
-    </style>
+    <link rel="Stylesheet" type="text/css" href="css/Navigation.css" />
+    <link rel="Stylesheet" type="text/css" href="css/mantainAttribute.css" />
     <script runat="server">
 
   void CustomersGridView_RowDataBound(Object sender, GridViewRowEventArgs e)
   {
-
-    
-      
     if(e.Row.RowType == DataControlRowType.DataRow)
     {
-      // Display the company name in italics.
       e.Row.Cells[1].Text = "<i>" + e.Row.Cells[1].Text + "</i>";
-      //e.Row.Cells[2].Visible = false; 
     }
 
   }

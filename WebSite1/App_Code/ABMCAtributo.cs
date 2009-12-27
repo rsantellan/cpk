@@ -48,6 +48,8 @@ public class ABMCAtributo
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
+            Log.saveInLog("Exception Obtener identificador ABMCAtributo");
+            Log.saveInLog(e.Message);
         }
         finally
         {
@@ -81,6 +83,8 @@ public class ABMCAtributo
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
+            Log.saveInLog("Exception obtener ultimo identificador ABMCAtributo");
+            Log.saveInLog(e.Message);
         }
         finally
         {
@@ -89,6 +93,80 @@ public class ABMCAtributo
 
         max = max + 1;
         return max;
+    }
+
+    public Atributo obtenerAtributoPorIdentificadorYVersion(int pIdentificador, int pVersion)
+    {
+        String sql = "SELECT " +
+                        "Id," +
+                        "Identificador," +
+                        "Autor," +
+                        "Version," +
+                        "FechaCreacion," +
+                        "FechaVigenciaDesde," +
+                        "FechaVigenciaHasta," +
+                        "Nombre," +
+                        "Descripcion," +
+                        "EsModificable" +
+                        " FROM " +
+                        " AtributoInformacionGeneral " +
+                        " WHERE " +
+                        " Identificador = @IDENTIFICADOR "+
+                        " AND Version = @VERSION ";
+        SqlCommand commandSql = new SqlCommand();
+        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        commandSql.CommandText = sql;
+        commandSql.Connection = sqlConn;
+        SqlParameter p_id = commandSql.Parameters.Add("IDENTIFICADOR", SqlDbType.Int);
+        p_id.Value = pIdentificador;
+        SqlParameter p_version = commandSql.Parameters.Add("VERSION", SqlDbType.Int);
+        p_version.Value = pVersion;
+        DataSet ds = new DataSet();
+        try
+        {
+            sqlConn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(commandSql);
+            sqlConn.Close();
+            da.Fill(ds, "Atributo");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            Log.saveInLog("Exception obtener atributo por identificador y version ABMCAtributo");
+            Log.saveInLog(e.Message);
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+        Atributo salida = new Atributo();
+        if (ds.Tables[0].Rows.Count > 0)
+        {
+            DataRow row = ds.Tables[0].Rows[0];
+            salida.Id = Convert.ToInt16(row[0].ToString());
+            salida.Identificador = Convert.ToInt16(row[1].ToString());
+            salida.Autor = row[2].ToString();
+            salida.Version = Convert.ToInt16(row[3].ToString());
+            salida.FechaCreacion = DateTime.Parse(row[4].ToString());
+            salida.FechaVigenciaDesde = DateTime.Parse(row[5].ToString());
+            salida.FechaVigenciaHasta = DateTime.Parse(row[6].ToString());
+            salida.Nombre = row[7].ToString();
+            salida.Descripcion = row[8].ToString();
+            if (row[9].ToString().Equals("1"))
+            {
+                salida.EsModificable = true;
+            }
+            else
+            {
+                salida.EsModificable = false;
+            }
+            return salida;
+        }
+        else
+        {
+            return null;
+        }
+        
     }
 
     public Atributo obtenerAtributo(int id)
@@ -125,6 +203,8 @@ public class ABMCAtributo
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
+            Log.saveInLog("Exception obtenerAtributo ABMCAtributo");
+            Log.saveInLog(e.Message);
         }
         finally
         {
@@ -158,6 +238,74 @@ public class ABMCAtributo
             return null;
         }
         
+    }
+
+    public Boolean updateAtributo(Atributo guardar)
+    {
+        String sql = " UPDATE AtributoInformacionGeneral " +
+                    " SET " +
+                    " Identificador = @IDENTIFICADOR," +
+                    " Autor = @AUTOR," +
+                    " Version = @VERSION," +
+                    " FechaCreacion = @FECHACREACION," +
+                    " FechaVigenciaDesde = @FECHAVIGENCIADESDE," +
+                    " FechaVigenciaHasta = @FECHAVIGENCIAHASTA," +
+                    " Nombre = @NOMBRE," +
+                    " Descripcion = @DESCRIPCION," +
+                    " EsModificable = @ESMODIFICABLE " +
+                    " WHERE " +
+                    " Id = @ID;";
+        SqlCommand commandSql = new SqlCommand();
+        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        Boolean salida = false;
+        commandSql.CommandText = sql;
+        SqlParameter p_id = commandSql.Parameters.Add("ID", SqlDbType.Int);
+        p_id.Value = guardar.Id;
+        SqlParameter p_identificador = commandSql.Parameters.Add("IDENTIFICADOR", SqlDbType.Int);
+        p_identificador.Value = guardar.Identificador;
+        SqlParameter p_autor = commandSql.Parameters.Add("AUTOR", SqlDbType.NChar);
+        p_autor.Value = guardar.Autor;
+        SqlParameter p_version = commandSql.Parameters.Add("VERSION", SqlDbType.Int);
+        p_version.Value = guardar.Version;
+        SqlParameter p_fechaCreacion = commandSql.Parameters.Add("FECHACREACION", SqlDbType.DateTime);
+        p_fechaCreacion.Value = guardar.FechaCreacion;
+        SqlParameter p_fechaVigenciaDesde = commandSql.Parameters.Add("FECHAVIGENCIADESDE", SqlDbType.DateTime);
+        p_fechaVigenciaDesde.Value = guardar.FechaVigenciaDesde;
+        SqlParameter p_fechaVigenciaHasta = commandSql.Parameters.Add("FECHAVIGENCIAHASTA", SqlDbType.DateTime);
+        p_fechaVigenciaHasta.Value = guardar.FechaVigenciaHasta;
+        SqlParameter p_nombre = commandSql.Parameters.Add("NOMBRE", SqlDbType.NChar);
+        p_nombre.Value = guardar.Nombre;
+        SqlParameter p_descripcion = commandSql.Parameters.Add("DESCRIPCION", SqlDbType.NChar);
+        p_descripcion.Value = guardar.Nombre;
+        SqlParameter p_modificable = commandSql.Parameters.Add("ESMODIFICABLE", SqlDbType.Bit);
+        p_modificable.Value = guardar.EsModificable;
+        Log.saveInLog("--------------Update Atributos ---------------");
+        Log.saveInLog(DateTime.Now.ToShortTimeString());
+        Log.saveInLog(commandSql.CommandText);
+        foreach (SqlParameter item in commandSql.Parameters)
+        {
+
+            Log.saveInLog(item.ParameterName);
+            Log.saveInLog(item.Value.ToString());
+        }
+        commandSql.Connection = sqlConn;
+        try
+        {
+            sqlConn.Open();
+            commandSql.ExecuteNonQuery();
+            salida = true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            Log.saveInLog("Exception  updateAtributo ABMCAtributo");
+            Log.saveInLog(e.Message);
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+        return salida;
     }
 
     public Boolean guardarAtributo(Atributo guardar)
@@ -209,7 +357,15 @@ public class ABMCAtributo
         p_descripcion.Value = guardar.Nombre;
         SqlParameter p_modificable = commandSql.Parameters.Add("MODIFICABLE", SqlDbType.Bit);
         p_modificable.Value = guardar.EsModificable;
-        
+        Log.saveInLog("--------------Insert Atributos ---------------");
+        Log.saveInLog(DateTime.Now.ToShortTimeString());
+        Log.saveInLog(commandSql.CommandText);
+        foreach (SqlParameter item in commandSql.Parameters)
+        {
+
+            Log.saveInLog(item.ParameterName);
+            Log.saveInLog(item.Value.ToString());
+        }
         commandSql.Connection = sqlConn;
         try
         {
@@ -220,6 +376,8 @@ public class ABMCAtributo
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
+            Log.saveInLog("Exception guardarAtributo ABMCAtributo");
+            Log.saveInLog(e.Message);
         }
         finally
         {
@@ -274,7 +432,7 @@ public class ABMCAtributo
         String consulta = consultaBasica + " WHERE ";
         System.Collections.ArrayList listaConsulta = new System.Collections.ArrayList();
         String datosConsulta = "";
-        if (!autor.Equals("-"))
+        if (!autor.Equals("-") && !autor.Equals(" "))
         {
             datosConsulta= "Autor = @AUTOR";
             listaConsulta.Add(datosConsulta);
@@ -307,6 +465,12 @@ public class ABMCAtributo
             datosConsulta = "FechaVigenciaDesde BETWEEN @FechaInicioDesde AND @FechaInicioHasta";
             listaConsulta.Add(datosConsulta);
         }
+        if (buscarVigencia)
+        {
+            datosConsulta = "FechaVigenciaHasta BETWEEN @FECHAVIGENCIADESDE AND @FECHAVIGENCIAHASTA";
+            listaConsulta.Add(datosConsulta);
+        }
+        
         if (buscarCreacion)
         {
             datosConsulta = "FechaCreacion BETWEEN @FechaCreacionDesde AND @FechaCreacionHasta";
@@ -329,12 +493,12 @@ public class ABMCAtributo
                     + " FROM "
                     + "AtributoInformacionGeneral "
                     + "GROUP BY "
-                    + "Identificador) AND FechaCreacion IS NOT NULL";
+                    + "Identificador) AND FechaCreacion IS NOT NULL AND Autor <> ''";
         consulta += " ORDER BY Identificador";
         SqlCommand commandSql = new SqlCommand();
         commandSql.CommandText = consulta;
 
-        if (!autor.Equals("-"))
+        if (!autor.Equals("-") && !autor.Equals(" "))
         {
             SqlParameter p_autor = commandSql.Parameters.Add("AUTOR", System.Data.SqlDbType.NChar);
             p_autor.Value = autor;
@@ -376,11 +540,27 @@ public class ABMCAtributo
 
             SqlParameter p_fechaInicioHasta = commandSql.Parameters.Add("FechaInicioHasta", System.Data.SqlDbType.DateTime);
             p_fechaInicioHasta.Value = FechaInicioHasta;
+        }  
+        if (buscarVigencia)
+        {
+            SqlParameter p_fechaFinDesde = commandSql.Parameters.Add("FECHAVIGENCIADESDE", System.Data.SqlDbType.DateTime);
+            p_fechaFinDesde.Value = fechaVigenciaDesde;
+
+            SqlParameter p_fechaFinHasta = commandSql.Parameters.Add("FECHAVIGENCIAHASTA", System.Data.SqlDbType.DateTime);
+            p_fechaFinHasta.Value = fechaVigenciaHasta;
         }
-        
         SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
         commandSql.Connection = sqlConn;
         DataSet ds = new DataSet();
+        Log.saveInLog("--------------Modificacion Atributos ---------------");
+        Log.saveInLog(DateTime.Now.ToShortTimeString());
+        Log.saveInLog(commandSql.CommandText);
+        foreach (SqlParameter item in commandSql.Parameters)
+        {
+
+            Log.saveInLog(item.ParameterName);
+            Log.saveInLog(item.Value.ToString());
+        }
         try
         {
             sqlConn.Open();
@@ -389,6 +569,8 @@ public class ABMCAtributo
         }
         catch (Exception e)
         {
+            Log.saveInLog("Exception buscarAtributos ABMCAtributo");
+            Log.saveInLog(e.Message);
             Console.WriteLine(e.Message);
         }
         finally
@@ -414,7 +596,7 @@ public class ABMCAtributo
     /// <param name="fechaCreacionDesde"></param>
     /// <param name="fechaCreacionHasta"></param>
     /// <returns></returns>
-    public DataSet buscarAtributosVersionado(int identificador, String nombre, Boolean estado, String autor, String responsables, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaVigenciaDesde, DateTime fechaVigenciaHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
+    public DataSet buscarAtributosVersionado(int identificador, String nombre, int estado, String autor, String responsables, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaVigenciaDesde, DateTime fechaVigenciaHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
     {
 
 
@@ -442,26 +624,37 @@ public class ABMCAtributo
         if (fechaInicioDesde != DateTime.MinValue && FechaInicioHasta != DateTime.MinValue) buscarInicio = true;
         if (fechaVigenciaDesde != DateTime.MinValue && fechaVigenciaHasta != DateTime.MinValue) buscarVigencia = true;
         if (fechaCreacionDesde != DateTime.MinValue && fechaCreacionHasta != DateTime.MinValue) buscarCreacion = true;
-        String consulta = consultaBasica + " WHERE Autor = @AUTOR AND Identificador = @IDENTIFICADOR";
-        if (estado)
+        String consulta = consultaBasica + " WHERE Identificador = @IDENTIFICADOR";
+        if (!autor.Equals("-") && !autor.Equals(" ") && !autor.Equals(""))
         {
-            consulta = consulta + " AND FechaVigenciaHasta >= @HOY";
+            consulta = consulta + " AND Autor = @AUTOR";
         }
-        else
+        switch (estado)
         {
-            consulta = consulta + " AND FechaVigenciaHasta < @HOY";
+            case 0:
+                consulta = consulta + " AND FechaVigenciaHasta < @HOY";
+                break;
+            case 1:
+                consulta = consulta + " AND FechaVigenciaHasta >= @HOY";
+                break;
+            default:
+                break;
         }
         if (buscarNombre)
         {
-            //consulta += " AND Nombre LIKE '@Nombre%' ";
+            consulta += " AND Nombre LIKE @Nombre";
         }
         if (buscarVersion)
         {
-            consulta += " AND Version = @VERSION ";
+            consulta += " AND Version = @VERSION";
         }
         if (buscarInicio)
         {
             consulta += " AND FechaVigenciaDesde BETWEEN @FechaInicioDesde AND @FechaInicioHasta";
+        }
+        if (buscarVigencia)
+        {
+            consulta += " AND FechaVigenciaHasta BETWEEN @FECHAVIGENCIADESDE AND @FECHAVIGENCIAHASTA";
         }
         if (buscarCreacion)
         {
@@ -473,12 +666,23 @@ public class ABMCAtributo
         SqlParameter p_identificador = commandSql.Parameters.Add("IDENTIFICADOR", System.Data.SqlDbType.Int);
         p_identificador.Value = identificador;
 
+        if (!autor.Equals("-") && !autor.Equals(" ") && !autor.Equals(""))
+        {
+            SqlParameter p_autor = commandSql.Parameters.Add("AUTOR", System.Data.SqlDbType.NChar);
+            p_autor.Value = autor;
+        }
 
-        SqlParameter p_autor = commandSql.Parameters.Add("AUTOR", System.Data.SqlDbType.NChar);
-        p_autor.Value = autor;
+        switch (estado)
+        {
+            case -1:
+                break;
+            default:
+                SqlParameter p_fechaAhora = commandSql.Parameters.Add("HOY", System.Data.SqlDbType.DateTime);
+                p_fechaAhora.Value = DateTime.Now;
+                break;
+        }
 
-        SqlParameter p_fechaAhora = commandSql.Parameters.Add("HOY", System.Data.SqlDbType.DateTime);
-        p_fechaAhora.Value = DateTime.Now;
+        
 
         if (buscarVersion)
         {
@@ -489,7 +693,7 @@ public class ABMCAtributo
         if (buscarNombre)
         {
             SqlParameter p_nombre = commandSql.Parameters.Add("Nombre", System.Data.SqlDbType.NChar);
-            p_nombre.Value = nombre;
+            p_nombre.Value = nombre + "%";
         }
 
         if (buscarCreacion)
@@ -508,9 +712,25 @@ public class ABMCAtributo
             SqlParameter p_fechaInicioHasta = commandSql.Parameters.Add("FechaInicioHasta", System.Data.SqlDbType.DateTime);
             p_fechaInicioHasta.Value = FechaInicioHasta;
         }
+        if (buscarVigencia)
+        {
+            SqlParameter p_fechaVigenciaDesde = commandSql.Parameters.Add("FECHAVIGENCIADESDE", System.Data.SqlDbType.DateTime);
+            p_fechaVigenciaDesde.Value = fechaVigenciaDesde;
 
+            SqlParameter p_fechaVigenciaHasta = commandSql.Parameters.Add("FECHAVIGENCIAHASTA", System.Data.SqlDbType.DateTime);
+            p_fechaVigenciaHasta.Value = fechaVigenciaHasta;
+        }
         SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
         commandSql.Connection = sqlConn;
+        Log.saveInLog("--------------Versionado Atributos ---------------");
+        Log.saveInLog(DateTime.Now.ToShortTimeString());
+        Log.saveInLog(commandSql.CommandText);
+        foreach (SqlParameter item in commandSql.Parameters)
+        {
+
+            Log.saveInLog(item.ParameterName);
+            Log.saveInLog(item.Value.ToString());
+        }
         DataSet ds = new DataSet();
         try
         {
@@ -521,6 +741,8 @@ public class ABMCAtributo
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
+            Log.saveInLog("Exception buscarAtributosVersionado ABMCAtributo");
+            Log.saveInLog(e.Message);
         }
         finally
         {
@@ -531,4 +753,37 @@ public class ABMCAtributo
         return ds;
     }
 
+
+    public Boolean deleteAtribute(int pId)
+    {
+        String consulta = "DELETE FROM AtributoInformacionGeneral WHERE Id = @ID";
+        SqlCommand commandSql = new SqlCommand();
+        commandSql.CommandText = consulta;
+
+        SqlParameter p_id = commandSql.Parameters.Add("ID", System.Data.SqlDbType.Int);
+        p_id.Value = pId;
+        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        Boolean salida = false;
+        commandSql.Connection = sqlConn;
+        Log.saveInLog("--------------Eliminar Atributos ---------------");
+        Log.saveInLog(DateTime.Now.ToShortTimeString());
+        Log.saveInLog(commandSql.CommandText);
+        try
+        {
+            sqlConn.Open();
+            commandSql.ExecuteNonQuery();
+            salida = true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            Log.saveInLog("Exception eliminar ABMCAtributo");
+            Log.saveInLog(e.Message);
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+        return salida;
+    }
 }
