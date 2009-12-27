@@ -20,11 +20,16 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
     {
         String id = Request.QueryString["id"];
         this._id = Convert.ToInt16(id);
-        this._identifier = ABMCAtributo.getIdentifierOfAtributeById(this._id);
-        if (!IsPostBack)
+        if (this._id != 0)
         {
-            this.cargarDatos();
+            this._identifier = ABMCAtributo.getIdentifierOfAtributeById(this._id);
+            if (!IsPostBack)
+            {
+                this.cargarDatos();
+            }
+            
         }
+
     }
     protected void ButtonBusqueda_Click(object sender, EventArgs e)
     {
@@ -102,8 +107,16 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
             }
             
         }
-        Boolean estado = Convert.ToBoolean(this.DropDownListEstado.SelectedValue);
-        DataSet datos = abmc.buscarAtributosVersionado(this._identifier, this.TextBoxNombre.Text, Convert.ToBoolean(this.DropDownListEstado.SelectedValue), this.DropDownListAutores.SelectedValue.ToString(), " ", version, vigenciaDesde, vigenciaHasta, vigenciaFinDesde, vigenciaFinHasta, creacionDesde, creacionHasta);
+        int estado;
+        if (String.IsNullOrEmpty(this.DropDownListEstado.SelectedValue))
+        {
+            estado = -1;
+        }
+        else
+        {
+            estado = Convert.ToInt16(this.DropDownListEstado.SelectedValue);
+        }
+        DataSet datos = abmc.buscarAtributosVersionado(this._identifier, this.TextBoxNombre.Text, estado, this.DropDownListAutores.SelectedValue.ToString(), " ", version, vigenciaDesde, vigenciaHasta, vigenciaFinDesde, vigenciaFinHasta, creacionDesde, creacionHasta);
 
         DataSet show = new DataSet();
 
@@ -151,13 +164,13 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
             misDatos.Add(dateTimes.ToShortDateString());
             misDatos.Add(row[3].ToString());
             misDatos.Add("Responsables");
-            if (estado)
+            if (DateTime.Now > dateTimes)
             {
-                misDatos.Add("Activo");
+                misDatos.Add("No Activo");
             }
             else
             {
-                misDatos.Add("No Activo");
+                misDatos.Add("Activo");
             }
             misDatos.Add(row[2].ToString());
             dr = dt.NewRow();
@@ -176,5 +189,11 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
         GridView grid = (GridView)sender;
         String place = "Atributos.aspx?id=" + grid.SelectedRow.Cells[1].Text + "&identificador=" + grid.SelectedRow.Cells[2].Text;
         Response.Redirect(place);
+    }
+
+    protected void gridViewDatos_paging(object sender, GridViewPageEventArgs e)
+    {
+        GridViewDatos.PageIndex = e.NewPageIndex;
+        this.cargarDatos();
     }
 }

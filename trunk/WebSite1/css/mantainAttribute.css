@@ -1,0 +1,30 @@
+﻿body
+{
+}
+.style1
+{
+	height: 10px;
+}
+.style2
+{
+	width: 172px;
+}
+.style3
+{
+	height: 10px;
+	width: 172px;
+}
+.consulta
+{
+	border-style: solid;
+}
+.buttonSearch
+{
+	padding-right: 50px;
+}
+.results
+{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}

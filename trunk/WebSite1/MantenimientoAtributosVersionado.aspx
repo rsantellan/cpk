@@ -6,41 +6,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Mantenimiento de atributos</title>
-    <style type="text/css">
-        .style1
-        {
-            height: 10px;
-        }
-        .style2
-        {
-            width: 172px;
-        }
-        .style3
-        {
-            height: 10px;
-            width: 172px;
-        }
-        .consulta
-        {
-            border-style: solid;
-        }
-        .buttonSearch
-        {
-            padding-right: 50px;
-        }
-        .navegacion
-        {
-            margin-left: auto;
-            margin-right: auto;
-            width: 30%;
-            background-color: #00FFCC;
-            text-align: center;
-        }
-        .linkNavegacion
-        {
-        	font-size:1.2em;
-        }
-    </style>
+    <link rel="Stylesheet" type="text/css" href="css/Navigation.css" />
+    <link rel="Stylesheet" type="text/css" href="css/mantainAttributeVersion.css" />
 </head>
 <body>
     <div class="navegacion">
@@ -96,8 +63,9 @@
                         </td>
                         <td class="style1">
                             <asp:DropDownList ID="DropDownListEstado" runat="server">
-                                <asp:ListItem Value="True">Vigente</asp:ListItem>
-                                <asp:ListItem Value="False">No vigente</asp:ListItem>
+                                <asp:ListItem></asp:ListItem>
+                                <asp:ListItem Value="1">Vigente</asp:ListItem>
+                                <asp:ListItem Value="0">No vigente</asp:ListItem>       
                             </asp:DropDownList>
                         </td>
                         <td class="style1">
@@ -220,8 +188,11 @@
                     <asp:Button ID="ButtonBusqueda" runat="server" Text="Buscar" CssClass="buttonSearch"
                         OnClick="ButtonBusqueda_Click" />
                 </div>
-                <div class="consulta">
-                    <asp:GridView ID="GridViewDatos" runat="server">
+                <div>
+                    <asp:GridView ID="GridViewDatos" runat="server" AllowPaging="True" 
+                        EnableSortingAndPagingCallbacks="True"
+                        onpageindexchanging="gridViewDatos_paging" 
+                        CssClass="results">
                         <%--<Columns><asp:CommandField ShowSelectButton="True" SelectText="Pick" /></Columns>--%>
                         <Columns>
                             <asp:HyperLinkField HeaderText="Modificar" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="Atributos.aspx?id={0}"
