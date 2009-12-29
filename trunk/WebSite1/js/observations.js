@@ -78,6 +78,7 @@ function addObservation()
         var textNode4 = document.createTextNode("<a href='#' onclick='deleteObservation(" + id + ")'>Eliminar</a>");
         textNode4.id = 'textNode_'+id;
         cellRight4.appendChild(el);
+        $('txtRow' + id).addClassName('btn');
         document.getElementById('txtRow' + id).onclick=function(){
                deleteObservation(id);
          }

@@ -9,6 +9,7 @@
     <title>Mantenimiento de atributos</title>
     <link rel="Stylesheet" type="text/css" href="css/Navigation.css" />
     <link rel="Stylesheet" type="text/css" href="css/mantainAttribute.css" />
+    <link rel="Stylesheet" type="text/css" href="css/1.css" />
     <script runat="server">
 
   void CustomersGridView_RowDataBound(Object sender, GridViewRowEventArgs e)
@@ -24,10 +25,12 @@
 
 </head>
 <body>
-    <div class="navegacion">
-        <a href="Atributos.aspx" class="linkNavegacion">Crear atributo</a> 
-        <a href="MantenimientoAtributos.aspx" class="linkNavegacion">Mantenimiento de atributos</a>
-    </div>
+<ul id="nav">
+        <li><a href="Atributos.aspx" class="linkNavegacion">Crear atributo</a> </li>
+        <li><a href="MantenimientoAtributos.aspx" class="linkNavegacion">Mantenimiento de atributos</a></li>
+    </ul>
+    
+    <div id="container">    
     <form id="form1" runat="server">
     <asp:ScriptManager ID="ScriptManagerAjax" runat="server" >
     </asp:ScriptManager>
@@ -196,7 +199,7 @@
     <br />
     <br />
          <asp:Button ID="ButtonBusqueda" runat="server" Text="Buscar" 
-             CssClass="buttonSearch" onclick="ButtonBusqueda_Click" />
+             CssClass="buttonSearch btn" onclick="ButtonBusqueda_Click" />
     </div>
     <div class="consulta">
         <asp:GridView ID="GridViewDatos" runat="server" AutoGenerateColumns="False" 
@@ -228,11 +231,17 @@
             </Columns>
         </asp:GridView>
     </div>
-    <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Large" ForeColor="Red"
-                    Text="Datos"></asp:Label>
+    <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Large" ForeColor="Green"
+                    Text="No hay datos" Visible="False" CssClass="errorMessage"></asp:Label>
     </ContentTemplate>
     
     </asp:UpdatePanel>
     </form>
+        </div>
+    <div id="footer">
+<p class="validate">		</p>
+<p>
+        © Develop by Maith Software.</p>
+</div>
     </body>
 </html>

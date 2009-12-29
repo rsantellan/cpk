@@ -93,7 +93,7 @@ public partial class Atributos : System.Web.UI.Page
             cell.InnerText = item.Fecha.ToShortDateString(); 
             row.Controls.Add(cell);
             cell = new HtmlTableCell();
-            cell.InnerHtml = "<button id='tableButton_" + item.Id + "' onclick='deleteObservation(" + item.Id + ")'>Eliminar</button>"; 
+            cell.InnerHtml = "<button id='tableButton_" + item.Id + "' onclick='deleteObservation(" + item.Id + ")' class='btn'>Eliminar</button>"; 
             row.Controls.Add(cell);
             this.observaciones.Controls.Add(row);
             

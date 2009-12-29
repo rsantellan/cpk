@@ -14,17 +14,42 @@
 	height: 10px;
 	width: 172px;
 }
-.consulta
-{
-	border-style: solid;
-}
 .buttonSearch
 {
 	padding-right: 50px;
+	margin-left: 980px;
+}
+.errorMessage
+{
+	padding-right: 50px;
+	margin-left: 500px;
 }
 .results
 {
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
+}
+
+input.btn {
+  color:#050;
+  font: bold 84% 'trebuchet ms',helvetica,sans-serif;
+  background-color:#fed;
+  border: 1px solid;
+  border-color: #696 #363 #363 #696;
+  filter:progid:DXImageTransform.Microsoft.Gradient
+  (GradientType=0,StartColorStr='#ffffffff',EndColorStr='#ffeeddaa');
+}
+button.btn {
+  color:#050;
+  font: bold 84% 'trebuchet ms',helvetica,sans-serif;
+  background-color:#fed;
+  border: 1px solid;
+  border-color: #696 #363 #363 #696;
+  filter:progid:DXImageTransform.Microsoft.Gradient
+  (GradientType=0,StartColorStr='#ffffffff',EndColorStr='#ffeeddaa');
+}
+
+li{
+  margin-left: 250px;
 }

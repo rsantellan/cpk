@@ -8,12 +8,15 @@
     <title>Mantenimiento de atributos</title>
     <link rel="Stylesheet" type="text/css" href="css/Navigation.css" />
     <link rel="Stylesheet" type="text/css" href="css/mantainAttributeVersion.css" />
+    <link rel="Stylesheet" type="text/css" href="css/1.css" />
 </head>
 <body>
-    <div class="navegacion">
-        <a href="Atributos.aspx" class="linkNavegacion">Crear atributo</a> 
-        <a href="MantenimientoAtributos.aspx" class="linkNavegacion">Mantenimiento de atributos</a>
-    </div>
+<ul id="nav">
+        <li><a href="Atributos.aspx" class="linkNavegacion">Crear atributo</a> </li>
+        <li><a href="MantenimientoAtributos.aspx" class="linkNavegacion">Mantenimiento de atributos</a></li>
+    </ul>
+    
+    <div id="container"> 
     <form id="form1" runat="server">
     <asp:ScriptManager ID="ScriptManagerAjax" runat="server">
     </asp:ScriptManager>
@@ -185,7 +188,7 @@
                     </table>
                     <br />
                     <br />
-                    <asp:Button ID="ButtonBusqueda" runat="server" Text="Buscar" CssClass="buttonSearch"
+                    <asp:Button ID="ButtonBusqueda" runat="server" Text="Buscar" CssClass="buttonSearch btn"
                         OnClick="ButtonBusqueda_Click" />
                 </div>
                 <div>
@@ -203,5 +206,11 @@
         </ContentTemplate>
     </asp:UpdatePanel>
     </form>
+            </div>
+    <div id="footer">
+<p class="validate">		</p>
+<p>
+        © Develop by Maith Software.</p>
+</div>
 </body>
 </html>

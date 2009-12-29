@@ -15,7 +15,7 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        //this.GridViewDatos.Visible = false;
+        this.LabelError.Visible = false;
     }
     protected void ButtonBusqueda_Click(object sender, EventArgs e)
     {
@@ -133,7 +133,14 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
         dt.Columns.Add(dc);
 
         DataRow dr;
-
+        if (datos.Tables[0].Rows.Count == 0)
+        {
+            this.LabelError.Visible = true;
+        }
+        else
+        {
+            this.LabelError.Visible = false;
+        }
         foreach (DataRow row in datos.Tables[0].Rows)
         {
             ArrayList misDatos = new ArrayList();
