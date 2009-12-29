@@ -38,6 +38,9 @@
 		$('ButtonSalvar').onclick=function(){
 		    availableSave();
 		}
+		removeAllCssClasses('CalendarExtenderHasta');
+		removeAllCssClasses('TextBoxCalendarHasta');
+		
     }
     function availableSave(){
         save = true;
@@ -59,7 +62,6 @@
 	}
 	
 	function leave(){
-	    alert(save);
 	    if(save)return;
 	    var objectId = $F('HiddenFieldId');
 		$('HiddenFieldId').value = "0";
@@ -81,3 +83,10 @@
 	window.onbeforeunload = function(){
 	    leave();
 	}
+	
+	function removeAllCssClasses(el) {
+        var classArray = $(el).classNames().toArray();
+        for (var index = 0, len = classArray.size(); index <len; ++index) {
+            $(el).removeClassName(classArray[index]);
+        }
+    } 

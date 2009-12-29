@@ -10,5 +10,10 @@
 
 .formularioObservacion
 {
-	text-align: justify;
+	text-align: right;
+	margin-left:820px;
+}
+
+.inputTarea{
+	width: 200px;
 }

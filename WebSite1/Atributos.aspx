@@ -12,18 +12,20 @@
     <script src="js/prototype.js" type="text/javascript"></script>
     <script src="js/observations.js" type="text/javascript"></script>
     <script src="js/addAttribute.js" type="text/javascript"></script>
+    <link rel="Stylesheet" type="text/css" href="css/1.css" />
     <link rel="Stylesheet" type="text/css" href="css/addAttribute.css" />
     <link rel="Stylesheet" type="text/css" href="css/Navigation.css" />
     <link rel="Stylesheet" type="text/css" href="css/Observations.css" />
 </head>
 
 <body onunload="leave()">
+    <ul id="nav">
+        <li><a href="Atributos.aspx" class="linkNavegacion">Crear atributo</a> </li>
+        <li><a href="MantenimientoAtributos.aspx" class="linkNavegacion">Mantenimiento de atributos</a></li>
+    </ul>
     
+    <div id="container">    
     <form id="form1" runat="server">
-    <div class="navegacion">
-        <a href="Atributos.aspx" class="linkNavegacion">Crear atributo</a> 
-        <a href="MantenimientoAtributos.aspx" class="linkNavegacion">Mantenimiento de atributos</a>
-    </div>
     
     <div id ="InformacionBasica" class="center">
     <table>
@@ -113,15 +115,15 @@
     </div>
     <div id="navegacion" class="center cssNavegacion">
         <asp:Button ID="ButtonCancelar" runat="server" Text="Cancelar" 
-            onclick="ButtonCancelar_Click" CausesValidation="False" />
-        <input id="ButtonAtras" type="button" value="<<Atras<<" onclick="goBack()" />
-        <input id="ButtonAdelante" type="button" value=">>Adelante>>" onclick="goForward()" />
-        <asp:Button ID="ButtonSalvar" runat="server" onclick="Button1_Click" Text="Salvar" />
+            onclick="ButtonCancelar_Click" CausesValidation="False" class="btn"/>
+        <input id="ButtonAtras" type="button" value="<<Atras<<" onclick="goBack()" class="btn"/>
+        <input id="ButtonAdelante" type="button" value=">>Adelante>>" onclick="goForward()" class="btn"/>
+        <asp:Button ID="ButtonSalvar" runat="server" onclick="Button1_Click" Text="Salvar" class="btn"/>
     </div>
     <div id="comentarios" class="divComentario">
     <label id="titulo">Comentarios</label>
     <br />
-        <input id="agregarObservacion" type="button" value="agregar" onclick="showObservation()"/>
+        <input id="agregarObservacion" type="button" value="agregar" onclick="showObservation()" class="btn"/>
         <div id="formularioIngreso" class ="formularioObservacion">
         <label id="labTarea">Tarea</label>
         <input id="inputTarea" />
@@ -129,7 +131,7 @@
         <label id="labObservacion">Obsevacion</label>
         <textarea id="TextAreaObservacion" rows="2" cols="30"></textarea>
         <br />
-        <input id="confirmarAgregar" type="button" value="insertar" onclick="addObservation()"/>
+        <input id="confirmarAgregar" type="button" value="insertar" onclick="addObservation()" class="btn"/>
         </div>
         <table id="observaciones" style="width: 100%;" runat="server">
             <tr>
@@ -145,5 +147,11 @@
     <asp:HiddenField ID="HiddenFieldVersion" runat="server" />
 
     </form>
+    </div>
+    <div id="footer">
+<p class="validate">		</p>
+<p>
+        © Develop by Maith Software.</p>
+</div>
     </body>
 </html>
