@@ -38,7 +38,7 @@ public class ABMCTreeNode
         p_idAtt.Value = pIdAtt;
         SqlParameter p_idVersion = commandSql.Parameters.Add("IDVERSION", System.Data.SqlDbType.Int);
         p_idVersion.Value = pIdVersion;
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         Boolean salida = false;
         commandSql.Connection = sqlConn;
         Log.saveInLog("--------------Eliminar Observacion ---------------");
@@ -79,7 +79,7 @@ public class ABMCTreeNode
         SqlParameter p_idVersion = commandSql.Parameters.Add("IDVERSION", System.Data.SqlDbType.Int);
         p_idVersion.Value = pIdVersion;
 
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.Connection = sqlConn;
         Log.saveInLog("--------------Eliminar Observacion ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());

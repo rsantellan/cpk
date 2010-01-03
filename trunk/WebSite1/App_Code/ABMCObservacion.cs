@@ -29,7 +29,7 @@ public class ABMCObservacion
         commandSql.CommandText = consulta;
         SqlParameter p_id = commandSql.Parameters.Add("@ID", SqlDbType.Int);
         p_id.Value = pId;
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.Connection = sqlConn;
         Boolean salida = false;
         try
@@ -90,8 +90,8 @@ public class ABMCObservacion
         p_fecha.Value = pObs.Fecha;
         SqlParameter p_objectVersion = commandSql.Parameters.Add("OBJECTVERSION", System.Data.SqlDbType.Int);
         p_objectVersion.Value = pObs.ObjectVersion;
-        
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.Connection = sqlConn;
         DataSet ds = new DataSet();
         try
@@ -146,7 +146,7 @@ public class ABMCObservacion
         p_class.Value = pObjectClass;
         SqlParameter p_objectVersion = commandSql.Parameters.Add("OBJECTVERSION", System.Data.SqlDbType.Int);
         p_objectVersion.Value = pObjectVersion;
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.Connection = sqlConn;
         DataSet ds = new DataSet();
         try
@@ -184,7 +184,7 @@ public class ABMCObservacion
     public Boolean guardarObservacion(Observacion pObs)
     {
         SqlCommand commandSql = new SqlCommand();
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         Boolean salida = false;
         String sql = "INSERT INTO " +
             "observaciones " +

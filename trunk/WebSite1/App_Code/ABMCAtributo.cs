@@ -27,7 +27,7 @@ public class ABMCAtributo
     {
         int identifier = 0;
         SqlCommand commandSql = new SqlCommand();
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         try
         {
             commandSql.Connection = sqlConn;
@@ -64,7 +64,7 @@ public class ABMCAtributo
         
         int max = 0;
         SqlCommand commandSql = new SqlCommand();
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         try
         {
             commandSql.Connection = sqlConn;
@@ -114,7 +114,7 @@ public class ABMCAtributo
                         " Identificador = @IDENTIFICADOR "+
                         " AND Version = @VERSION ";
         SqlCommand commandSql = new SqlCommand();
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.CommandText = sql;
         commandSql.Connection = sqlConn;
         SqlParameter p_id = commandSql.Parameters.Add("IDENTIFICADOR", SqlDbType.Int);
@@ -187,7 +187,7 @@ public class ABMCAtributo
                         " WHERE " +
                         " Id = @ID;";
         SqlCommand commandSql = new SqlCommand();
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.CommandText = sql;
         commandSql.Connection = sqlConn;
         SqlParameter p_id = commandSql.Parameters.Add("ID", SqlDbType.Int);
@@ -256,7 +256,7 @@ public class ABMCAtributo
                     " WHERE " +
                     " Id = @ID;";
         SqlCommand commandSql = new SqlCommand();
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         Boolean salida = false;
         commandSql.CommandText = sql;
         SqlParameter p_id = commandSql.Parameters.Add("ID", SqlDbType.Int);
@@ -311,7 +311,7 @@ public class ABMCAtributo
     public Boolean guardarAtributo(Atributo guardar)
     {
         SqlCommand commandSql = new SqlCommand();
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         Boolean salida = false;
         String sql = "INSERT INTO " +
             "AtributoInformacionGeneral " +
@@ -549,7 +549,7 @@ public class ABMCAtributo
             SqlParameter p_fechaFinHasta = commandSql.Parameters.Add("FECHAVIGENCIAHASTA", System.Data.SqlDbType.DateTime);
             p_fechaFinHasta.Value = fechaVigenciaHasta;
         }
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.Connection = sqlConn;
         DataSet ds = new DataSet();
         Log.saveInLog("--------------Modificacion Atributos ---------------");
@@ -720,7 +720,7 @@ public class ABMCAtributo
             SqlParameter p_fechaVigenciaHasta = commandSql.Parameters.Add("FECHAVIGENCIAHASTA", System.Data.SqlDbType.DateTime);
             p_fechaVigenciaHasta.Value = fechaVigenciaHasta;
         }
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.Connection = sqlConn;
         Log.saveInLog("--------------Versionado Atributos ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
@@ -762,7 +762,7 @@ public class ABMCAtributo
 
         SqlParameter p_id = commandSql.Parameters.Add("ID", System.Data.SqlDbType.Int);
         p_id.Value = pId;
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         Boolean salida = false;
         commandSql.Connection = sqlConn;
         Log.saveInLog("--------------Eliminar Atributos ---------------");

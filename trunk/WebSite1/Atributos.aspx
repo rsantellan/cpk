@@ -104,6 +104,7 @@
 </table>
     </div>
     <div id="dinamico1">
+        Prueba
         <div  style="height:auto"; margin: 0">
             <div style="margin: auto; width: 640px; height: 480px"> 
             <asp:Silverlight ID="Xaml1" runat="server" Source="~/ClientBin/SilverlightApplication2.xap" MinimumVersion="2.0.31005.0" Width="100%" Height="100%" />
