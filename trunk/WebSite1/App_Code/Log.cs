@@ -23,7 +23,7 @@ public class Log
 
     public static void saveInLog(String text)
     {
-        StreamWriter sw = new StreamWriter("C:\\logApplication.txt", true);
+        StreamWriter sw = new StreamWriter("C:\\temp\\logApplication.txt", true);
         sw.WriteLine(text);
         sw.Close();
     }
