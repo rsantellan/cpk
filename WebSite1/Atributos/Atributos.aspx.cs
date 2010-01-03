@@ -27,7 +27,7 @@ public partial class Atributos : System.Web.UI.Page
             {
                 int version = cargarDatosBase(Convert.ToInt16(id));
                 this.reservarIdCompleto();
-                this.loadTable(version);
+                this.loadObservationTable(version);
             }
             else
             {
@@ -63,7 +63,7 @@ public partial class Atributos : System.Web.UI.Page
 
     private int identificador;
 
-    public void loadTable(int pVersion)
+    public void loadObservationTable(int pVersion)
     {
         Atributo atr = new Atributo();
         ABMCObservacion abmc = new ABMCObservacion();

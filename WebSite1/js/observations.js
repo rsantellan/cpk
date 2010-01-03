@@ -12,7 +12,7 @@ function addObservation()
 		var objectId = $F('HiddenField1');
 	    var objectClass = $F('HiddenFieldClass');
 	    var objectVersion = $F('HiddenFieldVersion');
-		url = 'saveObservation.aspx?tarea='+escape(tarea)+'&observacion='+escape(observacion)+'&objectId='+escape(objectId)+'&objectClass=' +escape(objectClass)+'&objectVersion='+escape(objectVersion);
+	    url = '../Observaciones/saveObservation.aspx?tarea=' + escape(tarea) + '&observacion=' + escape(observacion) + '&objectId=' + escape(objectId) + '&objectClass=' + escape(objectClass) + '&objectVersion=' + escape(objectVersion);
 		var myAjax = new Ajax.Request(
 			url,
 			{
@@ -30,7 +30,7 @@ function addObservation()
     
     function deleteObservation(id)
     {
-       	url = 'deleteObservation.aspx?observationId='+escape(id);
+        url = '../Observaciones/deleteObservation.aspx?observationId=' + escape(id);
 		var myAjax = new Ajax.Request(
 			url,
 			{
