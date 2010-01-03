@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="formFlows" Class="DataClassesDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=blackpoint;Initial Catalog=formFlows;Persist Security Info=True;User ID=py" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="formFlowsConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AttrReglas" Member="AttrReglas">
+    <Type Name="AttrReglas">
+      <Column Name="IDRegla" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NomRegal" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IDAttRelacionado" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="NomModoEjecucion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TreeEstructuraItems" Member="TreeEstructuraItems">
+    <Type Name="TreeEstructuraItems">
+      <Column Name="IDTreeEstructuraItem" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EsRequerido" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="SoloLectura" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MultiSeleccion" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="SubTipo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="OrigenDeDatos" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Valores" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Ruta" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Metodo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Largo" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Decimales" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TreeNodos" Member="TreeNodos">
+    <Type Name="TreeNodos">
+      <Column Name="IDTree" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NomTree" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IDParent" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="IDAttr" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FamiliaInformacionGeneral" Member="FamiliaInformacionGeneral">
+    <Type Name="FamiliaInformacionGeneral">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Identificador" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Autor" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Version" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FechaCreacion" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FechaVigenciaDesde" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FechaVigenciaHasta" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Grupo" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="FamiliaInformacionGeneral_FamiliaAtributo" Member="FamiliaAtributo" ThisKey="Id" OtherKey="idFamilia" Type="FamiliaAtributo" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FamiliaAtributo" Member="FamiliaAtributo">
+    <Type Name="FamiliaAtributo">
+      <Column Name="idFamilia" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idAtributo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="FamiliaInformacionGeneral_FamiliaAtributo" Member="FamiliaInformacionGeneral" ThisKey="idFamilia" OtherKey="Id" Type="FamiliaInformacionGeneral" IsForeignKey="true" />
+      <Association Name="AtributoInformacionGeneral_FamiliaAtributo" Member="AtributoInformacionGeneral" ThisKey="idAtributo" OtherKey="Id" Type="AtributoInformacionGeneral" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AtributoInformacionGeneral" Member="AtributoInformacionGeneral">
+    <Type Name="AtributoInformacionGeneral">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Identificador" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Autor" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Version" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FechaCreacion" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FechaVigenciaDesde" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FechaVigenciaHasta" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="EsModificable" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Association Name="AtributoInformacionGeneral_FamiliaAtributo" Member="FamiliaAtributo" ThisKey="Id" OtherKey="idAtributo" Type="FamiliaAtributo" />
+    </Type>
+  </Table>
+</Database>
