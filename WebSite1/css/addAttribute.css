@@ -11,14 +11,16 @@
 {
 	float: left;
 	text-align: center;
-	margin-left: 490px;
+	width: 100%;
+
 }
 
 #InformacionBasica
 {
-   height: 400PX
+   height: 450PX;
    text-align: center;
-   margin-left: 280px;
+   width: 70%;
+   margin-left: 200px;
 }
 li{
   margin-left: 250px;

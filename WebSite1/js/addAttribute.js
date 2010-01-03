@@ -19,6 +19,8 @@
         switch(place){
             case 1:
                 showStuff('InformacionBasica');
+                place--;
+                hideStuff('dinamico1');
                 break;
             case 2:
                 place--;
@@ -29,7 +31,11 @@
                 break;
         }
     }
-    window.onload = loadEvents;
+    
+    
+    Event.observe(window, 'load', function(){
+           loadEvents();
+      }); 
     function loadEvents(){
         hideStuff('ButtonSalvar');
         hideStuff('dinamico1');
@@ -38,9 +44,6 @@
 		$('ButtonSalvar').onclick=function(){
 		    availableSave();
 		}
-		removeAllCssClasses('CalendarExtenderHasta');
-		removeAllCssClasses('TextBoxCalendarHasta');
-		
     }
     function availableSave(){
         save = true;

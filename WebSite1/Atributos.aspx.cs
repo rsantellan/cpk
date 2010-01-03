@@ -34,8 +34,8 @@ public partial class Atributos : System.Web.UI.Page
                 LabelVersion.Text = "0";
                 LabelIdentificador.Text = Convert.ToString(this.getNewId());
                 this.HiddenField1.Value = LabelIdentificador.Text;
-
-                String userFull = HttpContext.Current.User.Identity.Name;
+                
+                String userFull = User.Identity.Name.ToString(); //HttpContext.Current.User.Identity.Name;
                 String user = "";
                 bool save = false;
                 foreach (char a in userFull)
