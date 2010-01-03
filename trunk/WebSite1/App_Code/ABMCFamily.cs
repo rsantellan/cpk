@@ -13,17 +13,17 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 
 /// <summary>
-/// Descripción breve de ABMCAtributo
+/// Descripción breve de ABMCFamilia
 /// </summary>
-public class ABMCAtributo
+public class ABMCFamily
 {
-    private Atributo _atributo;
-    public ABMCAtributo()
+    private Family _familia;
+    public ABMCFamily()
     {
         //this._atributo = atributo;
     }
 
-    public static int getIdentifierOfAtributeById(int id)
+    public static int getIdentifierOfFamilyById(int id)
     {
         int identifier = 0;
         SqlCommand commandSql = new SqlCommand();
@@ -33,7 +33,7 @@ public class ABMCAtributo
             commandSql.Connection = sqlConn;
             commandSql = sqlConn.CreateCommand();
 
-            commandSql.CommandText = "SELECT Identificador FROM AtributoInformacionGeneral WHERE id = @ID ";
+            commandSql.CommandText = "SELECT Identificador FROM FamiliaInformacionGeneral WHERE id = @ID ";
             SqlParameter p_id = commandSql.Parameters.Add("ID", SqlDbType.Int);
             p_id.Value = id;
             sqlConn.Open();
@@ -48,7 +48,7 @@ public class ABMCAtributo
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception Obtener identificador ABMCAtributo");
+            Log.saveInLog("Exception Obtener identificador ABMCFamilia");
             Log.saveInLog(e.Message);
         }
         finally
@@ -70,7 +70,7 @@ public class ABMCAtributo
             commandSql.Connection = sqlConn;
             commandSql = sqlConn.CreateCommand();
 
-            commandSql.CommandText = "SELECT Identificador FROM AtributoInformacionGeneral WHERE Identificador = (SELECT MAX(Identificador)  FROM AtributoInformacionGeneral) ";
+            commandSql.CommandText = "SELECT Identificador FROM FamiliaInformacionGeneral WHERE Identificador = (SELECT MAX(Identificador)  FROM FamiliaInformacionGeneral) ";
             sqlConn.Open();
             System.Data.SqlClient.SqlDataReader DbReader = commandSql.ExecuteReader();
 
@@ -83,7 +83,7 @@ public class ABMCAtributo
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception obtener ultimo identificador ABMCAtributo");
+            Log.saveInLog("Exception obtener ultimo identificador ABMCFamilia");
             Log.saveInLog(e.Message);
         }
         finally
@@ -95,7 +95,7 @@ public class ABMCAtributo
         return max;
     }
 
-    public Atributo obtenerAtributoPorIdentificadorYVersion(int pIdentificador, int pVersion)
+    public Family getFamilyByIdentifierAndVersion(int pIdentificador, int pVersion)
     {
         String sql = "SELECT " +
                         "Id," +
@@ -106,10 +106,9 @@ public class ABMCAtributo
                         "FechaVigenciaDesde," +
                         "FechaVigenciaHasta," +
                         "Nombre," +
-                        "Descripcion," +
-                        "EsModificable" +
+                        "Grupo" +
                         " FROM " +
-                        " AtributoInformacionGeneral " +
+                        " FamiliaInformacionGeneral " +
                         " WHERE " +
                         " Identificador = @IDENTIFICADOR "+
                         " AND Version = @VERSION ";
@@ -132,14 +131,14 @@ public class ABMCAtributo
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception obtener atributo por identificador y version ABMCAtributo");
+            Log.saveInLog("Exception obtener atributo por identificador y version ABMCFamilia");
             Log.saveInLog(e.Message);
         }
         finally
         {
             sqlConn.Close();
         }
-        Atributo salida = new Atributo();
+        Family salida = new Family();
         if (ds.Tables[0].Rows.Count > 0)
         {
             DataRow row = ds.Tables[0].Rows[0];
@@ -151,15 +150,7 @@ public class ABMCAtributo
             salida.FechaVigenciaDesde = DateTime.Parse(row[5].ToString());
             salida.FechaVigenciaHasta = DateTime.Parse(row[6].ToString());
             salida.Nombre = row[7].ToString();
-            salida.Descripcion = row[8].ToString();
-            if (row[9].ToString().Equals("1"))
-            {
-                salida.EsModificable = true;
-            }
-            else
-            {
-                salida.EsModificable = false;
-            }
+            salida.Grupo = row[8].ToString();
             return salida;
         }
         else
@@ -169,7 +160,7 @@ public class ABMCAtributo
         
     }
 
-    public Atributo obtenerAtributo(int id)
+    public Family getFamily(int id)
     {
         String sql = "SELECT "+
                         "Id,"+
@@ -180,10 +171,9 @@ public class ABMCAtributo
                         "FechaVigenciaDesde,"+
                         "FechaVigenciaHasta,"+
                         "Nombre,"+
-                        "Descripcion,"+
-                        "EsModificable"+
+                        "Grupo" +
                         " FROM "+
-                        " AtributoInformacionGeneral "+
+                        " FamiliaInformacionGeneral "+
                         " WHERE " +
                         " Id = @ID;";
         SqlCommand commandSql = new SqlCommand();
@@ -203,14 +193,14 @@ public class ABMCAtributo
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception obtenerAtributo ABMCAtributo");
+            Log.saveInLog("Exception obtenerAtributo ABMCFamilia");
             Log.saveInLog(e.Message);
         }
         finally
         {
             sqlConn.Close();
         }
-        Atributo salida = new Atributo();
+        Family salida = new Family();
         if (ds.Tables[0].Rows.Count > 0)
         {
             DataRow row = ds.Tables[0].Rows[0];
@@ -222,15 +212,7 @@ public class ABMCAtributo
             salida.FechaVigenciaDesde = DateTime.Parse(row[5].ToString());
             salida.FechaVigenciaHasta = DateTime.Parse(row[6].ToString());
             salida.Nombre = row[7].ToString();
-            salida.Descripcion = row[8].ToString();
-            if (row[9].ToString().Equals("1"))
-            {
-                salida.EsModificable = true;
-            }
-            else
-            {
-                salida.EsModificable = false;
-            }
+            salida.Grupo = row[8].ToString();
             return salida;
         }
         else
@@ -240,9 +222,9 @@ public class ABMCAtributo
         
     }
 
-    public Boolean updateAtributo(Atributo guardar)
+    public Boolean updateFamily(Family guardar)
     {
-        String sql = " UPDATE AtributoInformacionGeneral " +
+        String sql = " UPDATE FamiliaInformacionGeneral " +
                     " SET " +
                     " Identificador = @IDENTIFICADOR," +
                     " Autor = @AUTOR," +
@@ -251,8 +233,7 @@ public class ABMCAtributo
                     " FechaVigenciaDesde = @FECHAVIGENCIADESDE," +
                     " FechaVigenciaHasta = @FECHAVIGENCIAHASTA," +
                     " Nombre = @NOMBRE," +
-                    " Descripcion = @DESCRIPCION," +
-                    " EsModificable = @ESMODIFICABLE " +
+                    " Grupo = @GRUPO " +
                     " WHERE " +
                     " Id = @ID;";
         SqlCommand commandSql = new SqlCommand();
@@ -275,11 +256,9 @@ public class ABMCAtributo
         p_fechaVigenciaHasta.Value = guardar.FechaVigenciaHasta;
         SqlParameter p_nombre = commandSql.Parameters.Add("NOMBRE", SqlDbType.NChar);
         p_nombre.Value = guardar.Nombre;
-        SqlParameter p_descripcion = commandSql.Parameters.Add("DESCRIPCION", SqlDbType.NChar);
-        p_descripcion.Value = guardar.Descripcion;
-        SqlParameter p_modificable = commandSql.Parameters.Add("ESMODIFICABLE", SqlDbType.Bit);
-        p_modificable.Value = guardar.EsModificable;
-        Log.saveInLog("--------------Update Atributos ---------------");
+        SqlParameter p_descripcion = commandSql.Parameters.Add("GRUPO", SqlDbType.NChar);
+        p_descripcion.Value = guardar.Grupo;
+        Log.saveInLog("--------------Update Familia ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
         foreach (SqlParameter item in commandSql.Parameters)
@@ -298,7 +277,7 @@ public class ABMCAtributo
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception  updateAtributo ABMCAtributo");
+            Log.saveInLog("Exception  updateAtributo ABMCFamilia");
             Log.saveInLog(e.Message);
         }
         finally
@@ -308,13 +287,13 @@ public class ABMCAtributo
         return salida;
     }
 
-    public Boolean guardarAtributo(Atributo guardar)
+    public Boolean saveFamily(Family guardar)
     {
         SqlCommand commandSql = new SqlCommand();
         SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         Boolean salida = false;
         String sql = "INSERT INTO " +
-            "AtributoInformacionGeneral " +
+            "FamiliaInformacionGeneral " +
             "(" +
                 "Identificador," +
                 "Autor," +
@@ -323,8 +302,7 @@ public class ABMCAtributo
                 "FechaVigenciaDesde," +
                 "FechaVigenciaHasta," +
                 "Nombre," +
-                "Descripcion," +
-                "EsModificable" +
+                "Grupo" +
             ")" +
             "VALUES"+
             "(" +
@@ -335,8 +313,7 @@ public class ABMCAtributo
                 "@FECHAVIGENCIADESDE," +
                 "@FECHAVIGENCIAHASTA," +
                 "@NOMBRE," +
-                "@DESCRIPCION," +
-                "@MODIFICABLE"+
+                "@GRUPO"+
             ");";
         commandSql.CommandText = sql;
         SqlParameter p_identificador = commandSql.Parameters.Add("IDENTIFICADOR", SqlDbType.Int);
@@ -353,11 +330,9 @@ public class ABMCAtributo
         p_fechaVigenciaHasta.Value = guardar.FechaVigenciaHasta;
         SqlParameter p_nombre = commandSql.Parameters.Add("NOMBRE", SqlDbType.NChar);
         p_nombre.Value = guardar.Nombre;
-        SqlParameter p_descripcion = commandSql.Parameters.Add("DESCRIPCION", SqlDbType.NChar);
-        p_descripcion.Value = guardar.Descripcion;
-        SqlParameter p_modificable = commandSql.Parameters.Add("MODIFICABLE", SqlDbType.Bit);
-        p_modificable.Value = guardar.EsModificable;
-        Log.saveInLog("--------------Insert Atributos ---------------");
+        SqlParameter p_descripcion = commandSql.Parameters.Add("GRUPO", SqlDbType.NChar);
+        p_descripcion.Value = guardar.Grupo;
+        Log.saveInLog("--------------Insert Familia ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
         foreach (SqlParameter item in commandSql.Parameters)
@@ -376,7 +351,7 @@ public class ABMCAtributo
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception guardarAtributo ABMCAtributo");
+            Log.saveInLog("Exception guardarAtributo ABMCFamilia");
             Log.saveInLog(e.Message);
         }
         finally
@@ -401,7 +376,7 @@ public class ABMCAtributo
     /// <param name="fechaCreacionDesde"></param>
     /// <param name="fechaCreacionHasta"></param>
     /// <returns></returns>
-    public DataSet buscarAtributos(String nombre, int estado, String autor, String responsables, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaVigenciaDesde, DateTime fechaVigenciaHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
+    public DataSet searchFamily(String nombre, int estado, String autor, String responsables, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaVigenciaDesde, DateTime fechaVigenciaHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
     {
 
 
@@ -414,10 +389,9 @@ public class ABMCAtributo
             "FechaVigenciaDesde," +
             "FechaVigenciaHasta," +
             "Nombre," +
-            "Descripcion," +
-            "EsModificable" +
+            "Grupo" +
             " FROM " +
-            "AtributoInformacionGeneral";
+            "FamiliaInformacionGeneral";
 
         bool buscarNombre = false;
         bool buscarVersion = false;
@@ -491,7 +465,7 @@ public class ABMCAtributo
         }
         consulta += " Id IN (SELECT max(Id)"
                     + " FROM "
-                    + "AtributoInformacionGeneral "
+                    + "FamiliaInformacionGeneral "
                     + "GROUP BY "
                     + "Identificador) AND FechaCreacion IS NOT NULL AND Autor <> ''";
         consulta += " ORDER BY Identificador";
@@ -552,7 +526,7 @@ public class ABMCAtributo
         SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.Connection = sqlConn;
         DataSet ds = new DataSet();
-        Log.saveInLog("--------------Modificacion Atributos ---------------");
+        Log.saveInLog("--------------Modificacion de Familias ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
         foreach (SqlParameter item in commandSql.Parameters)
@@ -569,7 +543,7 @@ public class ABMCAtributo
         }
         catch (Exception e)
         {
-            Log.saveInLog("Exception buscarAtributos ABMCAtributo");
+            Log.saveInLog("Exception buscarAtributos ABMCFamilia");
             Log.saveInLog(e.Message);
             Console.WriteLine(e.Message);
         }
@@ -596,7 +570,7 @@ public class ABMCAtributo
     /// <param name="fechaCreacionDesde"></param>
     /// <param name="fechaCreacionHasta"></param>
     /// <returns></returns>
-    public DataSet buscarAtributosVersionado(int identificador, String nombre, int estado, String autor, String responsables, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaVigenciaDesde, DateTime fechaVigenciaHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
+    public DataSet searchFamilyVersion(int identificador, String nombre, int estado, String autor, String responsables, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaVigenciaDesde, DateTime fechaVigenciaHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
     {
 
 
@@ -609,10 +583,9 @@ public class ABMCAtributo
             "FechaVigenciaDesde," +
             "FechaVigenciaHasta," +
             "Nombre," +
-            "Descripcion," +
-            "EsModificable" +
+            "Grupo" +
             " FROM " +
-            "AtributoInformacionGeneral";
+            "FamiliaInformacionGeneral";
 
         bool buscarNombre = false;
         bool buscarVersion = false;
@@ -722,7 +695,7 @@ public class ABMCAtributo
         }
         SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.Connection = sqlConn;
-        Log.saveInLog("--------------Versionado Atributos ---------------");
+        Log.saveInLog("--------------Versionado Familia ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
         foreach (SqlParameter item in commandSql.Parameters)
@@ -741,7 +714,7 @@ public class ABMCAtributo
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception buscarAtributosVersionado ABMCAtributo");
+            Log.saveInLog("Exception buscarAtributosVersionado ABMCFamilia");
             Log.saveInLog(e.Message);
         }
         finally
@@ -754,9 +727,9 @@ public class ABMCAtributo
     }
 
 
-    public Boolean deleteAtribute(int pId)
+    public Boolean deleteFamily(int pId)
     {
-        String consulta = "DELETE FROM AtributoInformacionGeneral WHERE Id = @ID";
+        String consulta = "DELETE FROM FamiliaInformacionGeneral WHERE Id = @ID";
         SqlCommand commandSql = new SqlCommand();
         commandSql.CommandText = consulta;
 
@@ -765,7 +738,7 @@ public class ABMCAtributo
         SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         Boolean salida = false;
         commandSql.Connection = sqlConn;
-        Log.saveInLog("--------------Eliminar Atributos ---------------");
+        Log.saveInLog("--------------Eliminar Familia ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
         try
@@ -777,7 +750,7 @@ public class ABMCAtributo
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception eliminar ABMCAtributo");
+            Log.saveInLog("Exception eliminar ABMCFamilia");
             Log.saveInLog(e.Message);
         }
         finally

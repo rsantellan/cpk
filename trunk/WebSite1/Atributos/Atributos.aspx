@@ -9,13 +9,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Crear atributo</title>
-    <script src="js/prototype.js" type="text/javascript"></script>
-    <script src="js/observations.js" type="text/javascript"></script>
-    <script src="js/addAttribute.js" type="text/javascript"></script>
-    <link rel="Stylesheet" type="text/css" href="css/1.css" />
-    <link rel="Stylesheet" type="text/css" href="css/addAttribute.css" />
-    <link rel="Stylesheet" type="text/css" href="css/Navigation.css" />
-    <link rel="Stylesheet" type="text/css" href="css/Observations.css" />
+    <script src="../js/prototype.js" type="text/javascript"></script>
+    <script src="../js/observations.js" type="text/javascript"></script>
+    <script src="../js/addAttribute.js" type="text/javascript"></script>
+    <link rel="Stylesheet" type="text/css" href="../css/1.css" />
+    <link rel="Stylesheet" type="text/css" href="../css/addAttribute.css" />
+    <link rel="Stylesheet" type="text/css" href="../css/Navigation.css" />
+    <link rel="Stylesheet" type="text/css" href="../css/Observations.css" />
+    <link rel="Stylesheet" type="text/css" href="../css/Botones.css" />
 </head>
 
 <body onunload="leave()">

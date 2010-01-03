@@ -29,7 +29,11 @@ public class DBManager
     /// <returns>Valid SqlConnection for the server</returns>
     public static SqlConnection getInstanceOfConnection()
     {
-        SqlConnection sqlConn = new SqlConnection("Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True");
+        //Para entorno de produccion
+        String conexion = "Data Source=BLACKPOINT;Initial Catalog=formFlows;User ID=py; Password=Proyecto2009;";
+        //Para entorno de desarrollo
+        //String conexion = "Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True"
+        SqlConnection sqlConn = new SqlConnection(conexion);
         return sqlConn;
     }
 }
