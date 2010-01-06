@@ -33,7 +33,7 @@ public partial class Atributos : System.Web.UI.Page
             {
                 LabelVersion.Text = "0";
                 LabelIdentificador.Text = Convert.ToString(this.getNewId());
-                this.HiddenField1.Value = LabelIdentificador.Text;
+                this.HiddenFieldId.Value = LabelIdentificador.Text;
                 
                 String userFull = User.Identity.Name.ToString(); //HttpContext.Current.User.Identity.Name;
                 String user = "";
@@ -55,7 +55,7 @@ public partial class Atributos : System.Web.UI.Page
                 this.reservarId();
             }
             this.HiddenFieldVersion.Value = this.LabelVersion.Text;
-            this.HiddenField1.Value = LabelIdentificador.Text;
+            this.HiddenFieldId.Value = LabelIdentificador.Text;
             
         }
         

@@ -106,7 +106,8 @@ public class ABMCFamily
                         "FechaVigenciaDesde," +
                         "FechaVigenciaHasta," +
                         "Nombre," +
-                        "Grupo" +
+                        "Grupo," +
+                        "estado" +
                         " FROM " +
                         " FamiliaInformacionGeneral " +
                         " WHERE " +
@@ -151,6 +152,7 @@ public class ABMCFamily
             salida.FechaVigenciaHasta = DateTime.Parse(row[6].ToString());
             salida.Nombre = row[7].ToString();
             salida.Grupo = row[8].ToString();
+            salida.Estado = row[9].ToString();
             return salida;
         }
         else
@@ -171,7 +173,8 @@ public class ABMCFamily
                         "FechaVigenciaDesde,"+
                         "FechaVigenciaHasta,"+
                         "Nombre,"+
-                        "Grupo" +
+                        "Grupo," +
+                        "estado" +
                         " FROM "+
                         " FamiliaInformacionGeneral "+
                         " WHERE " +
@@ -213,6 +216,7 @@ public class ABMCFamily
             salida.FechaVigenciaHasta = DateTime.Parse(row[6].ToString());
             salida.Nombre = row[7].ToString();
             salida.Grupo = row[8].ToString();
+            salida.Estado = row[9].ToString();
             return salida;
         }
         else
@@ -234,6 +238,7 @@ public class ABMCFamily
                     " FechaVigenciaHasta = @FECHAVIGENCIAHASTA," +
                     " Nombre = @NOMBRE," +
                     " Grupo = @GRUPO " +
+                    " Estado = @ESTADO " +
                     " WHERE " +
                     " Id = @ID;";
         SqlCommand commandSql = new SqlCommand();
@@ -258,6 +263,8 @@ public class ABMCFamily
         p_nombre.Value = guardar.Nombre;
         SqlParameter p_descripcion = commandSql.Parameters.Add("GRUPO", SqlDbType.NChar);
         p_descripcion.Value = guardar.Grupo;
+        SqlParameter p_estado = commandSql.Parameters.Add("ESTADO", SqlDbType.NChar);
+        p_estado.Value = guardar.Estado;
         Log.saveInLog("--------------Update Familia ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
@@ -302,7 +309,8 @@ public class ABMCFamily
                 "FechaVigenciaDesde," +
                 "FechaVigenciaHasta," +
                 "Nombre," +
-                "Grupo" +
+                "Grupo," +
+                "Estado" +
             ")" +
             "VALUES"+
             "(" +
@@ -313,7 +321,8 @@ public class ABMCFamily
                 "@FECHAVIGENCIADESDE," +
                 "@FECHAVIGENCIAHASTA," +
                 "@NOMBRE," +
-                "@GRUPO"+
+                "@GRUPO,"+
+                "@ESTADO" +
             ");";
         commandSql.CommandText = sql;
         SqlParameter p_identificador = commandSql.Parameters.Add("IDENTIFICADOR", SqlDbType.Int);
@@ -332,6 +341,8 @@ public class ABMCFamily
         p_nombre.Value = guardar.Nombre;
         SqlParameter p_descripcion = commandSql.Parameters.Add("GRUPO", SqlDbType.NChar);
         p_descripcion.Value = guardar.Grupo;
+        SqlParameter p_estado = commandSql.Parameters.Add("ESTADO", SqlDbType.NChar);
+        p_estado.Value = guardar.Estado;
         Log.saveInLog("--------------Insert Familia ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
@@ -389,7 +400,8 @@ public class ABMCFamily
             "FechaVigenciaDesde," +
             "FechaVigenciaHasta," +
             "Nombre," +
-            "Grupo" +
+            "Grupo," +
+            "Estado" +
             " FROM " +
             "FamiliaInformacionGeneral";
 
@@ -450,6 +462,7 @@ public class ABMCFamily
             datosConsulta = "FechaCreacion BETWEEN @FechaCreacionDesde AND @FechaCreacionHasta";
             listaConsulta.Add(datosConsulta);
         }
+
         int comienzo = 0;
         foreach (String item in listaConsulta)
         {
@@ -477,14 +490,9 @@ public class ABMCFamily
             SqlParameter p_autor = commandSql.Parameters.Add("AUTOR", System.Data.SqlDbType.NChar);
             p_autor.Value = autor;
         }
-        switch (estado)
+        if (estado >= 0)
         {
-            case -1:
-                break;
-            default:
-                SqlParameter p_fechaAhora = commandSql.Parameters.Add("HOY", System.Data.SqlDbType.DateTime);
-                p_fechaAhora.Value = DateTime.Now;
-                break;
+            consulta = consulta + " AND Estado = @ESTADO";
         }
 
         if (buscarVersion)
@@ -522,6 +530,26 @@ public class ABMCFamily
 
             SqlParameter p_fechaFinHasta = commandSql.Parameters.Add("FECHAVIGENCIAHASTA", System.Data.SqlDbType.DateTime);
             p_fechaFinHasta.Value = fechaVigenciaHasta;
+        }
+        if (estado >= 0)
+        {
+
+            SqlParameter p_estado = commandSql.Parameters.Add("ESTADO", SqlDbType.NChar);
+            switch (estado)
+            {
+                case 0:
+                    p_estado.Value = Family.ENCURSO;
+                    break;
+                case 1:
+                    p_estado.Value = Family.RECHAZADO;
+                    break;
+                case 2:
+                    p_estado.Value = Family.ACEPTADO;
+                    break;
+                default:
+                    break;
+            }
+
         }
         SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.Connection = sqlConn;
@@ -570,7 +598,7 @@ public class ABMCFamily
     /// <param name="fechaCreacionDesde"></param>
     /// <param name="fechaCreacionHasta"></param>
     /// <returns></returns>
-    public DataSet searchFamilyVersion(int identificador, String nombre, int estado, String autor, String responsables, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaVigenciaDesde, DateTime fechaVigenciaHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
+    public DataSet searchFamilyVersion(int identificador, int estado, String autor, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
     {
 
 
@@ -583,39 +611,25 @@ public class ABMCFamily
             "FechaVigenciaDesde," +
             "FechaVigenciaHasta," +
             "Nombre," +
-            "Grupo" +
+            "Grupo," +
+            "Estado" +
             " FROM " +
             "FamiliaInformacionGeneral";
 
-        bool buscarNombre = false;
         bool buscarVersion = false;
         bool buscarInicio = false;
-        bool buscarVigencia = false;
         bool buscarCreacion = false;
-        if (!string.IsNullOrEmpty(nombre)) buscarNombre = true;
         if (!version.Equals(0)) buscarVersion = true;
         if (fechaInicioDesde != DateTime.MinValue && FechaInicioHasta != DateTime.MinValue) buscarInicio = true;
-        if (fechaVigenciaDesde != DateTime.MinValue && fechaVigenciaHasta != DateTime.MinValue) buscarVigencia = true;
         if (fechaCreacionDesde != DateTime.MinValue && fechaCreacionHasta != DateTime.MinValue) buscarCreacion = true;
         String consulta = consultaBasica + " WHERE Identificador = @IDENTIFICADOR";
         if (!autor.Equals("-") && !autor.Equals(" ") && !autor.Equals(""))
         {
             consulta = consulta + " AND Autor = @AUTOR";
         }
-        switch (estado)
+        if (estado >= 0)
         {
-            case 0:
-                consulta = consulta + " AND FechaVigenciaHasta < @HOY";
-                break;
-            case 1:
-                consulta = consulta + " AND FechaVigenciaHasta >= @HOY";
-                break;
-            default:
-                break;
-        }
-        if (buscarNombre)
-        {
-            consulta += " AND Nombre LIKE @Nombre";
+            consulta = consulta + " AND Estado = @ESTADO";
         }
         if (buscarVersion)
         {
@@ -624,10 +638,6 @@ public class ABMCFamily
         if (buscarInicio)
         {
             consulta += " AND FechaVigenciaDesde BETWEEN @FechaInicioDesde AND @FechaInicioHasta";
-        }
-        if (buscarVigencia)
-        {
-            consulta += " AND FechaVigenciaHasta BETWEEN @FECHAVIGENCIADESDE AND @FECHAVIGENCIAHASTA";
         }
         if (buscarCreacion)
         {
@@ -645,28 +655,10 @@ public class ABMCFamily
             p_autor.Value = autor;
         }
 
-        switch (estado)
-        {
-            case -1:
-                break;
-            default:
-                SqlParameter p_fechaAhora = commandSql.Parameters.Add("HOY", System.Data.SqlDbType.DateTime);
-                p_fechaAhora.Value = DateTime.Now;
-                break;
-        }
-
-        
-
         if (buscarVersion)
         {
             SqlParameter p_version = commandSql.Parameters.Add("VERSION", System.Data.SqlDbType.NChar);
             p_version.Value = version;
-        }
-
-        if (buscarNombre)
-        {
-            SqlParameter p_nombre = commandSql.Parameters.Add("Nombre", System.Data.SqlDbType.NChar);
-            p_nombre.Value = nombre + "%";
         }
 
         if (buscarCreacion)
@@ -685,13 +677,25 @@ public class ABMCFamily
             SqlParameter p_fechaInicioHasta = commandSql.Parameters.Add("FechaInicioHasta", System.Data.SqlDbType.DateTime);
             p_fechaInicioHasta.Value = FechaInicioHasta;
         }
-        if (buscarVigencia)
+        if (estado >= 0)
         {
-            SqlParameter p_fechaVigenciaDesde = commandSql.Parameters.Add("FECHAVIGENCIADESDE", System.Data.SqlDbType.DateTime);
-            p_fechaVigenciaDesde.Value = fechaVigenciaDesde;
 
-            SqlParameter p_fechaVigenciaHasta = commandSql.Parameters.Add("FECHAVIGENCIAHASTA", System.Data.SqlDbType.DateTime);
-            p_fechaVigenciaHasta.Value = fechaVigenciaHasta;
+            SqlParameter p_estado = commandSql.Parameters.Add("ESTADO", SqlDbType.NChar);
+            switch (estado)
+            {
+                case 0:
+                    p_estado.Value = Family.ENCURSO;
+                    break;
+                case 1:
+                    p_estado.Value = Family.RECHAZADO;
+                    break;
+                case 2:
+                    p_estado.Value = Family.ACEPTADO;
+                    break;
+                default:
+                    break;
+            }
+
         }
         SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.Connection = sqlConn;

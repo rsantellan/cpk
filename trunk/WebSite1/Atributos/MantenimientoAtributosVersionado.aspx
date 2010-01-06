@@ -6,9 +6,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Mantenimiento de atributos</title>
-    <link rel="Stylesheet" type="text/css" href="css/Navigation.css" />
-    <link rel="Stylesheet" type="text/css" href="css/mantainAttributeVersion.css" />
-    <link rel="Stylesheet" type="text/css" href="css/1.css" />
+    <link rel="Stylesheet" type="text/css" href="../css/Navigation.css" />
+    <link rel="Stylesheet" type="text/css" href="../css/mantainAttributeVersion.css" />
+    <link rel="Stylesheet" type="text/css" href="../css/1.css" />
 </head>
 <body>
 <ul id="nav">

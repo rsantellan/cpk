@@ -1,13 +1,16 @@
 ﻿body {
 }
 input.btn {
-  color:#050;
-  font: bold 84% 'trebuchet ms',helvetica,sans-serif;
-  background-color:#fed;
-  border: 1px solid;
-  border-color: #696 #363 #363 #696;
-  filter:progid:DXImageTransform.Microsoft.Gradient
+  border-left: 1px solid #696;
+	border-right: 1px solid #363;
+	border-top: 1px solid #696;
+	border-bottom: 1px solid #363;
+	color:#050;
+  	font: bold 84% 'trebuchet ms',helvetica,sans-serif;
+  	background-color:#fed;
+  	filter:progid:DXImageTransform.Microsoft.Gradient
   (GradientType=0,StartColorStr='#ffffffff',EndColorStr='#ffeeddaa');
+	height: 26px;
 }
 button.btn {
   color:#050;

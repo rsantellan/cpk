@@ -9,16 +9,17 @@
 
     <script src="../js/observations.js" type="text/javascript"></script>
     <script src="../js/prototype.js" type="text/javascript"></script>
+    <script src="../js/addFamily.js" type="text/javascript"></script>
     <link rel="Stylesheet" type="text/css" href="../css/1.css" />
     <link rel="Stylesheet" type="text/css" href="../css/Navigation.css" />
     <link rel="Stylesheet" type="text/css" href="../css/Observations.css" />
     <link rel="Stylesheet" type="text/css" href="../css/Botones.css" />
     <link rel="Stylesheet" type="text/css" href="../css/AddFamily.css" />
 </head>
-<body>
+<body onunload="leave()">
     <ul id="nav">
-        <li><a href="" class="linkNavegacion">Crear Familia</a> </li>
-        <li><a href="" class="linkNavegacion">Mantenimiento de familias</a></li>
+        <li><a href="InsertarFamilia.aspx" class="linkNavegacion">Crear atributo</a> </li>
+        <li><a href="MantenimientoFamilias.aspx" class="linkNavegacion">Mantenimiento de atributos</a></li>
     </ul>
     <div id="container">
         <form id="form1" runat="server">
@@ -33,7 +34,7 @@
                         </td>
                         <td style="width: 478px">
                             <asp:Label ID="LabelFamilia" runat="server" Font-Bold="True" Text="Label"></asp:Label>
-                            <asp:HiddenField ID="HiddenFieldFamilia" runat="server" />
+                            <asp:HiddenField ID="HiddenFieldIdentificador" runat="server" />
                             <asp:HiddenField ID="HiddenFieldId" runat="server" />
                         </td>
                     </tr>
@@ -66,7 +67,8 @@
                             Fecha de vigencia desde:
                         </td>
                         <td style="width: 478px">
-                            <asp:ScriptManager ID="ScriptManager1" runat="server">
+                            <asp:ScriptManager ID="ScriptManager1" runat="server" 
+                                EnableScriptGlobalization="True">
                             </asp:ScriptManager>
                             <asp:TextBox ID="TextCalendarDesde" runat="server"></asp:TextBox>
                             <cc1:CalendarExtender ID="TextCalendarDesde_CalendarExtender" runat="server" Enabled="True"
@@ -89,7 +91,8 @@
                                 ControlToValidate="TextBoxCalendarHasta"></asp:RequiredFieldValidator>
                             <br />
                             <asp:RangeValidator ID="RangeValidator2" runat="server" ControlToValidate="TextBoxCalendarHasta"
-                                ErrorMessage="La fecha hasta tiene que ser mayor que la fecha desde" MaximumValue="2"></asp:RangeValidator>
+                                ErrorMessage="La fecha hasta tiene que ser mayor que la fecha desde" 
+                                MaximumValue="2" EnableClientScript="False" Enabled="False"></asp:RangeValidator>
                         </td>
                     </tr>
                     <tr>
@@ -117,13 +120,21 @@
                         </td>
                     </tr>
                 </table>
+            <div id="manejoAtributos">
+            <label id="mostrarAtributos" >Servicios</label>
+            <div id="listadoDeAtributos">
+                <h1>Aca van el listado de atributos</h1>
             </div>
         </div>
-        <div id="listadoDeAtributos">
+            </div>
         </div>
+
         <div id="ocultos">
             <asp:HiddenField ID="HiddenFieldClass" runat="server" />
             <asp:HiddenField ID="HiddenFieldVersion" runat="server" />
+        </div>
+        <div id="divReglas">
+        <h1>Esto es el div de reglas</h1>
         </div>
         <div id="comentarios" class="divComentario">
             <label id="titulo">
@@ -164,11 +175,12 @@
         </div>
         <div id="navegacion" class="center cssNavegacion">
             <asp:Button ID="ButtonCancelar" runat="server" Text="Cancelar" CausesValidation="False"
-                class="btn" />
+                class="btn" onclick="ButtonCancelar_Click" />
             <input id="ButtonAtras" type="button" value="<<Atras<<" onclick="goBack()" class="btn" />
             <input id="ButtonAdelante" type="button" value=">>Adelante>>" onclick="goForward()"
                 class="btn" />
-            <asp:Button ID="ButtonSalvar" runat="server" Text="Salvar" class="btn" />
+            <asp:Button ID="ButtonSalvar" runat="server" Text="Salvar" class="btn" 
+                onclick="ButtonSalvar_Click" />
         </div>
         </form>
     </div>

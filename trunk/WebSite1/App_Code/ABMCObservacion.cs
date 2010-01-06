@@ -49,6 +49,48 @@ public class ABMCObservacion
         return salida;  
     }
 
+    /// <summary>
+    /// Deletes all the given object parameters observations
+    /// </summary>
+    /// <param name="pObjectClass">Object Class</param>
+    /// <param name="pObjectId">Object Id</param>
+    /// <param name="pObjectVersion">Object Version</param>
+    /// <returns></returns>
+    public Boolean deleteAllObjectObservations(String pObjectClass, int pObjectId, int pObjectVersion)
+    {
+        String consulta = "DELETE FROM observaciones "+
+            " WHERE " +
+            " object_id = @ID " +
+            " AND object_class = @OBJECTCLASS " +
+            " AND object_version = @OBJECTVERSION";
+        SqlCommand commandSql = new SqlCommand();
+        commandSql.CommandText = consulta;
+        SqlParameter p_id = commandSql.Parameters.Add("ID", System.Data.SqlDbType.Int);
+        p_id.Value = pObjectId;
+        SqlParameter p_class = commandSql.Parameters.Add("OBJECTCLASS", System.Data.SqlDbType.NChar);
+        p_class.Value = pObjectClass;
+        SqlParameter p_objectVersion = commandSql.Parameters.Add("OBJECTVERSION", System.Data.SqlDbType.Int);
+        p_objectVersion.Value = pObjectVersion;
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
+        commandSql.Connection = sqlConn;
+        Boolean salida = false;
+        try
+        {
+            sqlConn.Open();
+            commandSql.ExecuteNonQuery();
+            salida = true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+        return salida;
+    }
+
     public int obtenerObservacionId(Observacion pObs)
     {
 

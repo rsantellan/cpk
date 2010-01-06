@@ -26,7 +26,7 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
             {
                 LabelVersion.Text = "0";
                 this.LabelFamilia.Text = Convert.ToString(this.getNewId());
-                this.HiddenFieldFamilia.Value = this.LabelFamilia.Text;
+                this.HiddenFieldIdentificador.Value = this.LabelFamilia.Text;
 
                 String userFull = User.Identity.Name.ToString(); //HttpContext.Current.User.Identity.Name;
                 String user = "";
@@ -48,7 +48,7 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
                 this.reservarId();
             }
             this.HiddenFieldVersion.Value = this.LabelVersion.Text;
-            this.HiddenFieldFamilia.Value = this.LabelFamilia.Text;
+            this.HiddenFieldIdentificador.Value = this.LabelFamilia.Text;
         }
     }
 
@@ -132,6 +132,7 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
         a.Identificador = Convert.ToInt16(this.LabelFamilia.Text);
         a.Nombre = this.TextBoxNombre.Text;
         a.Version = Convert.ToInt16(this.LabelVersion.Text);
+        a.Grupo = this.DropDownListGruposFamilia.SelectedValue.ToString();
         ABMCFamily abmc = new ABMCFamily();
         abmc.saveFamily(a);
         a = abmc.getFamilyByIdentifierAndVersion(a.Identificador, a.Version);
@@ -154,5 +155,46 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
         }
         Session["LastIdentifier"] = salida;
         return salida;
+    }
+    protected void ButtonSalvar_Click(object sender, EventArgs e)
+    {
+        if (this.RequiredFieldValidator2.IsValid
+            && this.RangeValidator2.IsValid
+            && this.RequiredFieldValidator3.IsValid
+            && this.RequiredFieldValidatorCalendarDesde.IsValid)
+        {
+            DateTime FechaVigenciaDesde = DateTime.Parse(this.TextCalendarDesde.Text);
+            DateTime FechaVigenciaHasta = DateTime.Parse(this.TextBoxCalendarHasta.Text);
+            //if (FechaVigenciaDesde.CompareTo(FechaVigenciaHasta) < 0)
+            //{
+            //    RangeValidator2.IsValid = false;
+            //}
+            //else
+            //{
+            //    this.guardar();
+            //}
+            this.guardar();
+        }
+    }
+
+    private void guardar()
+    {
+        Family a = new Family();
+        a.Id = Convert.ToInt16(this.HiddenFieldId.Value);
+        a.Autor = this.LabelAutor.Text;
+        a.Grupo = this.DropDownListGruposFamilia.SelectedValue.ToString();
+        a.FechaCreacion = DateTime.Parse(this.LabelFechaCreacion.Text);
+        a.FechaVigenciaDesde = DateTime.Parse(this.TextCalendarDesde.Text);
+        a.FechaVigenciaHasta = DateTime.Parse(this.TextBoxCalendarHasta.Text);
+        a.Identificador = Convert.ToInt16(this.LabelFamilia.Text);
+        a.Nombre = this.TextBoxNombre.Text;
+        a.Version = Convert.ToInt16(this.LabelVersion.Text);
+        ABMCFamily abmc = new ABMCFamily();
+        abmc.updateFamily(a);
+        Response.Redirect("MantenimientoFamilias.aspx");
+    }
+    protected void ButtonCancelar_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("MantenimientoFamilias.aspx");
     }
 }
