@@ -13,18 +13,32 @@ using System.Xml.Linq;
 
 public partial class MantenimientoAtributos : System.Web.UI.Page
 {
+    private int _id = 0;
+    private int _identifier = 0;
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.LabelError.Visible = false;
+        String id = Request.QueryString["id"];
+        this._id = Convert.ToInt16(id);
+        if (this._id != 0)
+        {
+            this._identifier = ABMCFamily.getIdentifierOfFamilyById(this._id);
+            if (!IsPostBack)
+            {
+                this.cargarDatos();
+            }
+            
+        }
+
     }
     protected void ButtonBusqueda_Click(object sender, EventArgs e)
     {
+        
         this.cargarDatos();
     }
 
     private void cargarDatos()
     {
-        ABMCFamily abmc = new ABMCFamily();
         DateTime creacionDesde = new DateTime();
         if (string.IsNullOrEmpty(this.TextBoxCreacionDesde.Text))
         {
@@ -44,23 +58,23 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
             creacionHasta = DateTime.Parse(this.TextBoxCreacionHasta.Text);
         }
         DateTime vigenciaFinDesde = new DateTime();
-        if (string.IsNullOrEmpty(this.TextBoxVigenciaFinDesde.Text))
-        {
-            vigenciaFinDesde = DateTime.MinValue;
-        }
-        else
-        {
-            vigenciaFinDesde = DateTime.Parse(this.TextBoxVigenciaFinDesde.Text);
-        }
+        //if (string.IsNullOrEmpty(this.TextBoxVigenciaFinDesde.Text))
+        //{
+        //    vigenciaFinDesde = DateTime.MinValue;
+        //}
+        //else
+        //{
+        //    vigenciaFinDesde = DateTime.Parse(this.TextBoxVigenciaFinDesde.Text);
+        //}
         DateTime vigenciaFinHasta = new DateTime();
-        if (string.IsNullOrEmpty(this.TextBoxVigenciaFinHasta.Text))
-        {
-            vigenciaFinHasta = DateTime.MinValue;
-        }
-        else
-        {
-            vigenciaFinHasta = DateTime.Parse(this.TextBoxVigenciaFinHasta.Text);
-        }
+        //if (string.IsNullOrEmpty(this.TextBoxVigenciaFinHasta.Text))
+        //{
+        //    vigenciaFinHasta = DateTime.MinValue;
+        //}
+        //else
+        //{
+        //    vigenciaFinHasta = DateTime.Parse(this.TextBoxVigenciaFinHasta.Text);
+        //}
         DateTime vigenciaDesde = new DateTime();
         if (string.IsNullOrEmpty(this.TextBoxVigenciaDesde.Text))
         {
@@ -88,7 +102,7 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+               
             }
             
         }
@@ -101,27 +115,27 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
         {
             estado = Convert.ToInt16(this.DropDownListEstado.SelectedValue);
         }
-        DataSet datos = abmc.searchFamily(this.TextBoxFamilia.Text, estado, this.DropDownListAutores.SelectedValue.ToString(), " ", version, vigenciaDesde, vigenciaHasta, vigenciaFinDesde, vigenciaFinHasta, creacionDesde, creacionHasta);
+        ABMCFamily abmc = new ABMCFamily();
+        
+        DataSet datos = abmc.searchFamilyVersion(this._identifier, estado, this.DropDownListAutores.SelectedValue.ToString(), version, vigenciaDesde, vigenciaHasta, creacionDesde, creacionHasta);
+
         DataSet show = new DataSet();
 
         DataTable dt = new DataTable();
         show.Tables.Add(dt);
-        DataColumn dc = new DataColumn("ID");
+        DataColumn dc = new DataColumn("Id");
+        //dc.ColumnMapping = MappingType.Hidden;
         dt.Columns.Add(dc);
         dc = new DataColumn("ModificarMostrar");
         dc.ColumnMapping = MappingType.Hidden;
         dt.Columns.Add(dc);
-        dc = new DataColumn("VersionadoMostrar");
-        dt.Columns.Add(dc);
-        dc = new DataColumn("Familia");
-        dt.Columns.Add(dc);
         dc = new DataColumn("Nombre");
         dt.Columns.Add(dc);
-        dc = new DataColumn("fecha_de_creacion");
+        dc = new DataColumn("Fecha de creacion");
         dt.Columns.Add(dc);
-        dc = new DataColumn("fecha_vigencia_desde");
+        dc = new DataColumn("Fecha vigencia desde");
         dt.Columns.Add(dc);
-        dc = new DataColumn("fecha_vigencia_hasta");
+        dc = new DataColumn("Fecha vigencia hasta");
         dt.Columns.Add(dc);
         dc = new DataColumn("Version");
         dt.Columns.Add(dc);
@@ -133,23 +147,13 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
         dt.Columns.Add(dc);
 
         DataRow dr;
-        if (datos.Tables[0].Rows.Count == 0)
-        {
-            this.LabelError.Visible = true;
-        }
-        else
-        {
-            this.LabelError.Visible = false;
-        }
+
         foreach (DataRow row in datos.Tables[0].Rows)
         {
             ArrayList misDatos = new ArrayList();
             misDatos.Add(row[0].ToString());
             misDatos.Add(" Modificar ");
-            misDatos.Add(" Versionado ");
-            misDatos.Add(row[1].ToString());
             misDatos.Add(row[7].ToString());
-            
             DateTime dateTimes;
             dateTimes = DateTime.Parse(row[4].ToString());
             misDatos.Add(dateTimes.ToShortDateString());
@@ -161,37 +165,34 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
             misDatos.Add(row[9].ToString());
             if (DateTime.Now > dateTimes)
             {
-                misDatos.Add("No Activo");
+                misDatos.Add("No");
             }
             else
             {
-                misDatos.Add("Activo");
+                misDatos.Add("Si");
             }
+
+            
             misDatos.Add(row[2].ToString());
+            
             dr = dt.NewRow();
             dr.ItemArray = misDatos.ToArray();
             dt.Rows.Add(dr);
         }
-        
+
         this.GridViewDatos.DataSource = show;
         this.GridViewDatos.DataBind();
         this.GridViewDatos.Visible = true;
-        
-        //this.GridViewDatos.Columns[2].Visible = false;
     }
 
 
     protected void GridViewDatos_SelectedIndexChanged(object sender, EventArgs e)
     {
-        //GridViewRow dr = new GridViewRow(GridViewDatos.SelectedRow);
-        
-        //dr.BackColor = System.Drawing.Color.FromName("#FAF7DA");
-        GridView grid = (GridView)sender;//-		sender	{System.Web.UI.WebControls.GridView}	object {System.Web.UI.WebControls.GridView}
+        GridView grid = (GridView)sender;
         String place = "Atributos.aspx?id=" + grid.SelectedRow.Cells[1].Text + "&identificador=" + grid.SelectedRow.Cells[2].Text;
         Response.Redirect(place);
-        //Server.Transfer(place);
-        //Console.WriteLine(e);
     }
+
     protected void gridViewDatos_paging(object sender, GridViewPageEventArgs e)
     {
         GridViewDatos.PageIndex = e.NewPageIndex;

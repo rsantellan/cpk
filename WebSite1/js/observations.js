@@ -9,7 +9,7 @@ function addObservation()
 		$('inputTarea').value = "";
 		var observacion = $F('TextAreaObservacion');
 		$('TextAreaObservacion').value = "";
-		var objectId = $F('HiddenField1');
+		var objectId = $F('HiddenFieldIdentificador');
 	    var objectClass = $F('HiddenFieldClass');
 	    var objectVersion = $F('HiddenFieldVersion');
 	    url = '../Observaciones/saveObservation.aspx?tarea=' + escape(tarea) + '&observacion=' + escape(observacion) + '&objectId=' + escape(objectId) + '&objectClass=' + escape(objectClass) + '&objectVersion=' + escape(objectVersion);

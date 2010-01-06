@@ -24,6 +24,10 @@ public class Family
     private DateTime _fechaVigenciaHasta;
     private String _nombre;
     private String _grupo;
+    private String _estado;
+    public static String ENCURSO = "En curso";
+    public static String RECHAZADO = "Rechazado";
+    public static String ACEPTADO = "Aceptado";
 
 #region Propiedades
     public int Id { get { return this._id; } set { this._id = value; } }
@@ -35,6 +39,7 @@ public class Family
     public DateTime FechaVigenciaHasta { get { return this._fechaVigenciaHasta; } set { this._fechaVigenciaHasta = value; } }
     public String Nombre { get { return this._nombre; } set { this._nombre = value; } }
     public String Grupo { get { return this._grupo; } set { this._grupo = value; } }
+    public String Estado { get { return this._estado; } set { this._estado = value; } }
     
 #endregion
 

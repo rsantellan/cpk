@@ -4,7 +4,10 @@
             case 0:
                 place++;
                 hideStuff('InformacionBasica');
-                showStuff('dinamico1');
+                showStuff('divReglas');
+                showStuff('ButtonSalvar');
+                showStuff('ButtonAtras');
+                hideStuff('ButtonAdelante'); 
                 break;
             case 1:
                 place++;
@@ -20,7 +23,10 @@
             case 1:
                 showStuff('InformacionBasica');
                 place--;
-                hideStuff('dinamico1');
+                hideStuff('divReglas');
+                hideStuff('ButtonSalvar');
+                showStuff('ButtonAdelante');
+                hideStuff('ButtonAtras');
                 break;
             case 2:
                 place--;
@@ -38,8 +44,7 @@
       }); 
     function loadEvents(){
         hideStuff('ButtonSalvar');
-        hideStuff('dinamico1');
-        hideStuff('dinamico2');
+        hideStuff('divReglas');
 		$('formularioIngreso').hide();
 		$('ButtonSalvar').onclick=function(){
 		    availableSave();
@@ -49,6 +54,7 @@
         save = true;
     }
     var save = false;
+	
     function getIdentifier(){
         return $F('HiddenFieldIdentificador');
     }
@@ -57,9 +63,10 @@
         return $F('HiddenFieldVersion');
     }
     
-    	function showStuff(id) {
+    function showStuff(id) {
 		document.getElementById(id).style.display = 'block';
 	}
+	
 	function hideStuff(id) {
 		document.getElementById(id).style.display = 'none';
 	}
@@ -71,7 +78,7 @@
 		if(objectId == 0) return;
 		var ident = getIdentifier();
 		var version =getVersion();
-		url = 'cleanUpAtribute.aspx?id='+escape(objectId)+'&identifier='+escape(ident)+'&version='+escape(version);
+		url = 'cleanUpFamily.aspx?id='+escape(objectId)+'&identifier='+escape(ident)+'&version='+escape(version);
 		var myAjax = new Ajax.Request(
 			url,
 			{

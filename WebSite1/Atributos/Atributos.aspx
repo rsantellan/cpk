@@ -34,7 +34,7 @@
         <td>Identificador: </td>
         <td style="width: 478px">
             <asp:Label ID="LabelIdentificador" runat="server" Font-Bold="True" Text="Label"></asp:Label>
-            <asp:HiddenField ID="HiddenField1" runat="server" />
+            <asp:HiddenField ID="HiddenFieldIdentificador" runat="server" />
             <asp:HiddenField ID="HiddenFieldId" runat="server" />
         </td>
     </tr>
@@ -54,7 +54,8 @@
     <tr>
         <td>Fecha de vigencia desde: </td>
         <td style="width: 478px">
-                    <asp:ScriptManager ID="ScriptManager1" runat="server">
+                    <asp:ScriptManager ID="ScriptManager1" runat="server" 
+                        EnableScriptGlobalization="True">
             </asp:ScriptManager>
             <asp:TextBox ID="TextCalendarDesde" runat="server"></asp:TextBox>
             <cc1:CalendarExtender
@@ -76,6 +77,13 @@
             
             <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" 
                 ErrorMessage="Campo requerido" ControlToValidate="TextBoxCalendarHasta"></asp:RequiredFieldValidator>
+            
+        </td>
+    </tr>
+    <tr>
+        <td>
+        </td>
+        <td>
             <asp:RangeValidator ID="RangeValidator2" runat="server" 
                 ControlToValidate="TextBoxCalendarHasta" 
                 ErrorMessage="La fecha hasta tiene que ser mayor que la fecha desde" 
