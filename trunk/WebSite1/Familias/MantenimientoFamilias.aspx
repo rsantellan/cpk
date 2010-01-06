@@ -6,7 +6,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Mantenimiento de atributos</title>
+    <title>Mantenimiento de familia</title>
     <link rel="Stylesheet" type="text/css" href="../css/Navigation.css" />
     <link rel="Stylesheet" type="text/css" href="../css/mantainAttribute.css" />
     <link rel="Stylesheet" type="text/css" href="../css/1.css" />
@@ -26,8 +26,9 @@
 </head>
 <body>
 <ul id="nav">
-        <li><a href="InsertarFamilia.aspx" class="linkNavegacion">Crear atributo</a> </li>
-        <li><a href="MantenimientoFamilias.aspx" class="linkNavegacion">Mantenimiento de atributos</a></li>
+        <li><a href="InsertarFamilia.aspx" class="linkNavegacion">Crear familia </a>&nbsp;</li>
+        <li><a href="MantenimientoFamilias.aspx" class="linkNavegacion">Mantenimiento de 
+            familia </a></li>
     </ul>
     
     <div id="container">    
@@ -41,7 +42,7 @@
     <div>
     
        <asp:Label ID="LabelTitulo" runat="server" Font-Bold="True" Font-Size="Large" 
-                    Text="Mantenimiento de atributos"></asp:Label>
+                    Text="Mantenimiento de familia"></asp:Label>
     </div>
     <table style="width:100%;">
         <tr>
