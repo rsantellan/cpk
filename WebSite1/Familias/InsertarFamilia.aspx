@@ -18,8 +18,8 @@
 </head>
 <body onunload="leave()">
     <ul id="nav">
-        <li><a href="InsertarFamilia.aspx" class="linkNavegacion">Crear atributo</a> </li>
-        <li><a href="MantenimientoFamilias.aspx" class="linkNavegacion">Mantenimiento de atributos</a></li>
+        <li><a href="InsertarFamilia.aspx" class="linkNavegacion">Crear familia</a> </li>
+        <li><a href="MantenimientoFamilias.aspx" class="linkNavegacion">Mantenimiento de familia</a></li>
     </ul>
     <div id="container">
         <form id="form1" runat="server">

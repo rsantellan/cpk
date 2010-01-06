@@ -5,15 +5,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Mantenimiento de atributos</title>
+    <title>Versionado de familia</title>
     <link rel="Stylesheet" type="text/css" href="../css/Navigation.css" />
     <link rel="Stylesheet" type="text/css" href="../css/mantainAttributeVersion.css" />
     <link rel="Stylesheet" type="text/css" href="../css/1.css" />
 </head>
 <body>
 <ul id="nav">
-        <li><a href="InsertarFamilia.aspx" class="linkNavegacion">Crear atributo</a> </li>
-        <li><a href="MantenimientoFamilias.aspx" class="linkNavegacion">Mantenimiento de atributos</a></li>
+        <li><a href="InsertarFamilia.aspx" class="linkNavegacion">Crear familia</a> </li>
+        <li><a href="MantenimientoFamilias.aspx" class="linkNavegacion">Mantenimiento de familia</a></li>
     </ul>
     
     <div id="container"> 
