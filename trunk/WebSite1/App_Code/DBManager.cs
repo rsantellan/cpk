@@ -30,11 +30,11 @@ public class DBManager
     public static SqlConnection getInstanceOfConnection()
     {
         //Para entorno de produccion
-        //String conexion = "Data Source=BLACKPOINT;Initial Catalog=formFlows;User ID=py; Password=Proyecto2009;";
+        String conexion = "Data Source=BLACKPOINT;Initial Catalog=formFlows;User ID=py; Password=Proyecto2009;";
         //Para entorno de desarrollo
         //String conexion = "Data Source=BLACKPOINT;Initial Catalog=formFlows;Integrated Security=True"
         //Entorno de desarrollo Win XP 
-        String conexion = "Data Source=RODRIGOWIN\\SQLEXPRESS1;Initial Catalog=formFlows;Integrated Security=True";
+        //String conexion = "Data Source=RODRIGOWIN\\SQLEXPRESS1;Initial Catalog=formFlows;Integrated Security=True";
         SqlConnection sqlConn = new SqlConnection(conexion);
         return sqlConn;
     }
