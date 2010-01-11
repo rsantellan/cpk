@@ -786,4 +786,61 @@ public class ABMCAtributo
         }
         return salida;
     }
+
+    public DataSet listOfAtributesByFamily(int pId)
+    {
+        DataSet retorno = new DataSet();
+        String consulta = " SELECT " +
+            " Id," +
+            "Identificador," +
+            "Autor," +
+            "Version," +
+            "FechaCreacion," +
+            "FechaVigenciaDesde," +
+            "FechaVigenciaHasta," +
+            "Nombre," +
+            "Descripcion," +
+            "EsModificable" +
+            " FROM " +
+            "AtributoInformacionGeneral " +
+            " WHERE " +
+            " Id IN (SELECT idAtributo FROM FamiliaAtributo WHERE idFamilia = @IDFAMILIA) "
+            ;
+        SqlCommand commandSql = new SqlCommand();
+        commandSql.CommandText = consulta;
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
+        SqlParameter p_id = commandSql.Parameters.Add("IDFAMILIA", System.Data.SqlDbType.Int);
+        p_id.Value = pId;
+        
+        commandSql.Connection = sqlConn;
+        Log.saveInLog("--------------Obtencion de todos los atributos de una familia.---------------");
+        Log.saveInLog(DateTime.Now.ToShortTimeString());
+        Log.saveInLog(commandSql.CommandText);
+        foreach (SqlParameter item in commandSql.Parameters)
+        {
+
+            Log.saveInLog(item.ParameterName);
+            Log.saveInLog(item.Value.ToString());
+        }
+        DataSet ds = new DataSet();
+        try
+        {
+            sqlConn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(commandSql);
+            da.Fill(ds, "Atributos");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            Log.saveInLog("Exception listOfAtributesByFamily ABMCAtributo");
+            Log.saveInLog(e.Message);
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+
+
+        return ds;
+    }
 }

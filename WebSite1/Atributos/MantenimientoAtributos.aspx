@@ -95,7 +95,8 @@
                 </asp:DropDownList>
                 <asp:SqlDataSource ID="SqlDataSourceAreas" runat="server" 
                     ConnectionString="<%$ ConnectionStrings:formFlowsConnectionString %>" 
-                    SelectCommand="SELECT DISTINCT [Nombre] FROM [Areas]"></asp:SqlDataSource>
+                    SelectCommand="SELECT DISTINCT [Nombre] FROM [Areas]" 
+                    ProviderName="System.Data.SqlClient"></asp:SqlDataSource>
             </td>
         </tr>
         <tr>

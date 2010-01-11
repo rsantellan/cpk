@@ -204,6 +204,7 @@ public class ABMCFamily
             sqlConn.Close();
         }
         Family salida = new Family();
+        if (ds.Tables.Count == 0) return null;
         if (ds.Tables[0].Rows.Count > 0)
         {
             DataRow row = ds.Tables[0].Rows[0];
@@ -237,7 +238,7 @@ public class ABMCFamily
                     " FechaVigenciaDesde = @FECHAVIGENCIADESDE," +
                     " FechaVigenciaHasta = @FECHAVIGENCIAHASTA," +
                     " Nombre = @NOMBRE," +
-                    " Grupo = @GRUPO " +
+                    " Grupo = @GRUPO, " +
                     " Estado = @ESTADO " +
                     " WHERE " +
                     " Id = @ID;";
@@ -763,4 +764,6 @@ public class ABMCFamily
         }
         return salida;
     }
+
+
 }
