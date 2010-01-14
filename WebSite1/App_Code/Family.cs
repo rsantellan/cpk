@@ -25,6 +25,7 @@ public class Family
     private String _nombre;
     private String _grupo;
     private String _estado;
+    private String _usuario;
     public static String ENCURSO = "En curso";
     public static String RECHAZADO = "Rechazado";
     public static String ACEPTADO = "Aceptado";
@@ -40,7 +41,8 @@ public class Family
     public String Nombre { get { return this._nombre; } set { this._nombre = value; } }
     public String Grupo { get { return this._grupo; } set { this._grupo = value; } }
     public String Estado { get { return this._estado; } set { this._estado = value; } }
-    
+    public String Usuario { get { return this._usuario; } set { this._usuario = value; } }
+
 #endregion
 
     public Family()
