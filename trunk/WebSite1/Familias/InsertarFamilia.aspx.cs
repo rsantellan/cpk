@@ -18,8 +18,9 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
             this.HiddenFieldClass.Value = atr.GetType().ToString();
             if (!String.IsNullOrEmpty(id))
             {
-                int version = cargarDatosBase(Convert.ToInt16(id));
-                this.reservarIdCompleto();
+                Family used = cargarDatosBase(Convert.ToInt16(id));
+                int version = used.Version;
+                this.reservarIdCompleto(used);
                 this.loadObservationTable(version, Convert.ToInt16(this.LabelFamilia.Text));
             }
             else
@@ -90,7 +91,7 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
 
     }
 
-    private int cargarDatosBase(int id)
+    private Family cargarDatosBase(int id)
     {
         ABMCFamily abmc = new ABMCFamily();
         Family a = abmc.getFamily(id);
@@ -102,7 +103,7 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
         this.TextBoxNombre.Text = a.Nombre;
         this.TextCalendarDesde.Text = a.FechaVigenciaDesde.ToShortDateString();
         this.DropDownListGruposFamilia.SelectedValue = a.Grupo;
-        return a.Version;
+        return a;
     }
 
     private void reservarId()
@@ -113,30 +114,26 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
         a.Autor = " ";
         a.Grupo = " ";
         a.Nombre = " ";
+        a.Estado = " ";
         a.FechaCreacion = DateTime.Now;
         a.FechaVigenciaDesde = DateTime.Now;
         a.FechaVigenciaHasta = DateTime.Now;
+        String userFull = User.Identity.Name.ToString();
+        a.Usuario = userFull;
         ABMCFamily abmc = new ABMCFamily();
         abmc.saveFamily(a);
         a = abmc.getFamilyByIdentifierAndVersion(a.Identificador, a.Version);
         this.HiddenFieldId.Value = a.Id.ToString();
     }
 
-    private void reservarIdCompleto()
+    private void reservarIdCompleto(Family reserve)
     {
-        Family a = new Family();
-        a.Autor = this.LabelAutor.Text;
-        a.FechaCreacion = DateTime.Parse(this.LabelFechaCreacion.Text);
-        a.FechaVigenciaDesde = DateTime.Parse(this.TextCalendarDesde.Text);
-        a.FechaVigenciaHasta = DateTime.Parse(this.TextBoxCalendarHasta.Text);
-        a.Identificador = Convert.ToInt16(this.LabelFamilia.Text);
-        a.Nombre = this.TextBoxNombre.Text;
-        a.Version = Convert.ToInt16(this.LabelVersion.Text);
-        a.Grupo = this.DropDownListGruposFamilia.SelectedValue.ToString();
+        String userFull = User.Identity.Name.ToString();
+        reserve.Usuario = userFull;
         ABMCFamily abmc = new ABMCFamily();
-        abmc.saveFamily(a);
-        a = abmc.getFamilyByIdentifierAndVersion(a.Identificador, a.Version);
-        this.HiddenFieldId.Value = a.Id.ToString();
+        abmc.saveFamily(reserve);
+        reserve = abmc.getFamilyByIdentifierAndVersion(reserve.Identificador, reserve.Version);
+        this.HiddenFieldId.Value = reserve.Id.ToString();
     }
 
     private int getNewId()
@@ -189,6 +186,9 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
         a.Identificador = Convert.ToInt16(this.LabelFamilia.Text);
         a.Nombre = this.TextBoxNombre.Text;
         a.Version = Convert.ToInt16(this.LabelVersion.Text);
+        a.Estado = Family.ENCURSO;
+        String userFull = User.Identity.Name.ToString();
+        a.Usuario = userFull;
         ABMCFamily abmc = new ABMCFamily();
         abmc.updateFamily(a);
         Response.Redirect("MantenimientoFamilias.aspx");
