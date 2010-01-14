@@ -239,7 +239,8 @@ public class ABMCFamily
                     " FechaVigenciaHasta = @FECHAVIGENCIAHASTA," +
                     " Nombre = @NOMBRE," +
                     " Grupo = @GRUPO, " +
-                    " Estado = @ESTADO " +
+                    " Estado = @ESTADO, " +
+                    " Usuario = @USUARIO " +
                     " WHERE " +
                     " Id = @ID;";
         SqlCommand commandSql = new SqlCommand();
@@ -266,6 +267,8 @@ public class ABMCFamily
         p_descripcion.Value = guardar.Grupo;
         SqlParameter p_estado = commandSql.Parameters.Add("ESTADO", SqlDbType.NChar);
         p_estado.Value = guardar.Estado;
+        SqlParameter p_usuario = commandSql.Parameters.Add("USUARIO", SqlDbType.NChar);
+        p_usuario.Value = guardar.Usuario;
         Log.saveInLog("--------------Update Familia ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
@@ -311,7 +314,8 @@ public class ABMCFamily
                 "FechaVigenciaHasta," +
                 "Nombre," +
                 "Grupo," +
-                "Estado" +
+                "Estado," +
+                "Usuario" +
             ")" +
             "VALUES"+
             "(" +
@@ -323,7 +327,8 @@ public class ABMCFamily
                 "@FECHAVIGENCIAHASTA," +
                 "@NOMBRE," +
                 "@GRUPO,"+
-                "@ESTADO" +
+                "@ESTADO," +
+                "@USUARIO" +
             ");";
         commandSql.CommandText = sql;
         SqlParameter p_identificador = commandSql.Parameters.Add("IDENTIFICADOR", SqlDbType.Int);
@@ -344,6 +349,8 @@ public class ABMCFamily
         p_descripcion.Value = guardar.Grupo;
         SqlParameter p_estado = commandSql.Parameters.Add("ESTADO", SqlDbType.NChar);
         p_estado.Value = guardar.Estado;
+        SqlParameter p_usuario = commandSql.Parameters.Add("USUARIO", SqlDbType.NChar);
+        p_usuario.Value = guardar.Usuario;
         Log.saveInLog("--------------Insert Familia ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
@@ -555,7 +562,7 @@ public class ABMCFamily
         SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.Connection = sqlConn;
         DataSet ds = new DataSet();
-        Log.saveInLog("--------------Modificacion de Familias ---------------");
+        Log.saveInLog("--------------Busqueda de Familias ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
         foreach (SqlParameter item in commandSql.Parameters)
