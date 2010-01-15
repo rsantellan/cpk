@@ -229,6 +229,9 @@
                 <asp:BoundField DataField="Area" HeaderText="Area responsable" />
                 <asp:BoundField DataField="Estado" HeaderText="Estado" />
                 <asp:BoundField DataField="Autor" HeaderText="Autor" />
+                <asp:HyperLinkField HeaderText="" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="Atributos.aspx?id={0}&ver=1" DataTextField="VersionadoMostrar"/>
+                <asp:BoundField DataField="NuevaVersionMostrar" HeaderText="NuevaVersionMostrar" 
+                    Visible="False" />
             </Columns>
         </asp:GridView>
     </div>
