@@ -14,14 +14,24 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
         if (!IsPostBack)
         {
             String id = Request.QueryString["id"];
+            String newVersion = Request.QueryString["ver"];
             Family atr = new Family();
             this.HiddenFieldClass.Value = atr.GetType().ToString();
             if (!String.IsNullOrEmpty(id))
             {
                 Family used = cargarDatosBase(Convert.ToInt16(id));
-                int version = used.Version;
+                if (!String.IsNullOrEmpty(newVersion))
+                {
+                    LabelVersion.Text = "0";
+                    this.LabelFamilia.Text = Convert.ToString(this.getNewId());
+                }
+                else
+                {
+                    int version = used.Version;
+                    this.loadObservationTable(version, Convert.ToInt16(this.LabelFamilia.Text));
+                }
                 this.reservarIdCompleto(used);
-                this.loadObservationTable(version, Convert.ToInt16(this.LabelFamilia.Text));
+                
             }
             else
             {
@@ -29,28 +39,33 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
                 this.LabelFamilia.Text = Convert.ToString(this.getNewId());
                 this.HiddenFieldIdentificador.Value = this.LabelFamilia.Text;
 
-                String userFull = User.Identity.Name.ToString(); //HttpContext.Current.User.Identity.Name;
-                String user = "";
-                bool save = false;
-                foreach (char a in userFull)
-                {
-                    if (save)
-                    {
-                        user += a;
-                    }
-                    if (a == '\\')
-                    {
-                        save = true;
-                    }
-
-                }
-                LabelAutor.Text = user;
+                LabelAutor.Text = this.getShortUser();
                 LabelFechaCreacion.Text = DateTime.Today.Date.ToShortDateString();
                 this.reservarId();
             }
             this.HiddenFieldVersion.Value = this.LabelVersion.Text;
             this.HiddenFieldIdentificador.Value = this.LabelFamilia.Text;
         }
+    }
+
+    private String getShortUser()
+    {
+        String userFull = User.Identity.Name.ToString(); //HttpContext.Current.User.Identity.Name;
+        String user = "";
+        bool save = false;
+        foreach (char a in userFull)
+        {
+            if (save)
+            {
+                user += a;
+            }
+            if (a == '\\')
+            {
+                save = true;
+            }
+
+        }
+        return user;
     }
 
     public void loadObservationTable(int pVersion, int pIdentificador)
