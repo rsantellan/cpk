@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SLAttrFliaSite", "SLAttrFliaSite\", "{F29D3E2D-CF7E-47D0-97EF-1E11B693458A}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFramework = "3.5"
+		Debug.AspNetCompiler.VirtualPath = "/SLAttrFliaSite"
+		Debug.AspNetCompiler.PhysicalPath = "SLAttrFliaSite\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\SLAttrFliaSite\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/SLAttrFliaSite"
+		Release.AspNetCompiler.PhysicalPath = "SLAttrFliaSite\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\SLAttrFliaSite\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "2355"
+		ProjOutputReferences = "{6e44c963-af59-4e48-ab9d-dc59da0f661b}|ClientBin|false;"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SLAttrFlia", "SLAttrFlia\SLAttrFlia.csproj", "{6E44C963-AF59-4E48-AB9D-DC59DA0F661B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F29D3E2D-CF7E-47D0-97EF-1E11B693458A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F29D3E2D-CF7E-47D0-97EF-1E11B693458A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F29D3E2D-CF7E-47D0-97EF-1E11B693458A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F29D3E2D-CF7E-47D0-97EF-1E11B693458A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E44C963-AF59-4E48-AB9D-DC59DA0F661B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E44C963-AF59-4E48-AB9D-DC59DA0F661B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E44C963-AF59-4E48-AB9D-DC59DA0F661B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E44C963-AF59-4E48-AB9D-DC59DA0F661B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

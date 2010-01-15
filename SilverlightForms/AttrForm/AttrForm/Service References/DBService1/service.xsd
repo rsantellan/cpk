@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/" />
+  <xs:element name="SaveNode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIDParent" type="xs:int" />
+        <xs:element minOccurs="0" name="pIDatt" type="xs:int" />
+        <xs:element minOccurs="0" name="pName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveNodeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SaveNodeResult" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTree">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pAttr" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTreeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="GetTreeResult" nillable="true" type="q1:ArrayOfTreeNodos" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetItem">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdNodo" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetItemResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="GetItemResult" nillable="true" type="q2:ArrayOfTreeEstructuraItems" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveNodeEstructure">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIDTree" type="xs:int" />
+        <xs:element minOccurs="0" name="pEsReq" type="xs:boolean" />
+        <xs:element minOccurs="0" name="pSolol" type="xs:boolean" />
+        <xs:element minOccurs="0" name="pMulti" type="xs:boolean" />
+        <xs:element minOccurs="0" name="pSubTipo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pOrigDatos" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pValores" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pRuta" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pMetodo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pTipo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pLargo" type="xs:int" />
+        <xs:element minOccurs="0" name="pDec" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveNodeEstructureResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

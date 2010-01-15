@@ -1,0 +1,17 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="BasicHttpBinding_DBService" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://blackpoint.denallix.com:8080/DBService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_DBService"
+                contract="DBService1.DBService" name="BasicHttpBinding_DBService" />
+        </client>
+    </system.serviceModel>
+</configuration>

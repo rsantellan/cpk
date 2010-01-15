@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d4dc97b8-1ba6-42a0-9a1d-ee77a60820f4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.Collection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://blackpoint:8080/DBService1.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="DBService1.wsdl" MetadataType="Wsdl" ID="43e01cdc-3d9e-4a7c-b0d6-3363db2ee4f3" SourceId="1" SourceUrl="http://blackpoint:8080/DBService1.svc?wsdl" />
+    <MetadataFile FileName="DBService11.wsdl" MetadataType="Wsdl" ID="857e3b44-ef5a-4be9-a322-8ea77439efc6" SourceId="1" SourceUrl="http://blackpoint:8080/DBService1.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="DBService1.disco" MetadataType="Disco" ID="edd887dd-6e74-40ff-b201-8a2d6580d86a" SourceId="1" SourceUrl="http://blackpoint:8080/DBService1.svc?disco" />
+    <MetadataFile FileName="DBService1.xsd" MetadataType="Schema" ID="ad15e24f-9d78-429f-ada2-53ed32565a1e" SourceId="1" SourceUrl="http://blackpoint:8080/DBService1.svc?xsd=xsd1" />
+    <MetadataFile FileName="DBService11.xsd" MetadataType="Schema" ID="257a1409-692e-47ae-b599-ce3e282efe5a" SourceId="1" SourceUrl="http://blackpoint:8080/DBService1.svc?xsd=xsd0" />
+    <MetadataFile FileName="DBService12.xsd" MetadataType="Schema" ID="9b9453f9-b84b-402f-baa0-37d1f5a635a4" SourceId="1" SourceUrl="http://blackpoint:8080/DBService1.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

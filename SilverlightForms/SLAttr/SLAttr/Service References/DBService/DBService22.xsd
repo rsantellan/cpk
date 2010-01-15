@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfAtributoInformacionGeneral">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AtributoInformacionGeneral" nillable="true" type="tns:AtributoInformacionGeneral" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAtributoInformacionGeneral" nillable="true" type="tns:ArrayOfAtributoInformacionGeneral" />
+  <xs:complexType name="AtributoInformacionGeneral">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Identificador" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Autor" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="FechaCreacion" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FechaVigenciaDesde" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FechaVigenciaHasta" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EsModificable" nillable="true" type="xs:unsignedByte" />
+      <xs:element minOccurs="0" name="FamiliaAtributo" nillable="true" type="tns:ArrayOfFamiliaAtributo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AtributoInformacionGeneral" nillable="true" type="tns:AtributoInformacionGeneral" />
+  <xs:complexType name="ArrayOfFamiliaAtributo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FamiliaAtributo" nillable="true" type="tns:FamiliaAtributo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFamiliaAtributo" nillable="true" type="tns:ArrayOfFamiliaAtributo" />
+  <xs:complexType name="FamiliaAtributo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="idFamilia" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="idAtributo" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FamiliaAtributo" nillable="true" type="tns:FamiliaAtributo" />
+</xs:schema>

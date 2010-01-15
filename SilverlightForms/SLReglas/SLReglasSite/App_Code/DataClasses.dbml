@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="formFlows" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=blackpoint;Initial Catalog=formFlows;Persist Security Info=True;User ID=py" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="formFlowsConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AttrReglas" Member="AttrReglas">
+    <Type Name="AttrReglas">
+      <Column Name="IDRegla" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NomRegal" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IDAttRelacionado" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="NomModoEjecucion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

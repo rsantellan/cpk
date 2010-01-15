@@ -1,0 +1,18 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:data="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data" xmlns:dataFormToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.DataForm.Toolkit"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Class="SLAttrFlia.MainPage"
+	Width="600" Height="220" mc:Ignorable="d">
+
+	<Grid x:Name="LayoutRoot" Background="White">
+	    <data:DataGrid x:Name="GridAttr" Height="100" HorizontalAlignment="Left" Margin="37,64,0,0" VerticalAlignment="Top" Width="150"/>
+		<Button x:Name="btnBuscar" HorizontalAlignment="Right" Margin="0,17,100,0" VerticalAlignment="Top" Width="75" Content="Buscar"/>
+		<TextBox x:Name="txtbuscar" HorizontalAlignment="Right" Margin="0,17,181,0" VerticalAlignment="Top" TextWrapping="Wrap" Width="64"/>
+		<Button x:Name="btnAgregar" Margin="227,82,298,0" VerticalAlignment="Top" Content="&lt;&lt;Agregar" d:LayoutOverrides="VerticalAlignment, GridBox"/>
+		<Button x:Name="btnQuitar" Margin="227,117,298,0" VerticalAlignment="Top" Content="Quitar&gt;&gt;" d:LayoutOverrides="VerticalAlignment, GridBox"/>
+		<data:DataGrid x:Name="GridAttrNom" HorizontalAlignment="Right" Margin="0,64,100,56" Width="163" d:LayoutOverrides="VerticalAlignment"/>
+		<TextBlock x:Name="ErrorConsole" HorizontalAlignment="Left" Margin="37,0,0,36" VerticalAlignment="Bottom" TextWrapping="Wrap"/>
+	</Grid>
+</UserControl>

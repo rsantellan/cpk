@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AttrFormSite", "AttrFormSite\", "{279EFC10-1006-4E2B-B42E-D2BDF6A28836}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFramework = "3.5"
+		ProjectReferences = "{FF22C35A-F556-48E1-AF5B-8C956BE80AAC}|AttrForm.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/AttrFormSite"
+		Debug.AspNetCompiler.PhysicalPath = "AttrFormSite\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\AttrFormSite\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/AttrFormSite"
+		Release.AspNetCompiler.PhysicalPath = "AttrFormSite\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\AttrFormSite\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "1860"
+		ProjOutputReferences = "{ff22c35a-f556-48e1-af5b-8c956be80aac}|ClientBin|false;"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttrForm", "AttrForm\AttrForm.csproj", "{FF22C35A-F556-48E1-AF5B-8C956BE80AAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{279EFC10-1006-4E2B-B42E-D2BDF6A28836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{279EFC10-1006-4E2B-B42E-D2BDF6A28836}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{279EFC10-1006-4E2B-B42E-D2BDF6A28836}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{279EFC10-1006-4E2B-B42E-D2BDF6A28836}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF22C35A-F556-48E1-AF5B-8C956BE80AAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF22C35A-F556-48E1-AF5B-8C956BE80AAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF22C35A-F556-48E1-AF5B-8C956BE80AAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF22C35A-F556-48E1-AF5B-8C956BE80AAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

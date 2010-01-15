@@ -1,0 +1,21 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="BasicHttpBinding_DBService2" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+                <binding name="BasicHttpBinding_DBService21" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://blackpoint:8080/DBService2.svc" binding="basicHttpBinding"
+                bindingConfiguration="BasicHttpBinding_DBService21" contract="DBService.DBService2"
+                name="BasicHttpBinding_DBService2" />
+        </client>
+    </system.serviceModel>
+</configuration>

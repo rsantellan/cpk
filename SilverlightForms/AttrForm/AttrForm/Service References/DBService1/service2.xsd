@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfTreeNodos">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TreeNodos" nillable="true" type="tns:TreeNodos" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTreeNodos" nillable="true" type="tns:ArrayOfTreeNodos" />
+  <xs:complexType name="TreeNodos">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IDTree" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NomTree" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IDParent" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IDAttr" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TreeNodos" nillable="true" type="tns:TreeNodos" />
+  <xs:complexType name="ArrayOfTreeEstructuraItems">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TreeEstructuraItems" nillable="true" type="tns:TreeEstructuraItems" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTreeEstructuraItems" nillable="true" type="tns:ArrayOfTreeEstructuraItems" />
+  <xs:complexType name="TreeEstructuraItems">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IDTreeEstructuraItem" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EsRequerido" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SoloLectura" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MultiSeleccion" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SubTipo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrigenDeDatos" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Valores" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Ruta" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Metodo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tipo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Largo" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Decimales" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TreeEstructuraItems" nillable="true" type="tns:TreeEstructuraItems" />
+</xs:schema>
