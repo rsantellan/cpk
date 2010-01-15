@@ -131,6 +131,8 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
         dt.Columns.Add(dc);
         dc = new DataColumn("Autor");
         dt.Columns.Add(dc);
+        dc = new DataColumn("NuevaVersionMostrar");
+        dt.Columns.Add(dc);
 
         DataRow dr;
         if (datos.Tables[0].Rows.Count == 0)
@@ -168,6 +170,7 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
                 misDatos.Add("Activo");
             }
             misDatos.Add(row[2].ToString());
+            misDatos.Add("Nueva version");
             dr = dt.NewRow();
             dr.ItemArray = misDatos.ToArray();
             dt.Rows.Add(dr);

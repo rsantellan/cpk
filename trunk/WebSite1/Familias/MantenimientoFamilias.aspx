@@ -225,6 +225,9 @@
                 <asp:BoundField DataField="Estado" HeaderText="Estado" />
                 <asp:BoundField DataField="Vigente" HeaderText="Vigente" />
                 <asp:BoundField DataField="Autor" HeaderText="Autor" />
+                <asp:HyperLinkField HeaderText="" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="InsertarFamilia.aspx?id={0}&ver=1" DataTextField="VersionadoMostrar"/>
+                <asp:BoundField DataField="NuevaVersionMostrar" HeaderText="NuevaVersionMostrar" 
+                    Visible="False" />
             </Columns>
         </asp:GridView>
     </div>
