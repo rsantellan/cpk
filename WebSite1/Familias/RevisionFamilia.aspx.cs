@@ -117,7 +117,11 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
         Family changed = abmcFamily.getFamily(Convert.ToInt16(this.HiddenFieldId.Value));
         changed.Estado = review.Resolution;
         abmcFamily.updateFamily(changed);
-        Response.Redirect("MantenimientoFamilias.aspx");
+        if (review.Resolution == "Rechazado")
+        {
+            Response.Redirect("http://moss.denallix.com/_layouts/FormServer.aspx?XsnLocation=http://moss.denallix.com/FliaReject/Forms/template_.xsn&OpenIn=browser&SaveLocation=http://moss.denallix.com/FliaReject");
+        }
+        
     }
 
     

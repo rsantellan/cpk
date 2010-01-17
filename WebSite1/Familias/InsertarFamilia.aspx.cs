@@ -23,7 +23,9 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
                 if (!String.IsNullOrEmpty(newVersion))
                 {
                     LabelVersion.Text = "0";
-                    this.LabelFamilia.Text = Convert.ToString(this.getNewId());
+                    int newId = this.getNewId();
+                    this.LabelFamilia.Text = Convert.ToString(newId);
+                    used.Identificador = newId;
                 }
                 else
                 {
@@ -177,14 +179,6 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
         {
             DateTime FechaVigenciaDesde = DateTime.Parse(this.TextCalendarDesde.Text);
             DateTime FechaVigenciaHasta = DateTime.Parse(this.TextBoxCalendarHasta.Text);
-            //if (FechaVigenciaDesde.CompareTo(FechaVigenciaHasta) < 0)
-            //{
-            //    RangeValidator2.IsValid = false;
-            //}
-            //else
-            //{
-            //    this.guardar();
-            //}
             this.guardar();
         }
     }
@@ -206,7 +200,8 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
         a.Usuario = userFull;
         ABMCFamily abmc = new ABMCFamily();
         abmc.updateFamily(a);
-        Response.Redirect("MantenimientoFamilias.aspx");
+        Response.Redirect("http://moss.denallix.com/_layouts/FormServer.aspx?XsnLocation=http://moss.denallix.com/Rev%20Flias/Forms/template_.xsn&OpenIn=browser&SaveLocation=http://moss.denallix.com/Rev%20Flias");
+        
     }
     protected void ButtonCancelar_Click(object sender, EventArgs e)
     {
