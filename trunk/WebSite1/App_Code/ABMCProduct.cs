@@ -13,17 +13,17 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 
 /// <summary>
-/// Descripción breve de ABMCFamilia
+/// Descripción breve de ABMCProduct
 /// </summary>
-public class ABMCFamily
+public class ABMCProduct
 {
-    private Family _familia;
-    public ABMCFamily()
+    //private Family _familia;
+    public ABMCProduct()
     {
         //this._atributo = atributo;
     }
 
-    public static int getIdentifierOfFamilyById(int id)
+    public static int getIdentifierOfProductById(int id)
     {
         int identifier = 0;
         SqlCommand commandSql = new SqlCommand();
@@ -33,7 +33,7 @@ public class ABMCFamily
             commandSql.Connection = sqlConn;
             commandSql = sqlConn.CreateCommand();
 
-            commandSql.CommandText = "SELECT Identificador FROM FamiliaInformacionGeneral WHERE id = @ID ";
+            commandSql.CommandText = "SELECT Identificador FROM ProductoInformacionGeneral WHERE id = @ID ";
             SqlParameter p_id = commandSql.Parameters.Add("ID", SqlDbType.Int);
             p_id.Value = id;
             sqlConn.Open();
@@ -48,7 +48,7 @@ public class ABMCFamily
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception Obtener identificador ABMCFamilia");
+            Log.saveInLog("Exception Obtener identificador ABMCProduct");
             Log.saveInLog(e.Message);
         }
         finally
@@ -70,7 +70,7 @@ public class ABMCFamily
             commandSql.Connection = sqlConn;
             commandSql = sqlConn.CreateCommand();
 
-            commandSql.CommandText = "SELECT Identificador FROM FamiliaInformacionGeneral WHERE Identificador = (SELECT MAX(Identificador)  FROM FamiliaInformacionGeneral) ";
+            commandSql.CommandText = "SELECT Identificador FROM ProductoInformacionGeneral WHERE Identificador = (SELECT MAX(Identificador)  FROM ProductoInformacionGeneral) ";
             sqlConn.Open();
             System.Data.SqlClient.SqlDataReader DbReader = commandSql.ExecuteReader();
 
@@ -83,7 +83,7 @@ public class ABMCFamily
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception obtener ultimo identificador ABMCFamilia");
+            Log.saveInLog("Exception obtener ultimo identificador ABMCProduct");
             Log.saveInLog(e.Message);
         }
         finally
@@ -95,9 +95,10 @@ public class ABMCFamily
         return max;
     }
 
-    public Family getFamilyByIdentifierAndVersion(int pIdentificador, int pVersion)
+    public Product getProductByIdentifierAndVersion(int pIdentificador, int pVersion)
     {
-        String sql = "SELECT " +
+
+       String sql = "SELECT " +
                         "Id," +
                         "Identificador," +
                         "Autor," +
@@ -106,10 +107,11 @@ public class ABMCFamily
                         "FechaVigenciaDesde," +
                         "FechaVigenciaHasta," +
                         "Nombre," +
-                        "Grupo," +
-                        "estado" +
+                        "Descripcion," +
+                        "Familia," +
+                        "Estado" +
                         " FROM " +
-                        " FamiliaInformacionGeneral " +
+                        " ProductoInformacionGeneral " +
                         " WHERE " +
                         " Identificador = @IDENTIFICADOR "+
                         " AND Version = @VERSION ";
@@ -127,19 +129,19 @@ public class ABMCFamily
             sqlConn.Open();
             SqlDataAdapter da = new SqlDataAdapter(commandSql);
             sqlConn.Close();
-            da.Fill(ds, "Atributo");
+            da.Fill(ds, "Producto");
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception obtener atributo por identificador y version ABMCFamilia");
+            Log.saveInLog("Exception obtener atributo por identificador y version ABMCProduct");
             Log.saveInLog(e.Message);
         }
         finally
         {
             sqlConn.Close();
         }
-        Family salida = new Family();
+        Product salida = new Product();
         if (ds.Tables[0].Rows.Count > 0)
         {
             DataRow row = ds.Tables[0].Rows[0];
@@ -151,7 +153,7 @@ public class ABMCFamily
             salida.FechaVigenciaDesde = DateTime.Parse(row[5].ToString());
             salida.FechaVigenciaHasta = DateTime.Parse(row[6].ToString());
             salida.Nombre = row[7].ToString();
-            salida.Grupo = row[8].ToString();
+            salida.Descripcion = row[8].ToString();
             salida.Estado = row[9].ToString();
             return salida;
         }
@@ -162,7 +164,7 @@ public class ABMCFamily
         
     }
 
-    public Family getFamily(int id)
+    public Product getProduct(int id)
     {
         String sql = "SELECT "+
                         "Id,"+
@@ -173,10 +175,11 @@ public class ABMCFamily
                         "FechaVigenciaDesde,"+
                         "FechaVigenciaHasta,"+
                         "Nombre,"+
-                        "Grupo," +
+                        "Descripcion," +
+                        "Familia," +
                         "estado" +
                         " FROM "+
-                        " FamiliaInformacionGeneral "+
+                        " ProductoInformacionGeneral " +
                         " WHERE " +
                         " Id = @ID;";
         SqlCommand commandSql = new SqlCommand();
@@ -196,14 +199,14 @@ public class ABMCFamily
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception obtenerAtributo ABMCFamilia");
+            Log.saveInLog("Exception obtenerAtributo ABMCProduct");
             Log.saveInLog(e.Message);
         }
         finally
         {
             sqlConn.Close();
         }
-        Family salida = new Family();
+        Product salida = new Product();
         if (ds.Tables.Count == 0) return null;
         if (ds.Tables[0].Rows.Count > 0)
         {
@@ -216,8 +219,9 @@ public class ABMCFamily
             salida.FechaVigenciaDesde = DateTime.Parse(row[5].ToString());
             salida.FechaVigenciaHasta = DateTime.Parse(row[6].ToString());
             salida.Nombre = row[7].ToString();
-            salida.Grupo = row[8].ToString();
-            salida.Estado = row[9].ToString();
+            salida.Descripcion = row[8].ToString();
+            salida.FamilyId = Convert.ToInt16(row[9].ToString());
+            salida.Estado = row[10].ToString();
             return salida;
         }
         else
@@ -227,9 +231,9 @@ public class ABMCFamily
         
     }
 
-    public Boolean updateFamily(Family guardar)
+    public Boolean updateProduct(Product guardar)
     {
-        String sql = " UPDATE FamiliaInformacionGeneral " +
+        String sql = " UPDATE ProductoInformacionGeneral " +
                     " SET " +
                     " Identificador = @IDENTIFICADOR," +
                     " Autor = @AUTOR," +
@@ -238,7 +242,8 @@ public class ABMCFamily
                     " FechaVigenciaDesde = @FECHAVIGENCIADESDE," +
                     " FechaVigenciaHasta = @FECHAVIGENCIAHASTA," +
                     " Nombre = @NOMBRE," +
-                    " Grupo = @GRUPO, " +
+                    " Descripcion = @DESCRIPCION, " +
+                    " Familia = @FAMILIA, " +
                     " Estado = @ESTADO, " +
                     " Usuario = @USUARIO " +
                     " WHERE " +
@@ -263,13 +268,15 @@ public class ABMCFamily
         p_fechaVigenciaHasta.Value = guardar.FechaVigenciaHasta;
         SqlParameter p_nombre = commandSql.Parameters.Add("NOMBRE", SqlDbType.NChar);
         p_nombre.Value = guardar.Nombre;
-        SqlParameter p_descripcion = commandSql.Parameters.Add("GRUPO", SqlDbType.NChar);
-        p_descripcion.Value = guardar.Grupo;
+        SqlParameter p_descripcion = commandSql.Parameters.Add("DESCRIPCION", SqlDbType.NChar);
+        p_descripcion.Value = guardar.Descripcion;
+        SqlParameter p_familia = commandSql.Parameters.Add("FAMILIA", SqlDbType.Int);
+        p_familia.Value = guardar.FamilyId;
         SqlParameter p_estado = commandSql.Parameters.Add("ESTADO", SqlDbType.NChar);
         p_estado.Value = guardar.Estado;
         SqlParameter p_usuario = commandSql.Parameters.Add("USUARIO", SqlDbType.NChar);
         p_usuario.Value = guardar.Usuario;
-        Log.saveInLog("--------------Update Familia ---------------");
+        Log.saveInLog("--------------Update Producto ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
         foreach (SqlParameter item in commandSql.Parameters)
@@ -288,7 +295,7 @@ public class ABMCFamily
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception  updateAtributo ABMCFamilia");
+            Log.saveInLog("Exception  updateAtributo ABMCProduct");
             Log.saveInLog(e.Message);
         }
         finally
@@ -298,13 +305,13 @@ public class ABMCFamily
         return salida;
     }
 
-    public Boolean saveFamily(Family guardar)
+    public Boolean saveProduct(Product guardar)
     {
         SqlCommand commandSql = new SqlCommand();
         SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         Boolean salida = false;
         String sql = "INSERT INTO " +
-            "FamiliaInformacionGeneral " +
+            "ProductoInformacionGeneral " +
             "(" +
                 "Identificador," +
                 "Autor," +
@@ -313,8 +320,8 @@ public class ABMCFamily
                 "FechaVigenciaDesde," +
                 "FechaVigenciaHasta," +
                 "Nombre," +
-                "Grupo," +
-                "Estado," +
+                "Descripcion," +
+                "Familia," +
                 "Usuario" +
             ")" +
             "VALUES"+
@@ -326,8 +333,8 @@ public class ABMCFamily
                 "@FECHAVIGENCIADESDE," +
                 "@FECHAVIGENCIAHASTA," +
                 "@NOMBRE," +
-                "@GRUPO,"+
-                "@ESTADO," +
+                "@DESCRIPCION,"+
+                "@FAMILIA," +
                 "@USUARIO" +
             ");";
         commandSql.CommandText = sql;
@@ -345,13 +352,13 @@ public class ABMCFamily
         p_fechaVigenciaHasta.Value = guardar.FechaVigenciaHasta;
         SqlParameter p_nombre = commandSql.Parameters.Add("NOMBRE", SqlDbType.NChar);
         p_nombre.Value = guardar.Nombre;
-        SqlParameter p_descripcion = commandSql.Parameters.Add("GRUPO", SqlDbType.NChar);
-        p_descripcion.Value = guardar.Grupo;
-        SqlParameter p_estado = commandSql.Parameters.Add("ESTADO", SqlDbType.NChar);
-        p_estado.Value = guardar.Estado;
+        SqlParameter p_descripcion = commandSql.Parameters.Add("DESCRIPCION", SqlDbType.NChar);
+        p_descripcion.Value = guardar.Descripcion;
+        SqlParameter p_familia = commandSql.Parameters.Add("FAMILIA", SqlDbType.Int);
+        p_familia.Value = guardar.FamilyId;
         SqlParameter p_usuario = commandSql.Parameters.Add("USUARIO", SqlDbType.NChar);
         p_usuario.Value = guardar.Usuario;
-        Log.saveInLog("--------------Insert Familia ---------------");
+        Log.saveInLog("--------------Insert Producto ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
         foreach (SqlParameter item in commandSql.Parameters)
@@ -370,7 +377,7 @@ public class ABMCFamily
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception guardarAtributo ABMCFamilia");
+            Log.saveInLog("Exception guardarAtributo ABMCProduct");
             Log.saveInLog(e.Message);
         }
         finally
@@ -395,7 +402,7 @@ public class ABMCFamily
     /// <param name="fechaCreacionDesde"></param>
     /// <param name="fechaCreacionHasta"></param>
     /// <returns></returns>
-    public DataSet searchFamily(String nombre, int estado, String autor, String responsables, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaVigenciaDesde, DateTime fechaVigenciaHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
+    public DataSet searchProduct(String nombre, int estado, String autor, String responsables, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaVigenciaDesde, DateTime fechaVigenciaHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
     {
 
 
@@ -408,10 +415,11 @@ public class ABMCFamily
             "FechaVigenciaDesde," +
             "FechaVigenciaHasta," +
             "Nombre," +
-            "Grupo," +
+            "Descripcion," +
+            "Familia," +
             "Estado" +
             " FROM " +
-            "FamiliaInformacionGeneral";
+            "ProductoInformacionGeneral";
 
         bool buscarNombre = false;
         bool buscarVersion = false;
@@ -486,7 +494,7 @@ public class ABMCFamily
         }
         consulta += " Id IN (SELECT max(Id)"
                     + " FROM "
-                    + "FamiliaInformacionGeneral "
+                    + "ProductoInformacionGeneral "
                     + "GROUP BY "
                     + "Identificador) AND FechaCreacion IS NOT NULL AND Autor <> ''";
         consulta += " ORDER BY Identificador";
@@ -546,13 +554,13 @@ public class ABMCFamily
             switch (estado)
             {
                 case 0:
-                    p_estado.Value = Family.ENCURSO;
+                    p_estado.Value = Product.ENCURSO;
                     break;
                 case 1:
-                    p_estado.Value = Family.RECHAZADO;
+                    p_estado.Value = Product.RECHAZADO;
                     break;
                 case 2:
-                    p_estado.Value = Family.ACEPTADO;
+                    p_estado.Value = Product.ACEPTADO;
                     break;
                 default:
                     break;
@@ -562,7 +570,7 @@ public class ABMCFamily
         SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.Connection = sqlConn;
         DataSet ds = new DataSet();
-        Log.saveInLog("--------------Busqueda de Familias ---------------");
+        Log.saveInLog("--------------Busqueda de Productos ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
         foreach (SqlParameter item in commandSql.Parameters)
@@ -575,11 +583,11 @@ public class ABMCFamily
         {
             sqlConn.Open();
             SqlDataAdapter da = new SqlDataAdapter(commandSql);
-            da.Fill(ds, "Atributos");
+            da.Fill(ds, "Productos");
         }
         catch (Exception e)
         {
-            Log.saveInLog("Exception buscarAtributos ABMCFamilia");
+            Log.saveInLog("Exception buscarAtributos ABMCProduct");
             Log.saveInLog(e.Message);
             Console.WriteLine(e.Message);
         }
@@ -606,7 +614,7 @@ public class ABMCFamily
     /// <param name="fechaCreacionDesde"></param>
     /// <param name="fechaCreacionHasta"></param>
     /// <returns></returns>
-    public DataSet searchFamilyVersion(int identificador, int estado, String autor, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
+    public DataSet searchProductVersion(int identificador, int estado, String autor, int version, DateTime fechaInicioDesde, DateTime FechaInicioHasta, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
     {
 
 
@@ -619,10 +627,11 @@ public class ABMCFamily
             "FechaVigenciaDesde," +
             "FechaVigenciaHasta," +
             "Nombre," +
-            "Grupo," +
+            "Descripcion," +
+            "Familia," +
             "Estado" +
             " FROM " +
-            "FamiliaInformacionGeneral";
+            "ProductoInformacionGeneral";
 
         bool buscarVersion = false;
         bool buscarInicio = false;
@@ -692,13 +701,13 @@ public class ABMCFamily
             switch (estado)
             {
                 case 0:
-                    p_estado.Value = Family.ENCURSO;
+                    p_estado.Value = Product.ENCURSO;
                     break;
                 case 1:
-                    p_estado.Value = Family.RECHAZADO;
+                    p_estado.Value = Product.RECHAZADO;
                     break;
                 case 2:
-                    p_estado.Value = Family.ACEPTADO;
+                    p_estado.Value = Product.ACEPTADO;
                     break;
                 default:
                     break;
@@ -707,7 +716,7 @@ public class ABMCFamily
         }
         SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         commandSql.Connection = sqlConn;
-        Log.saveInLog("--------------Versionado Familia ---------------");
+        Log.saveInLog("--------------Versionado Producto ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
         foreach (SqlParameter item in commandSql.Parameters)
@@ -726,7 +735,7 @@ public class ABMCFamily
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception buscarAtributosVersionado ABMCFamilia");
+            Log.saveInLog("Exception buscarAtributosVersionado ABMCProducto");
             Log.saveInLog(e.Message);
         }
         finally
@@ -738,38 +747,10 @@ public class ABMCFamily
         return ds;
     }
 
-    public static DataSet getAllFamilyOnLastVersion()
+
+    public Boolean deleteProduct(int pId)
     {
-        String consulta = "SELECT [Id], [Nombre] FROM [FamiliaInformacionGeneral]  WHERE [Id] IN (SELECT max(Id) FROM FamiliaInformacionGeneral GROUP BY Identificador)";
-        SqlCommand commandSql = new SqlCommand();
-        commandSql.CommandText = consulta;
-        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
-        commandSql.Connection = sqlConn;
-        DataSet ds = new DataSet();
-        try
-        {
-            sqlConn.Open();
-            SqlDataAdapter da = new SqlDataAdapter(commandSql);
-            da.Fill(ds, "Atributos");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-            Log.saveInLog("Obtener todas las familias con ultimo id ABMCFamilia");
-            Log.saveInLog(e.Message);
-        }
-        finally
-        {
-            sqlConn.Close();
-        }
-
-
-        return ds;
-    }
-
-    public Boolean deleteFamily(int pId)
-    {
-        String consulta = "DELETE FROM FamiliaInformacionGeneral WHERE Id = @ID";
+        String consulta = "DELETE FROM ProductoInformacionGeneral WHERE Id = @ID";
         SqlCommand commandSql = new SqlCommand();
         commandSql.CommandText = consulta;
 
@@ -778,9 +759,10 @@ public class ABMCFamily
         SqlConnection sqlConn = DBManager.getInstanceOfConnection();
         Boolean salida = false;
         commandSql.Connection = sqlConn;
-        Log.saveInLog("--------------Eliminar Familia ---------------");
+        Log.saveInLog("--------------Eliminar Producto ---------------");
         Log.saveInLog(DateTime.Now.ToShortTimeString());
         Log.saveInLog(commandSql.CommandText);
+        Log.saveInLog("El id es : " + pId.ToString()); 
         try
         {
             sqlConn.Open();
@@ -790,7 +772,7 @@ public class ABMCFamily
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            Log.saveInLog("Exception eliminar ABMCFamilia");
+            Log.saveInLog("Exception eliminar ABMCProducto");
             Log.saveInLog(e.Message);
         }
         finally

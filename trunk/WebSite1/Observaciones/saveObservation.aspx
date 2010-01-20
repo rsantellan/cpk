@@ -7,7 +7,10 @@
         string observacion = Request.QueryString["observacion"];
         int objId = Convert.ToInt16(Request.QueryString["objectId"]);
         string objClass = Request.QueryString["objectClass"];
-        int objVersion = Convert.ToInt16(Request.QueryString["objectVersion"]);
+        int objVersion = 0;
+        if(!String.IsNullOrEmpty(Request.QueryString["objectVersion"])){
+            objVersion =Convert.ToInt16(Request.QueryString["objectVersion"]);
+        }
         String userFull = HttpContext.Current.User.Identity.Name;
         String user = "";
         bool save = false;

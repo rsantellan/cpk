@@ -1,0 +1,28 @@
+﻿body
+{
+}
+
+.center
+{
+	float: left;
+	width: 1163px;
+}
+
+.cssNavegacion
+{
+	float: left;
+	text-align: center;
+	width: 100%;
+
+}
+
+#InformacionBasica
+{
+   height: 350PX;
+   text-align: center;
+   width: 70%;
+   margin-left: 200px;
+}
+li{
+  margin-left: 20px;
+}

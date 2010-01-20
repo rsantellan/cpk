@@ -223,6 +223,67 @@ public class ABMCObservacion
         return lista;
     }
 
+    public List<Observacion> obtenerObservaciones(String pObjectClass, int pObjectId)
+    {
+
+        String consulta = " SELECT " +
+            " id," +
+            "tarea," +
+            "observacion," +
+            "autor," +
+            "fecha," +
+            "object_id, " +
+            "object_class, " +
+            "object_version " +
+            " FROM " +
+            "observaciones " +
+            " WHERE " +
+            " object_id = @ID " +
+            " AND object_class = @OBJECTCLASS";
+
+
+        SqlCommand commandSql = new SqlCommand();
+        commandSql.CommandText = consulta;
+
+        SqlParameter p_id = commandSql.Parameters.Add("ID", System.Data.SqlDbType.Int);
+        p_id.Value = pObjectId;
+        SqlParameter p_class = commandSql.Parameters.Add("OBJECTCLASS", System.Data.SqlDbType.NChar);
+        p_class.Value = pObjectClass;
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
+        commandSql.Connection = sqlConn;
+        DataSet ds = new DataSet();
+        try
+        {
+            sqlConn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(commandSql);
+            da.Fill(ds, "Observacion");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+        List<Observacion> lista = new List<Observacion>();
+        if (ds.Tables.Count == 0) return lista;
+        foreach (DataRow row in ds.Tables["Observacion"].Rows)
+        {
+            Observacion ob = new Observacion();
+            ob.Id = (int)row[0];
+            ob.Tarea = (string)row[1];
+            ob.MiObservacion = (string)row[2];
+            ob.Autor = (string)row[3];
+            ob.Fecha = (DateTime)row[4];
+            ob.ObjectId = (int)row[5];
+            ob.ObjectClass = (string)row[6];
+            ob.ObjectVersion = (int)row[7];
+            lista.Add(ob);
+        }
+        return lista;
+    }
+
     public Boolean guardarObservacion(Observacion pObs)
     {
         SqlCommand commandSql = new SqlCommand();
