@@ -4,7 +4,10 @@
             case 0:
                 place++;
                 hideStuff('InformacionBasica');
-                showStuff('dinamico1');
+                showStuff('divReglas');
+                showStuff('ButtonSalvar');
+                showStuff('ButtonAtras');
+                hideStuff('ButtonAdelante'); 
                 break;
             case 1:
                 place++;
@@ -20,7 +23,10 @@
             case 1:
                 showStuff('InformacionBasica');
                 place--;
-                hideStuff('dinamico1');
+                hideStuff('divReglas');
+                hideStuff('ButtonSalvar');
+                showStuff('ButtonAdelante');
+                hideStuff('ButtonAtras');
                 break;
             case 2:
                 place--;
@@ -35,11 +41,11 @@
     
     Event.observe(window, 'load', function(){
            loadEvents();
-      }); 
-    function loadEvents(){
+      });
+      function loadEvents() {
+          hideStuff('muestra');
         hideStuff('ButtonSalvar');
-        hideStuff('dinamico1');
-        hideStuff('dinamico2');
+        hideStuff('divReglas');
 		$('formularioIngreso').hide();
 		$('ButtonSalvar').onclick=function(){
 		    availableSave();
@@ -49,6 +55,7 @@
         save = true;
     }
     var save = false;
+	
     function getIdentifier(){
         return $F('HiddenFieldIdentificador');
     }
@@ -57,25 +64,22 @@
         return $F('HiddenFieldVersion');
     }
     
-    	function showStuff(id) {
+    function showStuff(id) {
 		document.getElementById(id).style.display = 'block';
 	}
+	
 	function hideStuff(id) {
 		document.getElementById(id).style.display = 'none';
 	}
-
-	function leave() {
-	    alert(save);
+	
+	function leave(){
 	    if(save)return;
 	    var objectId = $F('HiddenFieldId');
 		$('HiddenFieldId').value = "0";
 		if(objectId == 0) return;
 		var ident = getIdentifier();
 		var version =getVersion();
-		url = 'cleanUpAtribute.aspx?id=' + escape(objectId) + '&identifier=' + escape(ident) + '&version=' + escape(version);
-		alert(objectId);
-		alert(ident);
-		alert(version);
+		url = 'cleanUpProduct.aspx?id='+escape(objectId)+'&identifier='+escape(ident)+'&version='+escape(version);
 		var myAjax = new Ajax.Request(
 			url,
 			{
@@ -89,6 +93,26 @@
 	
 	window.onbeforeunload = function(){
 	    leave();
+	}
+
+	function getGroupOfFamily() {
+	    var objectId = $F('DropDownList1');
+	    url = 'getFamilyGroup.aspx?id=' + escape(objectId);
+	    var myAjax = new Ajax.Request(
+			url,
+			{
+			    method: 'post',
+			    onSuccess: function(req) {
+			        var resultado = req.responseText;
+			        $('mostrado').value = resultado;
+			        $('muestra').value = resultado;
+			    }
+
+			});
+	}
+
+	function backToNormal() {
+	    $('mostrado').value = $('muestra').value;
 	}
 	
 	function removeAllCssClasses(el) {

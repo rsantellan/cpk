@@ -125,7 +125,7 @@
     </div>
     <div id="navegacion" class="center cssNavegacion">
         <asp:Button ID="ButtonCancelar" runat="server" Text="Cancelar" 
-            onclick="ButtonCancelar_Click" CausesValidation="False" class="btn"/>
+            onclick="ButtonCancelar_Click" OnClientClick="leave()" CausesValidation="False" class="btn"/>
         <input id="ButtonAtras" type="button" value="<<Atras<<" onclick="goBack()" class="btn"/>
         <input id="ButtonAdelante" type="button" value=">>Adelante>>" onclick="goForward()" class="btn"/>
         <asp:Button ID="ButtonSalvar" runat="server" onclick="Button1_Click" Text="Salvar" class="btn"/>
