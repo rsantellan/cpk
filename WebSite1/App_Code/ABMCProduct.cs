@@ -177,7 +177,8 @@ public class ABMCProduct
                         "Nombre,"+
                         "Descripcion," +
                         "Familia," +
-                        "estado" +
+                        "estado," +
+                        "Usuario "+
                         " FROM "+
                         " ProductoInformacionGeneral " +
                         " WHERE " +
@@ -222,6 +223,7 @@ public class ABMCProduct
             salida.Descripcion = row[8].ToString();
             salida.FamilyId = Convert.ToInt16(row[9].ToString());
             salida.Estado = row[10].ToString();
+            salida.Usuario = row[11].ToString();
             return salida;
         }
         else

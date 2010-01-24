@@ -31,6 +31,7 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
                 }
                 else
                 {
+                    this.cargarCoberturasProducto(used.Id);
                     int version = used.Version;
                     this.loadObservationTable(version, Convert.ToInt16(this.LabelProducto.Text));
                 }
@@ -51,6 +52,31 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
             this.HiddenFieldIdentificador.Value = this.LabelProducto.Text;
         }
        
+    }
+
+    private void cargarCoberturasProducto(int id)
+    {
+        List<int> lista = ABMCProductoCobertura.getProductoCovertura(id);
+        foreach (int i in lista)
+        {
+            switch (i)
+            {
+                case 1:
+                    this.CheckBoxCobertura1.Checked = true;
+                    break;
+                case 2:
+                    this.CheckBoxCobertura2.Checked = true;
+                    break;
+                case 3:
+                    this.CheckBoxCobertura3.Checked = true;
+                    break;
+                case 4:
+                    this.CheckBoxCobertura4.Checked = true;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void cargarCoberturas()
@@ -240,6 +266,34 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
         a.Descripcion = this.TextBoxDescripcion.Text;
         ABMCProduct abmc = new ABMCProduct();
         abmc.updateProduct(a);
+        if (this.CheckBoxCobertura1.Checked)
+        {
+            ProductoCobertura cob1 = new ProductoCobertura();
+            cob1.IdCondicionado = 1;
+            cob1.IdProducto = a.Id;
+            ABMCProductoCobertura.save(cob1);
+        }
+        if (this.CheckBoxCobertura2.Checked)
+        {
+            ProductoCobertura cob1 = new ProductoCobertura();
+            cob1.IdCondicionado = 2;
+            cob1.IdProducto = a.Id;
+            ABMCProductoCobertura.save(cob1);
+        }
+        if (this.CheckBoxCobertura3.Checked)
+        {
+            ProductoCobertura cob1 = new ProductoCobertura();
+            cob1.IdCondicionado = 3;
+            cob1.IdProducto = a.Id;
+            ABMCProductoCobertura.save(cob1);
+        }
+        if (this.CheckBoxCobertura4.Checked)
+        {
+            ProductoCobertura cob1 = new ProductoCobertura();
+            cob1.IdCondicionado = 4;
+            cob1.IdProducto = a.Id;
+            ABMCProductoCobertura.save(cob1);
+        }
         Response.Redirect("MantenimientoProductos.aspx");
         //Response.Redirect("http://moss.denallix.com/_layouts/FormServer.aspx?XsnLocation=http://moss.denallix.com/Rev%20Flias/Forms/template_.xsn&OpenIn=browser&SaveLocation=http://moss.denallix.com/Rev%20Flias");
     }
