@@ -69,12 +69,18 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
   partial void InsertAttrReglasAccion(AttrReglasAccion instance);
   partial void UpdateAttrReglasAccion(AttrReglasAccion instance);
   partial void DeleteAttrReglasAccion(AttrReglasAccion instance);
-  partial void InsertProductoRevision(ProductoRevision instance);
-  partial void UpdateProductoRevision(ProductoRevision instance);
-  partial void DeleteProductoRevision(ProductoRevision instance);
+  partial void InsertProductoInformacionGeneral(ProductoInformacionGeneral instance);
+  partial void UpdateProductoInformacionGeneral(ProductoInformacionGeneral instance);
+  partial void DeleteProductoInformacionGeneral(ProductoInformacionGeneral instance);
   partial void InsertProductoTarifa(ProductoTarifa instance);
   partial void UpdateProductoTarifa(ProductoTarifa instance);
   partial void DeleteProductoTarifa(ProductoTarifa instance);
+  partial void InsertProductoRevision(ProductoRevision instance);
+  partial void UpdateProductoRevision(ProductoRevision instance);
+  partial void DeleteProductoRevision(ProductoRevision instance);
+  partial void InsertProductoEstructuraAttr(ProductoEstructuraAttr instance);
+  partial void UpdateProductoEstructuraAttr(ProductoEstructuraAttr instance);
+  partial void DeleteProductoEstructuraAttr(ProductoEstructuraAttr instance);
   #endregion
 	
 	public DataClassesDataContext() : 
@@ -211,11 +217,11 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
 		}
 	}
 	
-	public System.Data.Linq.Table<ProductoRevision> ProductoRevision
+	public System.Data.Linq.Table<ProductoInformacionGeneral> ProductoInformacionGeneral
 	{
 		get
 		{
-			return this.GetTable<ProductoRevision>();
+			return this.GetTable<ProductoInformacionGeneral>();
 		}
 	}
 	
@@ -224,6 +230,22 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
 		get
 		{
 			return this.GetTable<ProductoTarifa>();
+		}
+	}
+	
+	public System.Data.Linq.Table<ProductoRevision> ProductoRevision
+	{
+		get
+		{
+			return this.GetTable<ProductoRevision>();
+		}
+	}
+	
+	public System.Data.Linq.Table<ProductoEstructuraAttr> ProductoEstructuraAttr
+	{
+		get
+		{
+			return this.GetTable<ProductoEstructuraAttr>();
 		}
 	}
 }
@@ -3023,22 +3045,36 @@ public partial class AttrReglasAccion : INotifyPropertyChanging, INotifyProperty
 	}
 }
 
-[Table(Name="dbo.ProductoRevision")]
+[Table(Name="dbo.ProductoInformacionGeneral")]
 [DataContract()]
-public partial class ProductoRevision : INotifyPropertyChanging, INotifyPropertyChanged
+public partial class ProductoInformacionGeneral : INotifyPropertyChanging, INotifyPropertyChanged
 {
 	
 	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 	
 	private int _Id;
 	
-	private System.Nullable<int> _IdProducto;
+	private System.Nullable<int> _Identificador;
 	
-	private string _Resolucion;
+	private string _Autor;
 	
-	private string _Observacion;
+	private System.Nullable<int> _Version;
 	
-	private System.Nullable<bool> _Bloquedo;
+	private System.Nullable<System.DateTime> _FechaCreacion;
+	
+	private System.Nullable<System.DateTime> _FechaVigenciaDesde;
+	
+	private System.Nullable<System.DateTime> _FechaVigenciaHasta;
+	
+	private string _Nombre;
+	
+	private string _Descripcion;
+	
+	private int _Familia;
+	
+	private string _Usuario;
+	
+	private string _Estado;
 	
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3046,17 +3082,31 @@ public partial class ProductoRevision : INotifyPropertyChanging, INotifyProperty
     partial void OnCreated();
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
-    partial void OnIdProductoChanging(System.Nullable<int> value);
-    partial void OnIdProductoChanged();
-    partial void OnResolucionChanging(string value);
-    partial void OnResolucionChanged();
-    partial void OnObservacionChanging(string value);
-    partial void OnObservacionChanged();
-    partial void OnBloquedoChanging(System.Nullable<bool> value);
-    partial void OnBloquedoChanged();
+    partial void OnIdentificadorChanging(System.Nullable<int> value);
+    partial void OnIdentificadorChanged();
+    partial void OnAutorChanging(string value);
+    partial void OnAutorChanged();
+    partial void OnVersionChanging(System.Nullable<int> value);
+    partial void OnVersionChanged();
+    partial void OnFechaCreacionChanging(System.Nullable<System.DateTime> value);
+    partial void OnFechaCreacionChanged();
+    partial void OnFechaVigenciaDesdeChanging(System.Nullable<System.DateTime> value);
+    partial void OnFechaVigenciaDesdeChanged();
+    partial void OnFechaVigenciaHastaChanging(System.Nullable<System.DateTime> value);
+    partial void OnFechaVigenciaHastaChanged();
+    partial void OnNombreChanging(string value);
+    partial void OnNombreChanged();
+    partial void OnDescripcionChanging(string value);
+    partial void OnDescripcionChanged();
+    partial void OnFamiliaChanging(int value);
+    partial void OnFamiliaChanged();
+    partial void OnUsuarioChanging(string value);
+    partial void OnUsuarioChanged();
+    partial void OnEstadoChanging(string value);
+    partial void OnEstadoChanged();
     #endregion
 	
-	public ProductoRevision()
+	public ProductoInformacionGeneral()
 	{
 		this.Initialize();
 	}
@@ -3082,86 +3132,233 @@ public partial class ProductoRevision : INotifyPropertyChanging, INotifyProperty
 		}
 	}
 	
-	[Column(Storage="_IdProducto", DbType="Int")]
+	[Column(Storage="_Identificador", DbType="Int")]
 	[DataMember(Order=2)]
-	public System.Nullable<int> IdProducto
+	public System.Nullable<int> Identificador
 	{
 		get
 		{
-			return this._IdProducto;
+			return this._Identificador;
 		}
 		set
 		{
-			if ((this._IdProducto != value))
+			if ((this._Identificador != value))
 			{
-				this.OnIdProductoChanging(value);
+				this.OnIdentificadorChanging(value);
 				this.SendPropertyChanging();
-				this._IdProducto = value;
-				this.SendPropertyChanged("IdProducto");
-				this.OnIdProductoChanged();
+				this._Identificador = value;
+				this.SendPropertyChanged("Identificador");
+				this.OnIdentificadorChanged();
 			}
 		}
 	}
 	
-	[Column(Storage="_Resolucion", DbType="VarChar(255)")]
+	[Column(Storage="_Autor", DbType="VarChar(255)")]
 	[DataMember(Order=3)]
-	public string Resolucion
+	public string Autor
 	{
 		get
 		{
-			return this._Resolucion;
+			return this._Autor;
 		}
 		set
 		{
-			if ((this._Resolucion != value))
+			if ((this._Autor != value))
 			{
-				this.OnResolucionChanging(value);
+				this.OnAutorChanging(value);
 				this.SendPropertyChanging();
-				this._Resolucion = value;
-				this.SendPropertyChanged("Resolucion");
-				this.OnResolucionChanged();
+				this._Autor = value;
+				this.SendPropertyChanged("Autor");
+				this.OnAutorChanged();
 			}
 		}
 	}
 	
-	[Column(Storage="_Observacion", DbType="VarChar(1000)")]
+	[Column(Storage="_Version", DbType="Int")]
 	[DataMember(Order=4)]
-	public string Observacion
+	public System.Nullable<int> Version
 	{
 		get
 		{
-			return this._Observacion;
+			return this._Version;
 		}
 		set
 		{
-			if ((this._Observacion != value))
+			if ((this._Version != value))
 			{
-				this.OnObservacionChanging(value);
+				this.OnVersionChanging(value);
 				this.SendPropertyChanging();
-				this._Observacion = value;
-				this.SendPropertyChanged("Observacion");
-				this.OnObservacionChanged();
+				this._Version = value;
+				this.SendPropertyChanged("Version");
+				this.OnVersionChanged();
 			}
 		}
 	}
 	
-	[Column(Storage="_Bloquedo", DbType="Bit")]
+	[Column(Storage="_FechaCreacion", DbType="DateTime")]
 	[DataMember(Order=5)]
-	public System.Nullable<bool> Bloquedo
+	public System.Nullable<System.DateTime> FechaCreacion
 	{
 		get
 		{
-			return this._Bloquedo;
+			return this._FechaCreacion;
 		}
 		set
 		{
-			if ((this._Bloquedo != value))
+			if ((this._FechaCreacion != value))
 			{
-				this.OnBloquedoChanging(value);
+				this.OnFechaCreacionChanging(value);
 				this.SendPropertyChanging();
-				this._Bloquedo = value;
-				this.SendPropertyChanged("Bloquedo");
-				this.OnBloquedoChanged();
+				this._FechaCreacion = value;
+				this.SendPropertyChanged("FechaCreacion");
+				this.OnFechaCreacionChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_FechaVigenciaDesde", DbType="DateTime")]
+	[DataMember(Order=6)]
+	public System.Nullable<System.DateTime> FechaVigenciaDesde
+	{
+		get
+		{
+			return this._FechaVigenciaDesde;
+		}
+		set
+		{
+			if ((this._FechaVigenciaDesde != value))
+			{
+				this.OnFechaVigenciaDesdeChanging(value);
+				this.SendPropertyChanging();
+				this._FechaVigenciaDesde = value;
+				this.SendPropertyChanged("FechaVigenciaDesde");
+				this.OnFechaVigenciaDesdeChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_FechaVigenciaHasta", DbType="DateTime")]
+	[DataMember(Order=7)]
+	public System.Nullable<System.DateTime> FechaVigenciaHasta
+	{
+		get
+		{
+			return this._FechaVigenciaHasta;
+		}
+		set
+		{
+			if ((this._FechaVigenciaHasta != value))
+			{
+				this.OnFechaVigenciaHastaChanging(value);
+				this.SendPropertyChanging();
+				this._FechaVigenciaHasta = value;
+				this.SendPropertyChanged("FechaVigenciaHasta");
+				this.OnFechaVigenciaHastaChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Nombre", DbType="VarChar(100)")]
+	[DataMember(Order=8)]
+	public string Nombre
+	{
+		get
+		{
+			return this._Nombre;
+		}
+		set
+		{
+			if ((this._Nombre != value))
+			{
+				this.OnNombreChanging(value);
+				this.SendPropertyChanging();
+				this._Nombre = value;
+				this.SendPropertyChanged("Nombre");
+				this.OnNombreChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Descripcion", DbType="VarChar(1000)")]
+	[DataMember(Order=9)]
+	public string Descripcion
+	{
+		get
+		{
+			return this._Descripcion;
+		}
+		set
+		{
+			if ((this._Descripcion != value))
+			{
+				this.OnDescripcionChanging(value);
+				this.SendPropertyChanging();
+				this._Descripcion = value;
+				this.SendPropertyChanged("Descripcion");
+				this.OnDescripcionChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Familia", DbType="Int NOT NULL")]
+	[DataMember(Order=10)]
+	public int Familia
+	{
+		get
+		{
+			return this._Familia;
+		}
+		set
+		{
+			if ((this._Familia != value))
+			{
+				this.OnFamiliaChanging(value);
+				this.SendPropertyChanging();
+				this._Familia = value;
+				this.SendPropertyChanged("Familia");
+				this.OnFamiliaChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Usuario", DbType="VarChar(255)")]
+	[DataMember(Order=11)]
+	public string Usuario
+	{
+		get
+		{
+			return this._Usuario;
+		}
+		set
+		{
+			if ((this._Usuario != value))
+			{
+				this.OnUsuarioChanging(value);
+				this.SendPropertyChanging();
+				this._Usuario = value;
+				this.SendPropertyChanged("Usuario");
+				this.OnUsuarioChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Estado", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+	[DataMember(Order=12)]
+	public string Estado
+	{
+		get
+		{
+			return this._Estado;
+		}
+		set
+		{
+			if ((this._Estado != value))
+			{
+				this.OnEstadoChanging(value);
+				this.SendPropertyChanging();
+				this._Estado = value;
+				this.SendPropertyChanged("Estado");
+				this.OnEstadoChanged();
 			}
 		}
 	}
@@ -3224,6 +3421,8 @@ public partial class ProductoTarifa : INotifyPropertyChanging, INotifyPropertyCh
 	
 	private System.Nullable<bool> _Bloquedo;
 	
+	private string _Usuario;
+	
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -3246,6 +3445,8 @@ public partial class ProductoTarifa : INotifyPropertyChanging, INotifyPropertyCh
     partial void OnMayoresMasculinoChanged();
     partial void OnBloquedoChanging(System.Nullable<bool> value);
     partial void OnBloquedoChanged();
+    partial void OnUsuarioChanging(string value);
+    partial void OnUsuarioChanged();
     #endregion
 	
 	public ProductoTarifa()
@@ -3438,6 +3639,454 @@ public partial class ProductoTarifa : INotifyPropertyChanging, INotifyPropertyCh
 				this._Bloquedo = value;
 				this.SendPropertyChanged("Bloquedo");
 				this.OnBloquedoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Usuario", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+	[DataMember(Order=10)]
+	public string Usuario
+	{
+		get
+		{
+			return this._Usuario;
+		}
+		set
+		{
+			if ((this._Usuario != value))
+			{
+				this.OnUsuarioChanging(value);
+				this.SendPropertyChanging();
+				this._Usuario = value;
+				this.SendPropertyChanged("Usuario");
+				this.OnUsuarioChanged();
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+	
+	private void Initialize()
+	{
+		OnCreated();
+	}
+	
+	[OnDeserializing()]
+	[System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+	public void OnDeserializing(StreamingContext context)
+	{
+		this.Initialize();
+	}
+}
+
+[Table(Name="dbo.ProductoRevision")]
+[DataContract()]
+public partial class ProductoRevision : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _Id;
+	
+	private System.Nullable<int> _IdProducto;
+	
+	private string _Resolucion;
+	
+	private string _Observacion;
+	
+	private System.Nullable<bool> _Bloquedo;
+	
+	private string _Usuario;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnIdProductoChanging(System.Nullable<int> value);
+    partial void OnIdProductoChanged();
+    partial void OnResolucionChanging(string value);
+    partial void OnResolucionChanged();
+    partial void OnObservacionChanging(string value);
+    partial void OnObservacionChanged();
+    partial void OnBloquedoChanging(System.Nullable<bool> value);
+    partial void OnBloquedoChanged();
+    partial void OnUsuarioChanging(string value);
+    partial void OnUsuarioChanged();
+    #endregion
+	
+	public ProductoRevision()
+	{
+		this.Initialize();
+	}
+	
+	[Column(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	[DataMember(Order=1)]
+	public int Id
+	{
+		get
+		{
+			return this._Id;
+		}
+		set
+		{
+			if ((this._Id != value))
+			{
+				this.OnIdChanging(value);
+				this.SendPropertyChanging();
+				this._Id = value;
+				this.SendPropertyChanged("Id");
+				this.OnIdChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_IdProducto", DbType="Int")]
+	[DataMember(Order=2)]
+	public System.Nullable<int> IdProducto
+	{
+		get
+		{
+			return this._IdProducto;
+		}
+		set
+		{
+			if ((this._IdProducto != value))
+			{
+				this.OnIdProductoChanging(value);
+				this.SendPropertyChanging();
+				this._IdProducto = value;
+				this.SendPropertyChanged("IdProducto");
+				this.OnIdProductoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Resolucion", DbType="VarChar(255)")]
+	[DataMember(Order=3)]
+	public string Resolucion
+	{
+		get
+		{
+			return this._Resolucion;
+		}
+		set
+		{
+			if ((this._Resolucion != value))
+			{
+				this.OnResolucionChanging(value);
+				this.SendPropertyChanging();
+				this._Resolucion = value;
+				this.SendPropertyChanged("Resolucion");
+				this.OnResolucionChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Observacion", DbType="VarChar(1000)")]
+	[DataMember(Order=4)]
+	public string Observacion
+	{
+		get
+		{
+			return this._Observacion;
+		}
+		set
+		{
+			if ((this._Observacion != value))
+			{
+				this.OnObservacionChanging(value);
+				this.SendPropertyChanging();
+				this._Observacion = value;
+				this.SendPropertyChanged("Observacion");
+				this.OnObservacionChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Bloquedo", DbType="Bit")]
+	[DataMember(Order=5)]
+	public System.Nullable<bool> Bloquedo
+	{
+		get
+		{
+			return this._Bloquedo;
+		}
+		set
+		{
+			if ((this._Bloquedo != value))
+			{
+				this.OnBloquedoChanging(value);
+				this.SendPropertyChanging();
+				this._Bloquedo = value;
+				this.SendPropertyChanged("Bloquedo");
+				this.OnBloquedoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Usuario", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+	[DataMember(Order=6)]
+	public string Usuario
+	{
+		get
+		{
+			return this._Usuario;
+		}
+		set
+		{
+			if ((this._Usuario != value))
+			{
+				this.OnUsuarioChanging(value);
+				this.SendPropertyChanging();
+				this._Usuario = value;
+				this.SendPropertyChanged("Usuario");
+				this.OnUsuarioChanged();
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+	
+	private void Initialize()
+	{
+		OnCreated();
+	}
+	
+	[OnDeserializing()]
+	[System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+	public void OnDeserializing(StreamingContext context)
+	{
+		this.Initialize();
+	}
+}
+
+[Table(Name="dbo.ProductoEstructuraAttr")]
+[DataContract()]
+public partial class ProductoEstructuraAttr : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private decimal _id;
+	
+	private decimal _idProducto;
+	
+	private decimal _idFamilia;
+	
+	private decimal _idAtributo;
+	
+	private string _NomAtributo;
+	
+	private string _TipoAtributo;
+	
+	private string _ValorAtributo;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(decimal value);
+    partial void OnidChanged();
+    partial void OnidProductoChanging(decimal value);
+    partial void OnidProductoChanged();
+    partial void OnidFamiliaChanging(decimal value);
+    partial void OnidFamiliaChanged();
+    partial void OnidAtributoChanging(decimal value);
+    partial void OnidAtributoChanged();
+    partial void OnNomAtributoChanging(string value);
+    partial void OnNomAtributoChanged();
+    partial void OnTipoAtributoChanging(string value);
+    partial void OnTipoAtributoChanged();
+    partial void OnValorAtributoChanging(string value);
+    partial void OnValorAtributoChanged();
+    #endregion
+	
+	public ProductoEstructuraAttr()
+	{
+		this.Initialize();
+	}
+	
+	[Column(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Decimal(18,0) NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	[DataMember(Order=1)]
+	public decimal id
+	{
+		get
+		{
+			return this._id;
+		}
+		set
+		{
+			if ((this._id != value))
+			{
+				this.OnidChanging(value);
+				this.SendPropertyChanging();
+				this._id = value;
+				this.SendPropertyChanged("id");
+				this.OnidChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_idProducto", DbType="Decimal(18,0) NOT NULL", IsPrimaryKey=true)]
+	[DataMember(Order=2)]
+	public decimal idProducto
+	{
+		get
+		{
+			return this._idProducto;
+		}
+		set
+		{
+			if ((this._idProducto != value))
+			{
+				this.OnidProductoChanging(value);
+				this.SendPropertyChanging();
+				this._idProducto = value;
+				this.SendPropertyChanged("idProducto");
+				this.OnidProductoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_idFamilia", DbType="Decimal(18,0) NOT NULL", IsPrimaryKey=true)]
+	[DataMember(Order=3)]
+	public decimal idFamilia
+	{
+		get
+		{
+			return this._idFamilia;
+		}
+		set
+		{
+			if ((this._idFamilia != value))
+			{
+				this.OnidFamiliaChanging(value);
+				this.SendPropertyChanging();
+				this._idFamilia = value;
+				this.SendPropertyChanged("idFamilia");
+				this.OnidFamiliaChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_idAtributo", DbType="Decimal(18,0) NOT NULL", IsPrimaryKey=true)]
+	[DataMember(Order=4)]
+	public decimal idAtributo
+	{
+		get
+		{
+			return this._idAtributo;
+		}
+		set
+		{
+			if ((this._idAtributo != value))
+			{
+				this.OnidAtributoChanging(value);
+				this.SendPropertyChanging();
+				this._idAtributo = value;
+				this.SendPropertyChanged("idAtributo");
+				this.OnidAtributoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_NomAtributo", DbType="VarChar(50)")]
+	[DataMember(Order=5)]
+	public string NomAtributo
+	{
+		get
+		{
+			return this._NomAtributo;
+		}
+		set
+		{
+			if ((this._NomAtributo != value))
+			{
+				this.OnNomAtributoChanging(value);
+				this.SendPropertyChanging();
+				this._NomAtributo = value;
+				this.SendPropertyChanged("NomAtributo");
+				this.OnNomAtributoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_TipoAtributo", DbType="VarChar(50)")]
+	[DataMember(Order=6)]
+	public string TipoAtributo
+	{
+		get
+		{
+			return this._TipoAtributo;
+		}
+		set
+		{
+			if ((this._TipoAtributo != value))
+			{
+				this.OnTipoAtributoChanging(value);
+				this.SendPropertyChanging();
+				this._TipoAtributo = value;
+				this.SendPropertyChanged("TipoAtributo");
+				this.OnTipoAtributoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_ValorAtributo", DbType="VarChar(50)")]
+	[DataMember(Order=7)]
+	public string ValorAtributo
+	{
+		get
+		{
+			return this._ValorAtributo;
+		}
+		set
+		{
+			if ((this._ValorAtributo != value))
+			{
+				this.OnValorAtributoChanging(value);
+				this.SendPropertyChanging();
+				this._ValorAtributo = value;
+				this.SendPropertyChanged("ValorAtributo");
+				this.OnValorAtributoChanged();
 			}
 		}
 	}

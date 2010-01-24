@@ -19,16 +19,16 @@ using System.Data.Linq;
 public class WSServiceFliaReject  : System.Web.Services.WebService {
 
      [WebMethod]
-    public decimal GetProductUltimoIDReject(string pUsuario)
+    public decimal GetProductUltimoIDAdmReject(string pUsuario)
     {
-        System.IO.StreamWriter sw = new System.IO.StreamWriter("c:\\temp\\dbconnFlia.txt", true);
+        System.IO.StreamWriter sw = new System.IO.StreamWriter("c:\\temp\\dbconnProducc.txt", true);
         sw.WriteLine("Nombre de autor " + (pUsuario));
         sw.Close();
 
         DataClassesDataContext db = new DataClassesDataContext();
         var query =
             from t in
-                (from t in db.ProductoTarifa
+                (from t in db.ProductoRevision
                  where
                    t.Usuario == pUsuario &&
                    t.Resolucion == "Rechazado"
@@ -48,7 +48,7 @@ public class WSServiceFliaReject  : System.Web.Services.WebService {
         {
             salida = Convert.ToDecimal(r.Column1);
         };
-        System.IO.StreamWriter sw1 = new System.IO.StreamWriter("c:\\temp\\dbconnFlia.txt", true);
+        System.IO.StreamWriter sw1 = new System.IO.StreamWriter("c:\\temp\\dbconnProducc.txt", true);
         sw1.WriteLine("Id flia a Modificar " + Convert.ToString(salida));
         sw1.Close();
 

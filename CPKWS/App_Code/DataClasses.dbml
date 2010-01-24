@@ -135,13 +135,20 @@
       <Column Name="Mensaje" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.ProductoRevision" Member="ProductoRevision">
-    <Type Name="ProductoRevision">
+  <Table Name="dbo.ProductoInformacionGeneral" Member="ProductoInformacionGeneral">
+    <Type Name="ProductoInformacionGeneral">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdProducto" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Resolucion" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="Observacion" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
-      <Column Name="Bloquedo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Identificador" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Autor" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Version" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FechaCreacion" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FechaVigenciaDesde" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FechaVigenciaHasta" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="Familia" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Usuario" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Estado" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.ProductoTarifa" Member="ProductoTarifa">
@@ -155,6 +162,28 @@
       <Column Name="MayoresFemino" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="MayoresMasculino" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Bloquedo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Usuario" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProductoRevision" Member="ProductoRevision">
+    <Type Name="ProductoRevision">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdProducto" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Resolucion" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Observacion" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="Bloquedo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Usuario" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProductoEstructuraAttr" Member="ProductoEstructuraAttr">
+    <Type Name="ProductoEstructuraAttr">
+      <Column Name="id" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idProducto" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idFamilia" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idAtributo" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NomAtributo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="TipoAtributo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ValorAtributo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>
