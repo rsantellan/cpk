@@ -9,8 +9,8 @@
 		ABMCAtributo abmc = new ABMCAtributo();
         if (abmc.deleteAtribute(Convert.ToInt16(objId)))
         {
-            ABMCTreeNode abmcTree = new ABMCTreeNode();
-            abmcTree.deleteTreeNodeStructure(objIdentifier, objVersion);
+            //ABMCTreeNode abmcTree = new ABMCTreeNode();
+            //abmcTree.deleteTreeNodeStructure(objIdentifier, objVersion);
             Atributo a = new Atributo();
             ABMCObservacion abmcObs = new ABMCObservacion();
             System.Collections.Generic.List<Observacion> lista =  abmcObs.obtenerObservaciones(a.GetType().ToString(), objIdentifier, objVersion);
@@ -18,6 +18,8 @@
             {
                 abmcObs.eliminarObservacion(item.Id);
             }
+            ABMCAtributoTree abmcTree = new ABMCAtributoTree();
+            abmcTree.deleteAll(objId);
         }
         
         

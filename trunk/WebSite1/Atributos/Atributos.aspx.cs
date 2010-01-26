@@ -38,6 +38,9 @@ public partial class Atributos : System.Web.UI.Page
                     this.loadObservationTable(version);
                 }
                 this.reservarIdCompleto();
+                //AsyncCalling async = new AsyncCalling();
+                //async.CallReplicateDataWithParameters(Convert.ToInt16(LabelIdentificador.Text), version, Convert.ToInt16(LabelVersion.Text)); 
+                //async.CallReplicateTreeWithParameters(Convert.ToInt16(id), Convert.ToInt16(this.HiddenFieldId.Value));
                 
             }
             else
@@ -50,7 +53,8 @@ public partial class Atributos : System.Web.UI.Page
                 this.reservarId();
             }
             this.HiddenFieldVersion.Value = this.LabelVersion.Text;
-            this.HiddenFieldId.Value = LabelIdentificador.Text;
+            //this.HiddenFieldId.Value = LabelIdentificador.Text;
+            this.HiddenFieldIdentificador.Value = LabelIdentificador.Text;
             
         }
         
