@@ -57,6 +57,7 @@ public class ABMCAtributosReglas
             this.insertAtributeRule(row[1].ToString(), Convert.ToInt16(row[2].ToString()), row[3].ToString(), versionNueva);
         }
         List<int> listaIdNuevos = this.getRulesId(pIdentificador, versionNueva);
+        this.replicateDataCondition(listaIdViejos, listaIdNuevos);
     }
 
     private List<int> getRulesId(int pIdentifier, int pVersion)
@@ -99,11 +100,101 @@ public class ABMCAtributosReglas
         return salida;
     }
 
-    private void replicateDataCondition(List<int> listaVieja, List<int> listaNueva,int pIdentifier, int pVersion)
+    private List<int> getConditionById(int pIdRule)
+    {
+        String sql = "SELECT id,idRegla,AtributoID,AtributoNom,OpreradorAritmetico,ValorAttr,OperadorLogico FROM AttrReglasCondicion WHERE idRegla = @ID ORDER BY id ASC";
+        SqlCommand commandSql = new SqlCommand();
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
+        commandSql.CommandText = sql;
+        commandSql.Connection = sqlConn;
+        SqlParameter p_rule = commandSql.Parameters.Add("ID", SqlDbType.Int);
+        p_rule.Value = pIdRule;
+
+        DataSet ds = new DataSet();
+        try
+        {
+            sqlConn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(commandSql);
+            sqlConn.Close();
+            da.Fill(ds, "Atributo");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            Log.saveInLog("Exception obtenerAtributo ABMCFamilia");
+            Log.saveInLog(e.Message);
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+        List<int> salida = new List<int>();
+        if (ds.Tables.Count == 0) return salida;
+        foreach (DataRow row in ds.Tables[0].Rows)
+        {
+            salida.Add(Convert.ToInt16(row[0].ToString()));
+
+        }
+        return salida;
+    }
+
+    private void replicateDataCondition(List<int> listaVieja, List<int> listaNueva)
     {
         //List<int> listaId = this.getRulesId(pIdentifier, pVersion);
-        String sql = "SELECT id,idRegla,AtributoID,AtributoNom,OpreradorAritmetico,ValorAttr,OperadorLogico FROM AttrReglasCondicion WHERE idRegla = @ID";
-        List<int> idCondicionesViejos = new List<int>();
+        String sql = "SELECT id,idRegla,AtributoID,AtributoNom,OpreradorAritmetico,ValorAttr,OperadorLogico FROM AttrReglasCondicion WHERE idRegla = @ID ORDER BY id ASC";
+        
+        for (int i = 0; i < listaVieja.Count; i++) // Loop through List with for
+        {
+            int idNuevo = listaNueva[i];
+            int idViejo = listaVieja[i];
+            List<int> idCondicionesViejos = new List<int>();
+            SqlCommand commandSql = new SqlCommand();
+            SqlConnection sqlConn = DBManager.getInstanceOfConnection();
+            commandSql.CommandText = sql;
+            commandSql.Connection = sqlConn;
+            SqlParameter p_id = commandSql.Parameters.Add("ID", SqlDbType.Int);
+            p_id.Value = idViejo;
+
+            DataSet ds = new DataSet();
+            try
+            {
+                sqlConn.Open();
+                SqlDataAdapter da = new SqlDataAdapter(commandSql);
+                sqlConn.Close();
+                da.Fill(ds, "Condicion");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Log.saveInLog("Exception obtenerAtributo ABMCFamilia");
+                Log.saveInLog(e.Message);
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+
+            if (ds.Tables.Count == 0) return;
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                int idCondicionViejo = Convert.ToInt16(row[0].ToString());
+                this.insertAtributeCondition(idNuevo, Convert.ToInt16(row[2].ToString()), row[3].ToString(), row[4].ToString(), row[5].ToString(), row[6].ToString());
+                idCondicionesViejos.Add(idCondicionViejo);
+            }
+            List<int> idCondicionesNuevo = this.getConditionById(idNuevo);
+            for (int k = 0; k < idCondicionesNuevo.Count; k++) // Loop through List with for
+            {
+                this.replicateDataAction(idCondicionesViejos, idCondicionesNuevo);
+            }
+        }
+
+    }
+
+    private void replicateDataAction(List<int> listaVieja, List<int> listaNueva)
+    {
+        //List<int> listaId = this.getRulesId(pIdentifier, pVersion);
+        String sql = "SELECT id, idCondicion, idAtributo, NomAtributo, OpAritmetico, Valor, Mensaje FROM AttrReglasAccion WHERE idCondicion = @ID ORDER BY id ASC";
+
         for (int i = 0; i < listaVieja.Count; i++) // Loop through List with for
         {
             int idNuevo = listaNueva[i];
@@ -137,12 +228,73 @@ public class ABMCAtributosReglas
             if (ds.Tables.Count == 0) return;
             foreach (DataRow row in ds.Tables[0].Rows)
             {
-                int idCondicionViejo = Convert.ToInt16(row[0].ToString());
-                this.insertAtributeCondition(idNuevo, Convert.ToInt16(row[2].ToString()), row[3].ToString(), row[4].ToString(), row[5].ToString(), row[6].ToString());
-                
+                this.insertAtributeAction(idNuevo, Convert.ToInt16(row[2].ToString()), row[3].ToString(), row[4].ToString(), row[5].ToString(), row[6].ToString());
             }
         }
 
+    }
+
+    private void insertAtributeAction(int pIdCondicion, int pAtributoId, String pAttNombre, String pOperador, String pValor, String pMensaje)
+    {
+        String sql = "INSERT INTO " +
+                        "AttrReglasAccion" +
+                        "(" +
+                            "idCondicion," +
+                            "idAtributo," +
+                            "NomAtributo," +
+                            "OpAritmetico," +
+                            "Valor," +
+                            "Mensaje" +
+                        ") " +
+                        "VALUES (" +
+                            "@idCondicion," +
+                            "@idAtributo," +
+                            "@NomAtributo," +
+                            "@OpAritmetico," +
+                            "@Valor," +
+                            "@Mensaje" +
+                        ");";
+        SqlCommand commandSql = new SqlCommand();
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
+        commandSql.CommandText = sql;
+        commandSql.Connection = sqlConn;
+        SqlParameter p_idRegla = commandSql.Parameters.Add("idCondicion", SqlDbType.Int);
+        p_idRegla.Value = pIdCondicion;
+        SqlParameter p_idAtt = commandSql.Parameters.Add("idAtributo", SqlDbType.Int);
+        p_idAtt.Value = pAtributoId;
+        SqlParameter p_nombre = commandSql.Parameters.Add("NomAtributo", SqlDbType.NChar);
+        p_nombre.Value = pAttNombre;
+        SqlParameter p_operador = commandSql.Parameters.Add("OpAritmetico", SqlDbType.NChar);
+        p_operador.Value = pOperador;
+        SqlParameter p_valor = commandSql.Parameters.Add("Valor", SqlDbType.NChar);
+        p_valor.Value = pValor;
+        SqlParameter p_opLogico = commandSql.Parameters.Add("Mensaje", SqlDbType.NChar);
+        p_opLogico.Value = pMensaje;
+        Log.saveInLog("--------------Insert Condicion ---------------");
+        Log.saveInLog(DateTime.Now.ToShortTimeString());
+        Log.saveInLog(commandSql.CommandText);
+        foreach (SqlParameter item in commandSql.Parameters)
+        {
+
+            Log.saveInLog(item.ParameterName);
+            Log.saveInLog(item.Value.ToString());
+        }
+        commandSql.Connection = sqlConn;
+        try
+        {
+            sqlConn.Open();
+            commandSql.ExecuteNonQuery();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            Log.saveInLog("Exception guardarRegla ABMCAtributoRegla");
+            Log.saveInLog(e.Message);
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
     }
 
     private void insertAtributeCondition(int pIdRegla, int pAtributoId, String pAttNombre,String pOperador, String pValor, String pOperadorLogico )

@@ -88,6 +88,12 @@
                 ControlToValidate="TextBoxCalendarHasta" 
                 ErrorMessage="La fecha hasta tiene que ser mayor que la fecha desde" 
                 MaximumValue="2"></asp:RangeValidator>
+            <br />
+            <asp:CompareValidator ID="CompareValidator1" runat="server"
+                ControlToValidate ="TextBoxCalendarHasta" ControlToCompare="TextCalendarDesde"
+                Operator="LessThanEqual" 
+                ErrorMessage="La fecha hasta tiene que ser mayor que la fecha desde"
+                Display="Dynamic"></asp:CompareValidator>
         </td>
     </tr>
     <tr>

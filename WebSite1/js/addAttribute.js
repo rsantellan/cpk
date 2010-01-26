@@ -56,26 +56,31 @@
     function getVersion(){
         return $F('HiddenFieldVersion');
     }
+
+    function getId() {
+        return $F('HiddenFieldId');
+    }
     
-    	function showStuff(id) {
+    function showStuff(id) {
 		document.getElementById(id).style.display = 'block';
 	}
 	function hideStuff(id) {
 		document.getElementById(id).style.display = 'none';
 	}
 
+    
 	function leave() {
 	    alert(save);
 	    if(save)return;
-	    var objectId = $F('HiddenFieldId');
+	    var objectId = getId();
 		$('HiddenFieldId').value = "0";
 		if(objectId == 0) return;
 		var ident = getIdentifier();
 		var version =getVersion();
 		url = 'cleanUpAtribute.aspx?id=' + escape(objectId) + '&identifier=' + escape(ident) + '&version=' + escape(version);
-		alert(objectId);
-		alert(ident);
-		alert(version);
+		//alert(objectId);
+		//alert(ident);
+		//alert(version);
 		var myAjax = new Ajax.Request(
 			url,
 			{

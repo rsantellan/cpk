@@ -23,8 +23,16 @@ public class Log
 
     public static void saveInLog(String text)
     {
-        StreamWriter sw = new StreamWriter("C:\\temp\\logApplication.txt", true);
-        sw.WriteLine(text);
-        sw.Close();
+        try
+        {
+            StreamWriter sw = new StreamWriter("C:\\temp\\logApplication.txt", true);
+            sw.WriteLine(text);
+            sw.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
     }
 }
