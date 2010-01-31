@@ -121,7 +121,10 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
         {
             Response.Redirect("http://moss.denallix.com/_layouts/FormServer.aspx?XsnLocation=http://moss.denallix.com/FliaReject/Forms/template_.xsn&OpenIn=browser&SaveLocation=http://moss.denallix.com/FliaReject");
         }
-        
+        else
+        {
+            Response.Redirect("MantenimientoFamilias.aspx");
+        }
     }
 
     

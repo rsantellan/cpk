@@ -145,7 +145,8 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
         dt.Columns.Add(dc);
         dc = new DataColumn("Autor");
         dt.Columns.Add(dc);
-
+        dc = new DataColumn("Ver");
+        dt.Columns.Add(dc);
         DataRow dr;
 
         foreach (DataRow row in datos.Tables[0].Rows)
@@ -174,7 +175,7 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
 
             
             misDatos.Add(row[2].ToString());
-            
+            misDatos.Add("Ver");
             dr = dt.NewRow();
             dr.ItemArray = misDatos.ToArray();
             dt.Rows.Add(dr);

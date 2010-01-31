@@ -14,6 +14,7 @@
 <ul id="nav">
         <li><a href="InsertarFamilia.aspx" class="linkNavegacion">Crear familia</a> </li>
         <li><a href="MantenimientoFamilias.aspx" class="linkNavegacion">Mantenimiento de familia</a></li>
+        <li><a href="ProcesoDefinicionFamilias.aspx" class="linkNavegacion">Proceso de definición</a></li>
     </ul>
     
     <div id="container"> 
@@ -191,6 +192,10 @@
                             <asp:BoundField DataField="Estado" HeaderText="Estado" />
                             <asp:BoundField DataField="Vigente" HeaderText="Vigente" />
                             <asp:BoundField DataField="Autor" HeaderText="Autor" />
+                            <asp:BoundField DataField="Ver" HeaderText="Ver" 
+                                Visible="False" />
+                            <asp:HyperLinkField HeaderText="" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="VerFamilia.aspx?id={0}" DataTextField="Ver"/>
+                
                             </Columns>
                         </asp:GridView>
                 </div>
