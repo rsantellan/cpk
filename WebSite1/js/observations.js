@@ -12,7 +12,7 @@ function addObservation()
 		var objectId = $F('HiddenFieldIdentificador');
 	    var objectClass = $F('HiddenFieldClass');
 	    var objectVersion = $F('HiddenFieldVersion');
-	    alert(objectVersion);
+	    //alert(objectVersion);
 	    url = '../Observaciones/saveObservation.aspx?tarea=' + escape(tarea) + '&observacion=' + escape(observacion) + '&objectId=' + escape(objectId) + '&objectClass=' + escape(objectClass) + '&objectVersion=' + escape(objectVersion);
 		var myAjax = new Ajax.Request(
 			url,
