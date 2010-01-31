@@ -20,6 +20,7 @@
     <ul id="nav">
         <li><a href="InsertarFamilia.aspx" class="linkNavegacion">Crear familia</a> </li>
         <li><a href="MantenimientoFamilias.aspx" class="linkNavegacion">Mantenimiento de familia</a></li>
+        <li><a href="ProcesoDefinicionFamilias.aspx" class="linkNavegacion">Proceso de definición</a></li>
     </ul>
     <div id="container">
         <form id="form1" runat="server">

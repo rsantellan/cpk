@@ -43,98 +43,38 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
         {
             creacionHasta = DateTime.Parse(this.TextBoxCreacionHasta.Text);
         }
-        DateTime vigenciaFinDesde = new DateTime();
-        if (string.IsNullOrEmpty(this.TextBoxVigenciaFinDesde.Text))
+        int identificador = 0;
+        try
         {
-            vigenciaFinDesde = DateTime.MinValue;
+            identificador = Convert.ToInt16(this.TextBoxFamilia.Text);
         }
-        else
+        catch (Exception e)
         {
-            vigenciaFinDesde = DateTime.Parse(this.TextBoxVigenciaFinDesde.Text);
+
         }
-        DateTime vigenciaFinHasta = new DateTime();
-        if (string.IsNullOrEmpty(this.TextBoxVigenciaFinHasta.Text))
-        {
-            vigenciaFinHasta = DateTime.MinValue;
-        }
-        else
-        {
-            vigenciaFinHasta = DateTime.Parse(this.TextBoxVigenciaFinHasta.Text);
-        }
-        DateTime vigenciaDesde = new DateTime();
-        if (string.IsNullOrEmpty(this.TextBoxVigenciaDesde.Text))
-        {
-            vigenciaDesde = DateTime.MinValue;
-        }
-        else
-        {
-            vigenciaDesde = DateTime.Parse(this.TextBoxVigenciaDesde.Text);
-        }
-        DateTime vigenciaHasta = new DateTime();
-        if (string.IsNullOrEmpty(this.TextBoxVigenciaHasta.Text))
-        {
-            vigenciaHasta = DateTime.MinValue;
-        }
-        else
-        {
-            vigenciaHasta = DateTime.Parse(this.TextBoxVigenciaHasta.Text);
-        }
-        int version = 0;
-        if (!String.IsNullOrEmpty(this.TextBoxVersion.Text))
-        {
-            try
-            {
-                version = Convert.ToInt16(this.TextBoxVersion.Text);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            
-        }
-        int estado;
-        if (String.IsNullOrEmpty(this.DropDownListEstado.SelectedValue))
-        {
-            estado = -1;
-        }
-        else
-        {
-            estado = Convert.ToInt16(this.DropDownListEstado.SelectedValue);
-        }
-        DataSet datos = abmc.searchFamily(this.TextBoxFamilia.Text, estado, this.DropDownListAutores.SelectedValue.ToString(), " ", version, vigenciaDesde, vigenciaHasta, vigenciaFinDesde, vigenciaFinHasta, creacionDesde, creacionHasta);
+        DataSet datos = abmc.searchFamilyTask(identificador, this.TextBoxNombre.Text, this.DropDownListAutores.SelectedValue.ToString(),creacionDesde, creacionHasta);
         DataSet show = new DataSet();
+
 
         DataTable dt = new DataTable();
         show.Tables.Add(dt);
-        DataColumn dc = new DataColumn("ID");
+        DataColumn dc = new DataColumn("Ver");
         dt.Columns.Add(dc);
-        dc = new DataColumn("ModificarMostrar");
-        dc.ColumnMapping = MappingType.Hidden;
-        dt.Columns.Add(dc);
-        dc = new DataColumn("VersionadoMostrar");
+        dc = new DataColumn("ID");
         dt.Columns.Add(dc);
         dc = new DataColumn("Familia");
         dt.Columns.Add(dc);
+        dc = new DataColumn("Version");
+        dt.Columns.Add(dc);
         dc = new DataColumn("Nombre");
+        dt.Columns.Add(dc);
+        dc = new DataColumn("Responsable");
         dt.Columns.Add(dc);
         dc = new DataColumn("fecha_de_creacion");
         dt.Columns.Add(dc);
-        dc = new DataColumn("fecha_vigencia_desde");
+        dc = new DataColumn("Tarea");
         dt.Columns.Add(dc);
-        dc = new DataColumn("fecha_vigencia_hasta");
-        dt.Columns.Add(dc);
-        dc = new DataColumn("Version");
-        dt.Columns.Add(dc);
-        dc = new DataColumn("Estado");
-        dt.Columns.Add(dc);
-        dc = new DataColumn("Vigente");
-        dt.Columns.Add(dc);
-        dc = new DataColumn("Autor");
-        dt.Columns.Add(dc);
-        dc = new DataColumn("NuevaVersionMostrar");
-        dt.Columns.Add(dc);
-        dc = new DataColumn("Ver");
-        dt.Columns.Add(dc);
+
         DataRow dr;
         if (datos.Tables[0].Rows.Count == 0)
         {
@@ -147,32 +87,17 @@ public partial class MantenimientoAtributos : System.Web.UI.Page
         foreach (DataRow row in datos.Tables[0].Rows)
         {
             ArrayList misDatos = new ArrayList();
-            misDatos.Add(row[0].ToString());
-            misDatos.Add(" Modificar ");
-            misDatos.Add(" Versionado ");
-            misDatos.Add(row[1].ToString());
-            misDatos.Add(row[7].ToString());
+            misDatos.Add("Ver");
             
+            misDatos.Add(row[0].ToString());
+            misDatos.Add(row[1].ToString());
+            misDatos.Add(row[3].ToString());
+            misDatos.Add(row[7].ToString());
+            misDatos.Add(row[2].ToString());
             DateTime dateTimes;
             dateTimes = DateTime.Parse(row[4].ToString());
             misDatos.Add(dateTimes.ToShortDateString());
-            dateTimes = DateTime.Parse(row[5].ToString());
-            misDatos.Add(dateTimes.ToShortDateString());
-            dateTimes = DateTime.Parse(row[6].ToString());
-            misDatos.Add(dateTimes.ToShortDateString());
-            misDatos.Add(row[3].ToString());
             misDatos.Add(row[9].ToString());
-            if (DateTime.Now > dateTimes)
-            {
-                misDatos.Add("No Activo");
-            }
-            else
-            {
-                misDatos.Add("Activo");
-            }
-            misDatos.Add(row[2].ToString());
-            misDatos.Add("Nueva version");
-            misDatos.Add("Ver");
             dr = dt.NewRow();
             dr.ItemArray = misDatos.ToArray();
             dt.Rows.Add(dr);
