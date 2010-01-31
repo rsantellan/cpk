@@ -70,7 +70,7 @@
 
     
 	function leave() {
-	    alert(save);
+	    //alert(save);
 	    if(save)return;
 	    var objectId = getId();
 		$('HiddenFieldId').value = "0";
