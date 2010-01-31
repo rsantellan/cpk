@@ -174,7 +174,8 @@ public class ABMCFamily
                         "FechaVigenciaHasta,"+
                         "Nombre,"+
                         "Grupo," +
-                        "estado" +
+                        "estado," +
+                        "Usuario" +
                         " FROM "+
                         " FamiliaInformacionGeneral "+
                         " WHERE " +
@@ -218,6 +219,7 @@ public class ABMCFamily
             salida.Nombre = row[7].ToString();
             salida.Grupo = row[8].ToString();
             salida.Estado = row[9].ToString();
+            salida.Usuario = row[10].ToString();
             return salida;
         }
         else
@@ -737,6 +739,146 @@ public class ABMCFamily
 
         return ds;
     }
+
+
+    /// <summary>
+    /// Busca atributo para las consultas de filtros.
+    /// </summary>
+    /// <param name="nombre"></param>
+    /// <param name="estado"></param>
+    /// <param name="autor"></param>
+    /// <param name="responsables"></param>
+    /// <param name="version"></param>
+    /// <param name="fechaInicioDesde"></param>
+    /// <param name="FechaInicioHasta"></param>
+    /// <param name="fechaVigenciaDesde"></param>
+    /// <param name="fechaVigenciaHasta"></param>
+    /// <param name="fechaCreacionDesde"></param>
+    /// <param name="fechaCreacionHasta"></param>
+    /// <returns></returns>
+    public DataSet searchFamilyTask(int identificador, String nombre, String responsable, DateTime fechaCreacionDesde, DateTime fechaCreacionHasta)
+    {
+
+
+        String consultaBasica = " SELECT " +
+            " Id," +
+            "Identificador," +
+            "Autor," +
+            "Version," +
+            "FechaCreacion," +
+            "FechaVigenciaDesde," +
+            "FechaVigenciaHasta," +
+            "Nombre," +
+            "Grupo," +
+            "Estado" +
+            " FROM " +
+            "FamiliaInformacionGeneral";
+
+        bool buscarNombre = false;
+        bool buscarCreacion = false;
+        if (!string.IsNullOrEmpty(nombre)) buscarNombre = true;
+        if (fechaCreacionDesde != DateTime.MinValue && fechaCreacionHasta != DateTime.MinValue) buscarCreacion = true;
+        String consulta = consultaBasica + " WHERE ";
+        System.Collections.ArrayList listaConsulta = new System.Collections.ArrayList();
+        String datosConsulta = "";
+        if (!responsable.Equals("-") && !responsable.Equals(" "))
+        {
+            datosConsulta = "Autor = @AUTOR";
+            listaConsulta.Add(datosConsulta);
+        }
+        if (identificador != 0)
+        {
+            datosConsulta = "Identificador = @IDENTIFICADOR";
+            listaConsulta.Add(datosConsulta);
+        }
+        if (buscarNombre)
+        {
+            datosConsulta = "Nombre LIKE @Nombre ";
+            listaConsulta.Add(datosConsulta);
+        }
+        if (buscarCreacion)
+        {
+            datosConsulta = "FechaCreacion BETWEEN @FechaCreacionDesde AND @FechaCreacionHasta";
+            listaConsulta.Add(datosConsulta);
+        }
+
+        int comienzo = 0;
+        foreach (String item in listaConsulta)
+        {
+            if (comienzo != 0)
+            {
+                consulta = consulta + " AND ";
+            }
+            consulta = consulta + item;
+            comienzo++;
+        }
+        if (comienzo != 0)
+        {
+            consulta = consulta + " AND ";
+        }
+        consulta += " FechaCreacion IS NOT NULL AND Autor <> ''";
+        consulta += " ORDER BY Identificador";
+        SqlCommand commandSql = new SqlCommand();
+        commandSql.CommandText = consulta;
+
+        if (!responsable.Equals("-") && !responsable.Equals(" "))
+        {
+            SqlParameter p_autor = commandSql.Parameters.Add("AUTOR", System.Data.SqlDbType.NChar);
+            p_autor.Value = responsable;
+        }
+        
+
+        if (buscarNombre)
+        {
+            SqlParameter p_nombre = commandSql.Parameters.Add("Nombre", System.Data.SqlDbType.NChar);
+            p_nombre.Value = nombre + "%";
+        }
+        if (identificador != 0)
+        {
+            SqlParameter p_identificador = commandSql.Parameters.Add("Identificador", System.Data.SqlDbType.Int);
+            p_identificador.Value = identificador;
+        }
+        if (buscarCreacion)
+        {
+            SqlParameter p_fechaCreacionDesde = commandSql.Parameters.Add("FechaCreacionDesde", System.Data.SqlDbType.DateTime);
+            p_fechaCreacionDesde.Value = fechaCreacionDesde;
+
+            SqlParameter p_fechaCreacionHasta = commandSql.Parameters.Add("FechaCreacionHasta", System.Data.SqlDbType.DateTime);
+            p_fechaCreacionHasta.Value = fechaCreacionHasta;
+        }
+        
+        
+        SqlConnection sqlConn = DBManager.getInstanceOfConnection();
+        commandSql.Connection = sqlConn;
+        DataSet ds = new DataSet();
+        Log.saveInLog("--------------Busqueda de Familias por Tareas ---------------");
+        Log.saveInLog(DateTime.Now.ToShortTimeString());
+        Log.saveInLog(commandSql.CommandText);
+        foreach (SqlParameter item in commandSql.Parameters)
+        {
+
+            Log.saveInLog(item.ParameterName);
+            Log.saveInLog(item.Value.ToString());
+        }
+        try
+        {
+            sqlConn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(commandSql);
+            da.Fill(ds, "Atributos");
+        }
+        catch (Exception e)
+        {
+            Log.saveInLog("Exception buscarAtributos ABMCFamilia");
+            Log.saveInLog(e.Message);
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+        return ds;
+    }
+
 
     public static DataSet getAllFamilyOnLastVersion()
     {
