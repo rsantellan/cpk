@@ -124,7 +124,7 @@
             <div id="manejoAtributos">
             <label id="mostrarAtributos" >Servicios</label>
             <div id="listadoDeAtributos">
-                <h1>Aca van el listado de atributos</h1>
+                <h1>Aca van el listado de atributos Silverlight</h1>
                 <asp:Silverlight ID="Xaml2" runat="server" Source="~/ClientBin/SLAttr.xap" MinimumVersion="2.0.31005.0" Width="100%" Height="100%" />
             </div>
         </div>
