@@ -14,11 +14,11 @@
             ABMCObservacion abmcObs = new ABMCObservacion();
 
             abmcObs.deleteAllObjectObservations(a.GetType().ToString(), objIdentifier, objVersion);
-            //System.Collections.Generic.List<Observacion> lista =  abmcObs.obtenerObservaciones(a.GetType().ToString(), objIdentifier, objVersion);
-            //foreach (Observacion item in lista)
-            //{
-            //    abmcObs.eliminarObservacion(item.Id);
-            //}
+            System.Collections.Generic.List<Observacion> lista =  abmcObs.obtenerObservaciones(a.GetType().ToString(), objIdentifier, objVersion);
+            foreach (Observacion item in lista)
+            {
+                abmcObs.eliminarObservacion(item.Id);
+            }
 
             ABMCFamilyAtribute abmcFamAtt = new ABMCFamilyAtribute();
             abmcFamAtt.deleteWithFamilyId(idFamilia);
