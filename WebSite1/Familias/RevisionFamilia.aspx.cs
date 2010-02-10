@@ -111,6 +111,7 @@ public partial class Familias_InsertarFamilia : System.Web.UI.Page
         }
         review.Author = user;
         review.CreatedAt = DateTime.Now;
+        review.Usuario = userFull;
         ABMCFamilyReview abmc = new ABMCFamilyReview();
         abmc.saveReviewOfFamily(review);
         ABMCFamily abmcFamily = new ABMCFamily();

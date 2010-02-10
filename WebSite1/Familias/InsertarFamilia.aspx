@@ -125,7 +125,22 @@
             <label id="mostrarAtributos" >Servicios</label>
             <div id="listadoDeAtributos">
                 <h1>Aca van el listado de atributos Silverlight</h1>
-                <asp:Silverlight ID="Xaml2" runat="server" Source="~/ClientBin/SLAttr.xap" MinimumVersion="2.0.31005.0" Width="100%" Height="100%" />
+                <object width="500" height="500"
+                    data="data:application/x-silverlight," 
+                    type="application/x-silverlight-3" >
+                    <param name="source" value="~/ClientBin/SLAttr.xap"/>
+                </object>
+
+                <object data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="100%" height="100%">
+  <param name="source" value="ClientBin/MyApplication.xap"/>
+  <param name="onError" value="onSilverlightError" />
+  <param name="background" value="white" />
+  <param name="minRuntimeVersion" value="3.0.40624.0" />
+  <param name="autoUpgrade" value="true" />      
+ <a href="http://go.microsoft.com/fwlink/?LinkID=149156&v=3.0.40624.0" style="text-decoration: none;">
+                <img src="http://go.microsoft.com/fwlink/?LinkId=108181" alt="Get Microsoft Silverlight" style="border-style: none"/>
+                </a>
+        </object></div>
             </div>
         </div>
             </div>
